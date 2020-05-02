@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
@@ -8,7 +8,9 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  offset: theme.mixins.toolbar, // this pushes content below toolbar
+  toolbarMargin: {
+    ...theme.mixins.toolbar, // this pushes content below toolbar
+  },
   tabs: {
     marginLeft: "auto",
   },
@@ -32,12 +34,35 @@ function ElevationScroll(props) {
   });
 }
 
+const routes = [
+  { name: "Home", link: "/", activeIndex: 0 },
+  { name: "Friends", link: "/friends", activeIndex: 1 },
+  { name: "Groups", link: "/groups", activeIndex: 2 },
+  { name: "About Us", link: "/about", activeIndex: 3 },
+  { name: "Contact Us", link: "/contact", activeIndex: 4 },
+];
+
 function Header() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const path = window.location.pathname;
+  useEffect(() => {
+    if (path === "/") {
+      setValue(0);
+    } else if (path === "/friends") {
+      setValue(1);
+    } else if (path === "/groups") {
+      setValue(2);
+    } else if (path === "/about") {
+      setValue(3);
+    } else if (path === "/contact") {
+      setValue(4);
+    }
+  }, [path]);
 
   return (
     <React.Fragment>
@@ -52,46 +77,21 @@ function Header() {
               aria-label="simple tabs"
               className={classes.tabs}
             >
-              <Tab
-                component={Link}
-                to="/"
-                className={classes.tab}
-                label="Home"
-                disableRipple
-              />
-              <Tab
-                component={Link}
-                to="/friends"
-                className={classes.tab}
-                label="Friends"
-                disableRipple
-              />
-              <Tab
-                component={Link}
-                to="/groups"
-                className={classes.tab}
-                label="Groups"
-                disableRipple
-              />
-              <Tab
-                component={Link}
-                to="/about"
-                className={classes.tab}
-                label="About Us"
-                disableRipple
-              />
-              <Tab
-                component={Link}
-                to="/contact"
-                className={classes.tab}
-                label="Contact Us"
-                disableRipple
-              />
+              {routes.map((route, index) => (
+                <Tab
+                  component={Link}
+                  to={route.link}
+                  className={classes.tab}
+                  label={route.name}
+                  disableRipple
+                  key={index}
+                />
+              ))}
             </Tabs>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <div className={classes.offset} />
+      <div className={classes.toolbarMargin} />
     </React.Fragment>
   );
 }

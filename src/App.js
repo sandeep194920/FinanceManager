@@ -13,7 +13,7 @@ function App() {
           <Route path="/" exact component={() => <div>Sandeep</div>} />
           <Route path="/friends" component={() => <div>Friends</div>} />
           <Route path="/groups" component={() => <div>Groups</div>} />
-          <Route path="/about" component={() => <div>About US</div>} />
+          <Route path="/about" component={() => <div>About Us</div>} />
           <Route path="/contact" component={() => <div>Contact Us</div>} />
         </Switch>
       </BrowserRouter>

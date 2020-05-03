@@ -103,14 +103,6 @@ function ElevationScroll(props) {
   });
 }
 
-const routes = [
-  { name: "Home", link: "/", activeIndex: 0 },
-  { name: "Friends", link: "/friends", activeIndex: 1 },
-  { name: "Groups", link: "/groups", activeIndex: 2 },
-  { name: "About Us", link: "/about", activeIndex: 3 },
-  { name: "Contact Us", link: "/contact", activeIndex: 4 },
-];
-
 function Header() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -140,81 +132,61 @@ function Header() {
     }
   }, [path]);
 
+  const routes = [
+    {
+      name: "Home",
+      link: "/",
+      icon: <HomeIcon classes={{ root: classes.icons }} />,
+    },
+    {
+      name: "Friends",
+      link: "/friends",
+      activeIndex: 1,
+      icon: <GroupIcon classes={{ root: classes.icons }} />,
+    },
+    {
+      name: "Groups",
+      link: "/groups",
+      activeIndex: 2,
+      icon: <GroupAddIcon classes={{ root: classes.icons }} />,
+    },
+    {
+      name: "About Us",
+      link: "/about",
+      activeIndex: 3,
+      icon: <InfoIcon classes={{ root: classes.icons }} />,
+    },
+    {
+      name: "Contact Us",
+      link: "/contact",
+      activeIndex: 4,
+      icon: <ContactsIcon classes={{ root: classes.icons }} />,
+    },
+  ];
+
   const sideDrawerList = (
     <List
       className={classes.drawerList}
       component="nav"
       aria-label="sidedrawer list"
     >
-      <ListItem
-        classes={{ root: classes.listItem, selected: classes.selected }}
-        selected={window.location.pathname === "/"}
-        button
-        onClick={handleDrawerToggle}
-        component={Link}
-        to="/"
-      >
-        <ListItemIcon>
-          <HomeIcon classes={{ root: classes.icons }} />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItem>
-      <Divider />
-      <ListItem
-        onClick={handleDrawerToggle}
-        classes={{ root: classes.listItem, selected: classes.selected }}
-        selected={window.location.pathname === "/friends"}
-        button
-        component={Link}
-        to="friends"
-      >
-        <ListItemIcon>
-          <GroupIcon classes={{ root: classes.icons }} />
-        </ListItemIcon>
-        <ListItemText primary="Friends" />
-      </ListItem>
-      <Divider />
-      <ListItem
-        onClick={handleDrawerToggle}
-        classes={{ root: classes.listItem, selected: classes.selected }}
-        selected={window.location.pathname === "/groups"}
-        button
-        component={Link}
-        to="groups"
-      >
-        <ListItemIcon>
-          <GroupAddIcon classes={{ root: classes.icons }} />
-        </ListItemIcon>
-        <ListItemText primary="Groups" />
-      </ListItem>
-      <Divider />
-      <ListItem
-        classes={{ root: classes.listItem, selected: classes.selected }}
-        selected={window.location.pathname === "/about"}
-        button
-        onClick={handleDrawerToggle}
-        component={Link}
-        to="about"
-      >
-        <ListItemIcon>
-          <InfoIcon classes={{ root: classes.icons }} />
-        </ListItemIcon>
-        <ListItemText primary="About Us" />
-      </ListItem>
-      <Divider />
-      <ListItem
-        onClick={handleDrawerToggle}
-        classes={{ root: classes.listItem, selected: classes.selected }}
-        selected={window.location.pathname === "/contact"}
-        button
-        component={Link}
-        to="contact"
-      >
-        <ListItemIcon>
-          <ContactsIcon classes={{ root: classes.icons }} />
-        </ListItemIcon>
-        <ListItemText primary="Contact Us" />
-      </ListItem>
+      {routes.map((route, index) => (
+        <React.Fragment>
+          <ListItem
+            key={route + index}
+            classes={{ root: classes.listItem, selected: classes.selected }}
+            selected={window.location.pathname === route.link}
+            button
+            onClick={handleDrawerToggle}
+            component={Link}
+            to={route.link}
+          >
+            <ListItemIcon>{route.icon}</ListItemIcon>
+            <ListItemText primary={route.name} />
+          </ListItem>
+          <Divider />
+        </React.Fragment>
+      ))}
     </List>
   );
   const swipableDrawer = (

@@ -171,9 +171,8 @@ function Header() {
       aria-label="sidedrawer list"
     >
       {routes.map((route, index) => (
-        <React.Fragment>
+        <React.Fragment key={route + index}>
           <ListItem
-            key={route + index}
             classes={{ root: classes.listItem, selected: classes.selected }}
             selected={window.location.pathname === route.link}
             button
@@ -234,7 +233,7 @@ function Header() {
                   className={classes.tab}
                   label={route.name}
                   disableRipple
-                  key={index}
+                  key={index + route}
                 />
               ))}
             </Tabs>

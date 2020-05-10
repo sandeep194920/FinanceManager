@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import { makeStyles } from "@material-ui/core/styles";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { Link } from "react-router-dom";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
@@ -188,15 +188,15 @@ function Header() {
       ))}
     </List>
   );
-  const swipableDrawer = (
-    <SwipeableDrawer
+  const drawer = (
+    <Drawer
       classes={{ root: classes.drawer }}
       open={open}
       onOpen={handleDrawerToggle}
       onClose={handleDrawerToggle}
     >
       {sideDrawerList}
-    </SwipeableDrawer>
+    </Drawer>
   );
 
   return (
@@ -241,7 +241,7 @@ function Header() {
         </AppBar>
       </ElevationScroll>
       <div className={classes.toolbarMargin} />
-      {swipableDrawer}
+      {drawer}
     </React.Fragment>
   );
 }

@@ -5,7 +5,8 @@ import theme from "./components/UI/Theme";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Footer from "./components/Footer/Footer";
 import Groups from "./components/Groups";
-import Friends from "./components/Friends";
+// import Friends from "./components/Friends";
+import Friends from "./components/FriendsTable";
 
 function App() {
   return (

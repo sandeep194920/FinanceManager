@@ -30,12 +30,47 @@ const useStyles = makeStyles((theme) => ({
   userDetails: {
     padding: "1em",
   },
+  userName: {
+    marginLeft: "5em",
+    marginTop: "1em",
+    marginBottom: "1em",
+    background: theme.palette.secondary.main,
+    borderRadius: "10px",
+    padding: "0.4em",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "5em",
+      color: "black",
+      fontSize: "0.9em",
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "2em",
+    },
+  },
+  username: {
+    marginRight: "5em",
+    marginTop: "1em",
+    marginBottom: "1em",
+    borderRadius: "10px",
+    backgroundColor: theme.palette.secondary.main,
+    padding: "0.4em",
+
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "5em",
+      color: "black",
+      fontSize: "0.9em",
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "2em",
+    },
+  },
 }));
-export default function FriendsDetails() {
+export default function FriendsDetails(props) {
+  const { name, oweAmount, details } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
+  const detailsTableHead = ["Date", "Paid By", "Category", "You Owe($)"];
 
   return (
     <React.Fragment>
@@ -55,7 +90,7 @@ export default function FriendsDetails() {
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
-                  <Typography variant="subtitle1">Sandeep</Typography>
+                  <Typography variant="subtitle1">{name}</Typography>
                 </Grid>
                 <Grid item xs={matchesSM ? 6 : 4}>
                   <Grid container direction="column" alignItems="center">
@@ -65,7 +100,7 @@ export default function FriendsDetails() {
                       alignItems="center"
                       style={{ padding: "20px", width: "15em" }}
                     >
-                      <Typography variant="caption text" gutterBottom>
+                      <Typography variant="caption" gutterBottom>
                         You Owe&nbsp;&nbsp;&nbsp;
                       </Typography>
                       <Typography
@@ -74,13 +109,14 @@ export default function FriendsDetails() {
                         variant="h6"
                         gutterBottom
                       >
-                        $100
+                        ${oweAmount}
                       </Typography>
                     </Grid>
                     <Button
                       style={{ width: "2em" }}
                       variant="outlined"
                       color="primary"
+                      size={matchesSM ? "small" : "medium"}
                     >
                       Pay
                     </Button>
@@ -96,70 +132,46 @@ export default function FriendsDetails() {
         <TableCell colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={0}>
-              <Grid
-                container
-                justify="center"
-                alignItems="flex-start"
-                direction="column"
-              >
+              <Grid container justify="space-between">
                 <Typography
-                  className={classes.userDetails}
-                  variant="subtitle1"
                   gutterBottom
-                  component="div"
+                  variant="subtitle2"
+                  className={classes.userName}
                 >
-                  Sandeep Amarnath - Sa194920
+                  Sandeep Amarnath
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="subtitle2"
+                  className={classes.username}
+                >
+                  Sa194920
                 </Typography>
               </Grid>
               <TableContainer component={Paper}>
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell
-                        classes={{ root: classes.tcell }}
-                        align="right"
-                      >
-                        Date
-                      </TableCell>
-                      <TableCell
-                        classes={{ root: classes.tcell }}
-                        align="right"
-                      >
-                        Paid by
-                      </TableCell>
-                      <TableCell
-                        classes={{ root: classes.tcell }}
-                        align="right"
-                      >
-                        Type
-                      </TableCell>
-                      <TableCell
-                        classes={{ root: classes.tcell }}
-                        align="right"
-                      >
-                        You Owe ($)
-                      </TableCell>
+                      {detailsTableHead.map((tableCell) => (
+                        <TableCell
+                          key={tableCell}
+                          classes={{ root: classes.tcell }}
+                          align="right"
+                        >
+                          {tableCell}
+                        </TableCell>
+                      ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow className={classes.tRow}>
-                      <TableCell align="right">20/02/2019</TableCell>
-                      <TableCell align="right">Vijay</TableCell>
-                      <TableCell align="right">Split Equally</TableCell>
-                      <TableCell align="right">20</TableCell>
-                    </TableRow>
-                    <TableRow className={classes.tRow}>
-                      <TableCell align="right">20/02/2019</TableCell>
-                      <TableCell align="right">Vijay</TableCell>
-                      <TableCell align="right">Split Equally</TableCell>
-                      <TableCell align="right">20</TableCell>
-                    </TableRow>
-                    <TableRow className={classes.tRow}>
-                      <TableCell align="right">20/02/2019</TableCell>
-                      <TableCell align="right">Vijay</TableCell>
-                      <TableCell align="right">Split Equally</TableCell>
-                      <TableCell align="right">20</TableCell>
-                    </TableRow>
+                    {details.map((record, index) => (
+                      <TableRow key={record + index} className={classes.tRow}>
+                        <TableCell align="right">{record.date}</TableCell>
+                        <TableCell align="right">{record.paidBy}</TableCell>
+                        <TableCell align="right">{record.type}</TableCell>
+                        <TableCell align="right">{record.owe}</TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>

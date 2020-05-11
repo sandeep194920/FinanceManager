@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import FriendsDetails from "../components/FriendsDetails";
-
+import { friendsInfo } from "../data/FriendsInfo";
 const useStyles = makeStyles((theme) => ({
   table: {
     marginTop: 100,
@@ -40,11 +40,13 @@ export default function FriendsList(props) {
       <TableContainer className={classes.table} component={Paper}>
         <Table>
           <TableBody>
-            <FriendsDetails />
-            <FriendsDetails />
-            <FriendsDetails />
-            <FriendsDetails />
-            <FriendsDetails />
+            {friendsInfo.map((friendInfo) => (
+              <FriendsDetails
+                name={friendInfo.main.displayName}
+                oweAmount={friendInfo.main.oweAmount}
+                details={friendInfo.details}
+              />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

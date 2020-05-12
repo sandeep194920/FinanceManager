@@ -29,7 +29,7 @@ export const friendsInfo = [
   {
     main: {
       displayName: "Vijay",
-      oweAmount: -200,
+      oweAmount: -2000,
     },
     details: [
       {

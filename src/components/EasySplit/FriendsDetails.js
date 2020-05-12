@@ -90,7 +90,9 @@ export default function FriendsDetails(props) {
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
-                  <Typography variant="subtitle1">{name}</Typography>
+                  <Typography variant={matchesSM ? "subtitle2" : "body1"}>
+                    {name}
+                  </Typography>
                 </Grid>
                 <Grid item xs={matchesSM ? 6 : 4}>
                   <Grid container direction="column" alignItems="center">
@@ -102,14 +104,18 @@ export default function FriendsDetails(props) {
                     >
                       <Typography variant="caption" gutterBottom>
                         You Owe&nbsp;&nbsp;&nbsp;
+                        {oweAmount > 0 ? <span>&nbsp;&nbsp;&nbsp;</span> : null}
                       </Typography>
                       <Typography
-                        color="error"
-                        style={{ color: "green" }}
-                        variant="h6"
+                        style={{
+                          color: oweAmount >= 0 ? "green" : "red",
+                        }}
+                        variant={matchesSM ? "subtitle2" : "h6"}
                         gutterBottom
                       >
-                        ${oweAmount}
+                        {oweAmount > 0
+                          ? "$ " + oweAmount
+                          : "- $ " + oweAmount * -1}
                       </Typography>
                     </Grid>
                     <Button

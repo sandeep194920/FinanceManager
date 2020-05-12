@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function FriendsDetails(props) {
+export default function GroupsDetails(props) {
   const { name, oweAmount, details } = props;
   const classes = useStyles();
   const theme = useTheme();

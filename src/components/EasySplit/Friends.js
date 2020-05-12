@@ -4,53 +4,60 @@ import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import FriendsDetails from "./FriendsDetails";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
 
 const useStyles = makeStyles((theme) => ({
+  friendsContainer: {
+    ...theme.container,
+  },
+  friendsHeading: {
+    ...theme.heading,
+  },
   table: {
-    marginTop: 100,
-    maxWidth: 800,
-    [theme.breakpoints.down("xs")]: {
-      maxWidth: 500,
-      margin: "10px",
-    },
-    "& .MuiTableCell-root": {
-      padding: 0,
-      textAlign: "center",
-      [theme.breakpoints.down("xs")]: {
-        fontSize: "0.8em",
-        paddingLeft: "0",
-      },
-    },
-    "& .MuiCardContent-root": {
-      padding: "0 0 1em 2em",
-      [theme.breakpoints.down("sm")]: {
-        padding: "0 0 1em 1em",
-      },
-    },
+    ...theme.table,
   },
 }));
 
 export default function FriendsList(props) {
   const classes = useStyles();
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Grid container justify="center">
-      <TableContainer className={classes.table} component={Paper}>
-        <Table>
-          <TableBody>
-            {friendsInfo.map((friendInfo) => (
-              <FriendsDetails
-                name={friendInfo.main.displayName}
-                oweAmount={friendInfo.main.oweAmount}
-                details={friendInfo.details}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <Grid
+      className={classes.friendsContainer}
+      container
+      direction="column"
+      alignItems="center"
+    >
+      <Typography
+        className={classes.friendsHeading}
+        variant={matchesSM ? "subtitle1" : "h6"}
+        gutterBottom
+      >
+        Friends
+      </Typography>
+      <Grid container justify="center">
+        <TableContainer className={classes.table} component={Paper}>
+          <Table>
+            <TableBody>
+              {friendsInfo.map((friendInfo, index) => (
+                <FriendsDetails
+                  key={friendInfo + index}
+                  name={friendInfo.main.displayName}
+                  oweAmount={friendInfo.main.oweAmount}
+                  details={friendInfo.details}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
     </Grid>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -10,6 +10,8 @@ import FriendsDetails from "./FriendsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles((theme) => ({
   friendsContainer: {
@@ -21,12 +23,33 @@ const useStyles = makeStyles((theme) => ({
   table: {
     ...theme.table,
   },
+  filterArea: {
+    ...theme.filterArea,
+  },
+  formLabel: {
+    ...theme.formLabel,
+  },
+  formControlLabel: {
+    ...theme.formControlLabel,
+  },
+  toggleSwitch: {
+    ...theme.toggleSwitch,
+  },
 }));
 
 export default function FriendsList(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // switch details
+  const [details, switchDetails] = useState(false);
+
+  const detailsToggleHandler = () => {
+    switchDetails((prevState) => {
+      return !prevState;
+    });
+  };
 
   return (
     <Grid
@@ -44,6 +67,28 @@ export default function FriendsList(props) {
       </Typography>
       <Grid container justify="center">
         <TableContainer className={classes.table} component={Paper}>
+          <Grid
+            container
+            className={classes.filterArea}
+            justify="flex-end"
+            alignItems="center"
+          >
+            <FormControlLabel
+              value={details}
+              checked={details}
+              control={
+                <Switch
+                  onChange={detailsToggleHandler}
+                  color="primary"
+                  classes={{ switchBase: classes.toggleSwitch }}
+                />
+              }
+              label="Show all details"
+              labelPlacement="start"
+              classes={{ label: classes.formLabel }}
+              className={classes.formControlLabel}
+            />
+          </Grid>
           <Table>
             <TableBody>
               {friendsInfo.map((friendInfo, index) => (
@@ -52,6 +97,7 @@ export default function FriendsList(props) {
                   name={friendInfo.main.displayName}
                   oweAmount={friendInfo.main.oweAmount}
                   details={friendInfo.details}
+                  showDetails={details}
                 />
               ))}
             </TableBody>

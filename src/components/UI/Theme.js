@@ -2,8 +2,13 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import purple from "@material-ui/core/colors/purple";
 import amber from "@material-ui/core/colors/amber";
 
+const lightGrey = "#fafafa";
+
 const theme = createMuiTheme({
   palette: {
+    common: {
+      lightGrey: lightGrey,
+    },
     primary: purple,
     secondary: amber,
     // type: "dark",
@@ -69,5 +74,39 @@ export default createMuiTheme({
   dropdownTcell: {
     backgroundColor: theme.palette.primary.main,
     width: "5em",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "2em",
+    },
+  },
+
+  // used in Friends and Group
+
+  filterArea: {
+    backgroundColor: theme.palette.common.lightGrey,
+    height: "3em",
+    [theme.breakpoints.down("sm")]: {
+      height: "2em",
+    },
+  },
+  formLabel: {
+    fontSize: "0.9em",
+    marginRight: "5px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.7em",
+      marginRight: "3px",
+    },
+  },
+  formControlLabel: {
+    marginRight: "5em",
+    [theme.breakpoints.down("sm")]: {
+      marginRight: 0,
+    },
+  },
+
+  toggleSwitch: {
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
 });

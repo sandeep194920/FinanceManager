@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function FriendsDetails(props) {
-  const { name, oweAmount, details } = props;
+  const { name, oweAmount, details, showDetails } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -126,7 +126,7 @@ export default function FriendsDetails(props) {
 
       <TableRow>
         <TableCell colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open || showDetails} timeout="auto" unmountOnExit>
             <Box margin={0}>
               <Grid container justify="space-between">
                 <Typography

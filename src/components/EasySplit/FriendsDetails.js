@@ -19,6 +19,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 
 const useStyles = makeStyles((theme) => ({
   dropdownTcell: {
@@ -53,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "2em",
     },
   },
+  detailCellHead: {
+    ...theme.detailCellHead,
+  },
+  detailsIcon: {
+    ...theme.detailsIcon,
+  },
 }));
 export default function FriendsDetails(props) {
   const { name, oweAmount, details, showDetails } = props;
@@ -60,7 +67,13 @@ export default function FriendsDetails(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
-  const detailsTableHead = ["Date", "Paid By", "Category", "You Owe($)"];
+  const detailsTableHead = [
+    "Date",
+    "Paid By",
+    "Category",
+    "You Owe($)",
+    // "Details",
+  ];
 
   return (
     <React.Fragment>
@@ -157,6 +170,13 @@ export default function FriendsDetails(props) {
                           {tableCell}
                         </TableCell>
                       ))}
+                      <TableCell
+                        align="right"
+                        className={classes.detailCellHead}
+                        classes={{ root: classes.tcell }}
+                      >
+                        Details
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -166,6 +186,19 @@ export default function FriendsDetails(props) {
                         <TableCell align="right">{record.paidBy}</TableCell>
                         <TableCell align="right">{record.type}</TableCell>
                         <TableCell align="right">{record.owe}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            // onClick={handleDrawerToggle}
+                            // className={classes.iconBtn}
+                            // disableRipple
+                            classes={{ root: classes.detailsIcon }}
+                          >
+                            <CallMadeIcon
+                              fontSize={matchesSM ? "small" : "default"}
+                              color="primary"
+                            />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

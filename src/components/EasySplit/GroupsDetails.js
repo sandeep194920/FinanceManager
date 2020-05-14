@@ -19,8 +19,10 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import CallMadeIcon from "@material-ui/icons/CallMade";
 
 const useStyles = makeStyles((theme) => ({
+  // css similar to FriendsDetails
   dropdownTcell: {
     ...theme.dropdownTcell,
   },
@@ -53,6 +55,20 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "2em",
     },
   },
+  detailCellHead: {
+    ...theme.detailCellHead,
+  },
+  detailsIcon: {
+    ...theme.detailsIcon,
+  },
+  // css related to this component
+  memberCount: {
+    paddingTop: "1em",
+    fontStyle: "italic",
+  },
+  groupNameMembers: {
+    marginTop: "3em",
+  },
 }));
 export default function GroupsDetails(props) {
   const { name, oweAmount, details, showDetails } = props;
@@ -80,9 +96,25 @@ export default function GroupsDetails(props) {
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
-                  <Typography variant={matchesSM ? "subtitle2" : "body1"}>
-                    {name}
-                  </Typography>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="flex-start"
+                    className={classes.groupNameMembers}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant={matchesSM ? "subtitle2" : "body1"}
+                    >
+                      {name}
+                    </Typography>
+                    <Typography
+                      className={classes.memberCount}
+                      variant="caption"
+                    >
+                      (3 Members)
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={matchesSM ? 6 : 4}>
                   <Grid container direction="column" alignItems="center">
@@ -157,6 +189,13 @@ export default function GroupsDetails(props) {
                           {tableCell}
                         </TableCell>
                       ))}
+                      <TableCell
+                        align="right"
+                        className={classes.detailCellHead}
+                        classes={{ root: classes.tcell }}
+                      >
+                        Details
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -166,6 +205,19 @@ export default function GroupsDetails(props) {
                         <TableCell align="right">{record.paidBy}</TableCell>
                         <TableCell align="right">{record.type}</TableCell>
                         <TableCell align="right">{record.owe}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            // onClick={handleDrawerToggle}
+                            // className={classes.iconBtn}
+                            // disableRipple
+                            classes={{ root: classes.detailsIcon }}
+                          >
+                            <CallMadeIcon
+                              fontSize={matchesSM ? "small" : "default"}
+                              color="primary"
+                            />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

@@ -1,7 +1,7 @@
 export const groupsInfo = [
   {
     main: {
-      displayName: "Group1",
+      displayName: "Ontario street group",
       oweAmount: 50,
     },
     details: [
@@ -28,7 +28,7 @@ export const groupsInfo = [
 
   {
     main: {
-      displayName: "Vijay",
+      displayName: "Apt 1511",
       oweAmount: -2000,
     },
     details: [

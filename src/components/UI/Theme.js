@@ -103,10 +103,20 @@ export default createMuiTheme({
       marginRight: 0,
     },
   },
-
   toggleSwitch: {
     "&:hover": {
       backgroundColor: "transparent",
     },
+  },
+  detailCellHead: {
+    color: theme.palette.primary.main,
+    fontSize: "0.875rem",
+    fontWeight: "700",
+  },
+  //detailsIcon hover is not disabled currently. Uncommenting below code will disable hover effect
+  detailsIcon: {
+    // "&:hover": {
+    //   backgroundColor: "transparent",
+    // },
   },
 });

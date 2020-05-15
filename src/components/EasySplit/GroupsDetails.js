@@ -76,7 +76,11 @@ export default function GroupsDetails(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
-  const detailsTableHead = ["Date", "Paid By", "Category", "You Owe($)"];
+  const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
+
+  if (matchesSM) {
+    detailsTableHead.splice(2, 1);
+  }
 
   return (
     <React.Fragment>
@@ -92,7 +96,7 @@ export default function GroupsDetails(props) {
           </IconButton>
         </TableCell>
         <TableCell>
-          <Card>
+          <Card style={{ backgroundColor: theme.palette.common.lightGrey }}>
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
@@ -157,9 +161,12 @@ export default function GroupsDetails(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell colSpan={6}>
+        <TableCell
+          style={{ backgroundColor: theme.palette.common.lightGrey }}
+          colSpan={6}
+        >
           <Collapse in={open || showDetails} timeout="auto" unmountOnExit>
-            <Box margin={0}>
+            <Box>
               <Grid container justify="space-between">
                 <Typography
                   gutterBottom
@@ -176,7 +183,10 @@ export default function GroupsDetails(props) {
                   Sa194920
                 </Typography>
               </Grid>
-              <TableContainer component={Paper}>
+              <TableContainer
+                style={{ backgroundColor: theme.palette.common.lightGrey }}
+                component={Paper}
+              >
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
@@ -201,11 +211,15 @@ export default function GroupsDetails(props) {
                   <TableBody>
                     {details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
-                        <TableCell align="right">{record.date}</TableCell>
-                        <TableCell align="right">{record.paidBy}</TableCell>
-                        <TableCell align="right">{record.type}</TableCell>
-                        <TableCell align="right">{record.owe}</TableCell>
-                        <TableCell align="right">
+                        <TableCell>{record.date}</TableCell>
+                        <TableCell>{record.amount}</TableCell>
+
+                        {matchesSM ? null : (
+                          <TableCell>{record.paidBy}</TableCell>
+                        )}
+                        <TableCell>{record.type}</TableCell>
+                        <TableCell>{record.owe}</TableCell>
+                        <TableCell>
                           <IconButton
                             // onClick={handleDrawerToggle}
                             // className={classes.iconBtn}

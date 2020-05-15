@@ -2,12 +2,14 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import purple from "@material-ui/core/colors/purple";
 import amber from "@material-ui/core/colors/amber";
 
-const lightGrey = "#fafafa";
+const grey50 = "#fafafa";
+const grey100 = "#f5f5f5";
 
 const theme = createMuiTheme({
   palette: {
     common: {
-      lightGrey: lightGrey,
+      lightGrey: grey50,
+      lightGreyTwo: grey100,
     },
     primary: purple,
     secondary: amber,
@@ -33,6 +35,9 @@ export default createMuiTheme({
 
   table: {
     maxWidth: 800,
+    [theme.breakpoints.down("md")]: {
+      margin: "20px",
+    },
     [theme.breakpoints.down("xs")]: {
       maxWidth: 500,
       margin: "10px",
@@ -76,6 +81,10 @@ export default createMuiTheme({
     width: "5em",
 
     [theme.breakpoints.down("sm")]: {
+      width: "4em",
+    },
+
+    [theme.breakpoints.down("xs")]: {
       width: "2em",
     },
   },
@@ -85,7 +94,8 @@ export default createMuiTheme({
   filterArea: {
     backgroundColor: theme.palette.common.lightGrey,
     height: "3em",
-    [theme.breakpoints.down("sm")]: {
+
+    [theme.breakpoints.down("xs")]: {
       height: "2em",
     },
   },
@@ -99,7 +109,7 @@ export default createMuiTheme({
   },
   formControlLabel: {
     marginRight: "5em",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       marginRight: 0,
     },
   },

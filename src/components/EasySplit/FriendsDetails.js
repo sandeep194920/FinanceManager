@@ -22,6 +22,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 
 const useStyles = makeStyles((theme) => ({
+  // css similar to GroupsDetails
   dropdownTcell: {
     ...theme.dropdownTcell,
   },
@@ -66,14 +67,13 @@ export default function FriendsDetails(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const [open, setOpen] = React.useState(false);
-  const detailsTableHead = [
-    "Date",
-    "Paid By",
-    "Category",
-    "You Owe($)",
-    // "Details",
-  ];
+  const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
+
+  if (matchesSM) {
+    detailsTableHead.splice(2, 1);
+  }
 
   return (
     <React.Fragment>
@@ -89,15 +89,15 @@ export default function FriendsDetails(props) {
           </IconButton>
         </TableCell>
         <TableCell>
-          <Card>
+          <Card style={{ background: theme.palette.common.lightGrey }}>
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
-                  <Typography variant={matchesSM ? "subtitle2" : "body1"}>
+                  <Typography variant={matchesXS ? "subtitle2" : "body1"}>
                     {name}
                   </Typography>
                 </Grid>
-                <Grid item xs={matchesSM ? 6 : 4}>
+                <Grid item xs={matchesXS ? 6 : 4}>
                   <Grid container direction="column" alignItems="center">
                     <Grid
                       container
@@ -113,7 +113,7 @@ export default function FriendsDetails(props) {
                         style={{
                           color: oweAmount >= 0 ? "green" : "red",
                         }}
-                        variant={matchesSM ? "subtitle2" : "h6"}
+                        variant={matchesXS ? "subtitle2" : "h6"}
                         gutterBottom
                       >
                         {oweAmount > 0
@@ -125,7 +125,7 @@ export default function FriendsDetails(props) {
                       style={{ width: "2em" }}
                       variant="outlined"
                       color="primary"
-                      size={matchesSM ? "small" : "medium"}
+                      size={matchesXS ? "small" : "medium"}
                     >
                       Pay
                     </Button>
@@ -138,7 +138,10 @@ export default function FriendsDetails(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell colSpan={6}>
+        <TableCell
+          style={{ backgroundColor: theme.palette.common.lightGrey }}
+          colSpan={6}
+        >
           <Collapse in={open || showDetails} timeout="auto" unmountOnExit>
             <Box margin={0}>
               <Grid container justify="space-between">
@@ -157,7 +160,10 @@ export default function FriendsDetails(props) {
                   Sa194920
                 </Typography>
               </Grid>
-              <TableContainer component={Paper}>
+              <TableContainer
+                style={{ backgroundColor: theme.palette.common.lightGrey }}
+                component={Paper}
+              >
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
@@ -165,13 +171,11 @@ export default function FriendsDetails(props) {
                         <TableCell
                           key={tableCell}
                           classes={{ root: classes.tcell }}
-                          align="right"
                         >
                           {tableCell}
                         </TableCell>
                       ))}
                       <TableCell
-                        align="right"
                         className={classes.detailCellHead}
                         classes={{ root: classes.tcell }}
                       >
@@ -182,11 +186,14 @@ export default function FriendsDetails(props) {
                   <TableBody>
                     {details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
-                        <TableCell align="right">{record.date}</TableCell>
-                        <TableCell align="right">{record.paidBy}</TableCell>
-                        <TableCell align="right">{record.type}</TableCell>
-                        <TableCell align="right">{record.owe}</TableCell>
-                        <TableCell align="right">
+                        <TableCell>{record.date}</TableCell>
+                        <TableCell>{record.amount}</TableCell>
+                        {matchesSM ? null : (
+                          <TableCell>{record.paidBy}</TableCell>
+                        )}
+                        <TableCell>{record.type}</TableCell>
+                        <TableCell>{record.owe}</TableCell>
+                        <TableCell>
                           <IconButton
                             // onClick={handleDrawerToggle}
                             // className={classes.iconBtn}

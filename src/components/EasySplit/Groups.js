@@ -83,7 +83,7 @@ export default function GroupsList(props) {
                   classes={{ switchBase: classes.toggleSwitch }}
                 />
               }
-              label="Show all details"
+              label={details ? "Hide details" : "Show all details"}
               labelPlacement="start"
               classes={{ label: classes.formLabel }}
               className={classes.formControlLabel}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -71,7 +71,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function GroupsDetails(props) {
-  const { name, oweAmount, details, showDetails } = props;
+  const {
+    name,
+    oweAmount,
+    details,
+    showDetails,
+    hideDetails,
+    setHideDetails,
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -81,6 +88,12 @@ export default function GroupsDetails(props) {
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  useEffect(() => {
+    if (hideDetails) {
+      setHideDetails(false);
+      setOpen(false);
+    }
+  }, [hideDetails, setHideDetails]);
 
   return (
     <React.Fragment>
@@ -165,7 +178,11 @@ export default function GroupsDetails(props) {
           style={{ backgroundColor: theme.palette.common.lightGrey }}
           colSpan={6}
         >
-          <Collapse in={open || showDetails} timeout="auto" unmountOnExit>
+          <Collapse
+            in={(open || showDetails) && !hideDetails}
+            timeout="auto"
+            unmountOnExit
+          >
             <Box>
               <Grid container justify="space-between">
                 <Typography

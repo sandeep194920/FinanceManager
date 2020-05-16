@@ -43,12 +43,17 @@ export default function GroupsList(props) {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   // switch details
-  const [details, switchDetails] = useState(false);
+  const [showDetails, switchShowDetails] = useState(false);
+  const [hideDetails, switchHideDetails] = useState(false);
 
-  const detailsToggleHandler = () => {
-    switchDetails((prevState) => {
-      return !prevState;
-    });
+  const showDetailsToggleHandler = () => {
+    switchShowDetails(true);
+    switchHideDetails(false);
+  };
+
+  const hideDetailsToggleHandler = () => {
+    switchShowDetails(false);
+    switchHideDetails(true);
   };
 
   return (
@@ -74,16 +79,20 @@ export default function GroupsList(props) {
             alignItems="center"
           >
             <FormControlLabel
-              value={details}
-              checked={details}
+              value={showDetails}
+              checked={showDetails}
               control={
                 <Switch
-                  onChange={detailsToggleHandler}
+                  onChange={
+                    showDetails
+                      ? hideDetailsToggleHandler
+                      : showDetailsToggleHandler
+                  }
                   color="primary"
                   classes={{ switchBase: classes.toggleSwitch }}
                 />
               }
-              label={details ? "Hide details" : "Show all details"}
+              label={showDetails ? "Hide all details" : "Show all details"}
               labelPlacement="start"
               classes={{ label: classes.formLabel }}
               className={classes.formControlLabel}
@@ -97,7 +106,9 @@ export default function GroupsList(props) {
                   name={groupInfo.main.displayName}
                   oweAmount={groupInfo.main.oweAmount}
                   details={groupInfo.details}
-                  showDetails={details}
+                  showDetails={showDetails}
+                  hideDetails={hideDetails}
+                  setHideDetails={switchHideDetails}
                 />
               ))}
             </TableBody>

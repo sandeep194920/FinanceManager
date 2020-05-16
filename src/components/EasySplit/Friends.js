@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import FriendsDetails from "./FriendsDetails";
+import FriendsshowDetails from "./FriendsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
@@ -42,13 +42,18 @@ export default function FriendsList(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // switch details
-  const [details, switchDetails] = useState(false);
+  // switch show and hide details
+  const [showDetails, switchShowDetails] = useState(false);
+  const [hideDetails, switchHideDetails] = useState(false);
 
-  const detailsToggleHandler = () => {
-    switchDetails((prevState) => {
-      return !prevState;
-    });
+  const showDetailsToggleHandler = () => {
+    switchShowDetails(true);
+    switchHideDetails(false);
+  };
+
+  const hideDetailsToggleHandler = () => {
+    switchShowDetails(false);
+    switchHideDetails(true);
   };
 
   return (
@@ -74,16 +79,20 @@ export default function FriendsList(props) {
             alignItems="center"
           >
             <FormControlLabel
-              value={details}
-              checked={details}
+              value={showDetails}
+              checked={showDetails}
               control={
                 <Switch
-                  onChange={detailsToggleHandler}
+                  onChange={
+                    showDetails
+                      ? hideDetailsToggleHandler
+                      : showDetailsToggleHandler
+                  }
                   color="primary"
                   classes={{ switchBase: classes.toggleSwitch }}
                 />
               }
-              label={details ? "Hide details" : "Show all details"}
+              label={showDetails ? "Hide all details" : "Show all details"}
               labelPlacement="start"
               classes={{ label: classes.formLabel }}
               className={classes.formControlLabel}
@@ -92,12 +101,14 @@ export default function FriendsList(props) {
           <Table>
             <TableBody>
               {friendsInfo.map((friendInfo, index) => (
-                <FriendsDetails
+                <FriendsshowDetails
                   key={friendInfo + index}
                   name={friendInfo.main.displayName}
                   oweAmount={friendInfo.main.oweAmount}
                   details={friendInfo.details}
-                  showDetails={details}
+                  showDetails={showDetails}
+                  hideDetails={hideDetails}
+                  setHideDetails={switchHideDetails}
                 />
               ))}
             </TableBody>

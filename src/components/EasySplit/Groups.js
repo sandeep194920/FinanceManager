@@ -41,6 +41,7 @@ export default function GroupsList(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // switch details
   const [showDetails, switchShowDetails] = useState(false);
@@ -83,12 +84,15 @@ export default function GroupsList(props) {
               checked={showDetails}
               control={
                 <Switch
+                  size={matchesXS ? "small" : "medium"}
                   onChange={
                     showDetails
                       ? hideDetailsToggleHandler
                       : showDetailsToggleHandler
                   }
-                  color="primary"
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
                   classes={{ switchBase: classes.toggleSwitch }}
                 />
               }

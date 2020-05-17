@@ -20,6 +20,7 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import GroupIcon from "@material-ui/icons/Group";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import InfoIcon from "@material-ui/icons/Info";
+import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -70,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
 
   drawerList: {
     width: 230,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor:
+      theme.palette.type === "dark" ? "black" : theme.palette.primary.main,
     height: "100vh",
     color: "white",
     paddingTop: theme.mixins.toolbar.minHeight,
@@ -105,6 +107,7 @@ function ElevationScroll(props) {
 
 function Header() {
   const classes = useStyles();
+  const theme = useTheme();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   // const [selectedIndex, setSelectedIndex] = useState(false);
@@ -220,7 +223,9 @@ function Header() {
               Finance Manager
             </Button>
             <Tabs
-              indicatorColor="primary"
+              indicatorColor={
+                theme.palette.type === "dark" ? "secondary" : "primary"
+              }
               value={value}
               onChange={handleChange}
               aria-label="simple tabs"

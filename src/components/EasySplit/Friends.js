@@ -41,6 +41,7 @@ export default function FriendsList(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // switch show and hide details
   const [showDetails, switchShowDetails] = useState(false);
@@ -83,13 +84,18 @@ export default function FriendsList(props) {
               checked={showDetails}
               control={
                 <Switch
+                  size={matchesXS ? "small" : "medium"}
                   onChange={
                     showDetails
                       ? hideDetailsToggleHandler
                       : showDetailsToggleHandler
                   }
-                  color="primary"
-                  classes={{ switchBase: classes.toggleSwitch }}
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                  classes={{
+                    switchBase: classes.toggleSwitch,
+                  }}
                 />
               }
               label={showDetails ? "Hide all details" : "Show all details"}

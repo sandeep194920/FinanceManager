@@ -43,8 +43,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1em",
     marginBottom: "1em",
     borderRadius: "10px",
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? theme.palette.secondary.light
+        : theme.palette.secondary.main,
     padding: "0.4em",
+    color: "black",
 
     [theme.breakpoints.down("sm")]: {
       marginRight: "5em",
@@ -60,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
   },
   detailsIcon: {
     ...theme.detailsIcon,
+  },
+  displayCard: {
+    ...theme.displayCard,
   },
   // css related to this component
   memberCount: {
@@ -109,7 +116,10 @@ export default function GroupsDetails(props) {
           </IconButton>
         </TableCell>
         <TableCell>
-          <Card style={{ backgroundColor: theme.palette.common.lightGrey }}>
+          <Card
+            className={classes.displayCard}
+            // style={{ backgroundColor: theme.palette.common.lightGrey }}
+          >
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
@@ -147,7 +157,10 @@ export default function GroupsDetails(props) {
                       </Typography>
                       <Typography
                         style={{
-                          color: oweAmount >= 0 ? "green" : "red",
+                          color:
+                            oweAmount >= 0
+                              ? theme.palette.common.greenAmount
+                              : theme.palette.common.redAmount,
                         }}
                         variant={matchesSM ? "subtitle2" : "h6"}
                         gutterBottom
@@ -160,7 +173,9 @@ export default function GroupsDetails(props) {
                     <Button
                       style={{ width: "2em" }}
                       variant="outlined"
-                      color="primary"
+                      color={
+                        theme.palette.type === "dark" ? "secondary" : "primary"
+                      }
                       size={matchesSM ? "small" : "medium"}
                     >
                       Pay
@@ -175,7 +190,8 @@ export default function GroupsDetails(props) {
 
       <TableRow>
         <TableCell
-          style={{ backgroundColor: theme.palette.common.lightGrey }}
+          className={classes.displayCard}
+          // style={{ backgroundColor: theme.palette.common.lightGrey }}
           colSpan={6}
         >
           <Collapse
@@ -201,7 +217,8 @@ export default function GroupsDetails(props) {
                 </Typography>
               </Grid>
               <TableContainer
-                style={{ backgroundColor: theme.palette.common.lightGrey }}
+                className={classes.displayCard}
+                // style={{ backgroundColor: theme.palette.common.lightGrey }}
                 component={Paper}
               >
                 <Table aria-label="purchases">
@@ -211,13 +228,11 @@ export default function GroupsDetails(props) {
                         <TableCell
                           key={tableCell}
                           classes={{ root: classes.tcell }}
-                          align="right"
                         >
                           {tableCell}
                         </TableCell>
                       ))}
                       <TableCell
-                        align="right"
                         className={classes.detailCellHead}
                         classes={{ root: classes.tcell }}
                       >
@@ -245,7 +260,11 @@ export default function GroupsDetails(props) {
                           >
                             <CallMadeIcon
                               fontSize={matchesSM ? "small" : "default"}
-                              color="primary"
+                              color={
+                                theme.palette.type === "dark"
+                                  ? "secondary"
+                                  : "primary"
+                              }
                             />
                           </IconButton>
                         </TableCell>

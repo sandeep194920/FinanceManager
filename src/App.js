@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./components/UI/Theme";
+import lightTheme from "./components/UI/LightTheme";
+import darkTheme from "./components/UI/DarkTheme";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Footer from "./components/Footer/Footer";
 import Groups from "./components/EasySplit/Groups";
@@ -9,12 +10,24 @@ import Friends from "./components/EasySplit/Friends";
 import Paper from "@material-ui/core/Paper";
 
 function App() {
+  const [myTheme, setTheme] = useState(darkTheme);
+
+  const switchThemeHandler = () => {
+    setTheme((prevState) => {
+      if (prevState.palette.type === "dark") {
+        return lightTheme;
+      } else {
+        return darkTheme;
+      }
+    });
+  };
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={myTheme}>
       {/* remove this style later */}
       <Paper style={{ height: "100vh" }}>
         <BrowserRouter>
-          <Header />
+          <Header switchTheme={switchThemeHandler} />
           <Switch>
             <Route
               path="/"

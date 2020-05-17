@@ -5,37 +5,37 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import FriendsshowDetails from "./FriendsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import useStyles from "../EasySplit/FriendsGroupsStyles";
 
-const useStyles = makeStyles((theme) => ({
-  friendsContainer: {
-    ...theme.container,
-  },
-  friendsHeading: {
-    ...theme.heading,
-  },
-  table: {
-    ...theme.table,
-  },
-  filterArea: {
-    ...theme.filterArea,
-  },
-  formLabel: {
-    ...theme.formLabel,
-  },
-  formControlLabel: {
-    ...theme.formControlLabel,
-  },
-  toggleSwitch: {
-    ...theme.toggleSwitch,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   friendsContainer: {
+//     ...theme.container,
+//   },
+//   friendsHeading: {
+//     ...theme.heading,
+//   },
+//   table: {
+//     ...theme.table,
+//   },
+//   filterArea: {
+//     ...theme.filterArea,
+//   },
+//   formLabel: {
+//     ...theme.formLabel,
+//   },
+//   formControlLabel: {
+//     ...theme.formControlLabel,
+//   },
+//   toggleSwitch: {
+//     ...theme.toggleSwitch,
+//   },
+// }));
 
 export default function FriendsList(props) {
   const classes = useStyles();
@@ -59,13 +59,13 @@ export default function FriendsList(props) {
 
   return (
     <Grid
-      className={classes.friendsContainer}
+      className={classes.container}
       container
       direction="column"
       alignItems="center"
     >
       <Typography
-        className={classes.friendsHeading}
+        className={classes.heading}
         variant={matchesSM ? "subtitle1" : "h6"}
         gutterBottom
       >

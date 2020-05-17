@@ -9,7 +9,6 @@ import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -20,55 +19,8 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
+import useStyles from "./FriendGroupDetailsStyles";
 
-const useStyles = makeStyles((theme) => ({
-  // css similar to GroupsDetails
-  dropdownTcell: {
-    ...theme.dropdownTcell,
-  },
-  tcell: {
-    fontWeight: 700,
-  },
-  tRow: {
-    height: "3em",
-  },
-  userDetails: {
-    padding: "1em",
-  },
-  displayName: {
-    ...theme.displayName,
-  },
-  username: {
-    marginRight: "5em",
-    marginTop: "1em",
-    marginBottom: "1em",
-    borderRadius: "10px",
-    backgroundColor:
-      theme.palette.type === "dark"
-        ? theme.palette.secondary.light
-        : theme.palette.secondary.main,
-    padding: "0.4em",
-    color: "black",
-
-    [theme.breakpoints.down("sm")]: {
-      marginRight: "5em",
-      color: "black",
-      fontSize: "0.9em",
-    },
-    [theme.breakpoints.down("xs")]: {
-      marginRight: "2em",
-    },
-  },
-  detailCellHead: {
-    ...theme.detailCellHead,
-  },
-  detailsIcon: {
-    ...theme.detailsIcon,
-  },
-  displayCard: {
-    ...theme.displayCard,
-  },
-}));
 export default function FriendsDetails(props) {
   const {
     name,
@@ -78,8 +30,8 @@ export default function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
   } = props;
-  const classes = useStyles();
   const theme = useTheme();
+  const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const [open, setOpen] = React.useState(false);
@@ -111,7 +63,7 @@ export default function FriendsDetails(props) {
         </TableCell>
         <TableCell>
           <Card
-            className={classes.displayCard}
+            className={[classes.displayCard, classes.darkDisplayCard].join(" ")}
             // style={{ background: theme.palette.common.lightGrey }}
           >
             <CardContent>

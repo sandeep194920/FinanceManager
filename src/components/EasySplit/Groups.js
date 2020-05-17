@@ -5,37 +5,37 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import GroupsDetails from "./GroupsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { groupsInfo } from "../../data/EasySplit/GroupsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import useStyles from "../EasySplit/FriendsGroupsStyles";
 
-const useStyles = makeStyles((theme) => ({
-  groupContainer: {
-    ...theme.container,
-  },
-  groupHeading: {
-    ...theme.heading,
-  },
-  table: {
-    ...theme.table,
-  },
-  filterArea: {
-    ...theme.filterArea,
-  },
-  formLabel: {
-    ...theme.formLabel,
-  },
-  formControlLabel: {
-    ...theme.formControlLabel,
-  },
-  toggleSwitch: {
-    ...theme.toggleSwitch,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   groupContainer: {
+//     ...theme.container,
+//   },
+//   groupHeading: {
+//     ...theme.heading,
+//   },
+//   table: {
+//     ...theme.table,
+//   },
+//   filterArea: {
+//     ...theme.filterArea,
+//   },
+//   formLabel: {
+//     ...theme.formLabel,
+//   },
+//   formControlLabel: {
+//     ...theme.formControlLabel,
+//   },
+//   toggleSwitch: {
+//     ...theme.toggleSwitch,
+//   },
+// }));
 
 export default function GroupsList(props) {
   const classes = useStyles();
@@ -59,13 +59,13 @@ export default function GroupsList(props) {
 
   return (
     <Grid
-      className={classes.groupContainer}
+      className={classes.container}
       container
       direction="column"
       alignItems="center"
     >
       <Typography
-        className={classes.groupHeading}
+        className={classes.heading}
         variant={matchesSM ? "subtitle1" : "h6"}
         gutterBottom
       >

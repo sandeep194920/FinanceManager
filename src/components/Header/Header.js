@@ -20,7 +20,10 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import GroupIcon from "@material-ui/icons/Group";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import InfoIcon from "@material-ui/icons/Info";
+import Brightness3Icon from "@material-ui/icons/Brightness3";
+import HighlightIcon from "@material-ui/icons/Highlight";
 import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -89,6 +92,15 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  lightThemeIcon: {
+    color: "white",
+    background: "black",
+    borderRadius: "50%",
+    padding: "2px",
+  },
+  darkThemeIcon: {
+    marginBottom: "6px",
+  },
 }));
 
 // used to provide light elivation in appbar when content is scrolled
@@ -105,12 +117,14 @@ function ElevationScroll(props) {
   });
 }
 
-function Header() {
+function Header(props) {
+  const { switchTheme } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
-  // const [selectedIndex, setSelectedIndex] = useState(false);
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -242,6 +256,19 @@ function Header() {
                 />
               ))}
             </Tabs>
+            <IconButton onClick={switchTheme}>
+              {theme.palette.type === "dark" ? (
+                <HighlightIcon
+                  fontSize={matchesSM ? "small" : "default"}
+                  className={classes.darkThemeIcon}
+                />
+              ) : (
+                <Brightness3Icon
+                  fontSize={matchesSM ? "small" : "default"}
+                  className={classes.lightThemeIcon}
+                />
+              )}
+            </IconButton>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

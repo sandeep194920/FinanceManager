@@ -8,9 +8,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Groups from "./components/EasySplit/Groups";
 import Friends from "./components/EasySplit/Friends";
 import Paper from "@material-ui/core/Paper";
+import darkLogo from "./assets/darkLogo.png";
+import lightLogo from "./assets/lightLogo.png";
 
 function App() {
-  const [myTheme, setTheme] = useState(darkTheme);
+  const [myTheme, setTheme] = useState(lightTheme);
+  const [logoImg, setLogoImg] = useState(lightLogo);
 
   const switchThemeHandler = () => {
     setTheme((prevState) => {
@@ -21,13 +24,26 @@ function App() {
       }
     });
   };
+  const switchLogoHandler = () => {
+    setLogoImg(() => {
+      if (myTheme.palette.type === "dark") {
+        return lightLogo;
+      } else {
+        return darkLogo;
+      }
+    });
+  };
 
   return (
     <ThemeProvider theme={myTheme}>
       {/* remove this style later */}
       <Paper style={{ height: "100vh" }}>
         <BrowserRouter>
-          <Header switchTheme={switchThemeHandler} />
+          <Header
+            switchTheme={switchThemeHandler}
+            switchLogo={switchLogoHandler}
+            logoImg={logoImg}
+          />
           <Switch>
             <Route
               path="/"

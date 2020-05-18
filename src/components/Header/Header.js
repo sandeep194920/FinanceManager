@@ -14,6 +14,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import HomeIcon from "@material-ui/icons/Home";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
@@ -29,17 +30,45 @@ const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar, // this pushes content below toolbar
   },
+  logoContainer: {
+    // display: "inline-grid",
+    // gridTemplateColumns: "auto auto",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "auto",
+      // width: "30%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "auto",
+      // width: "70%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      margin: "auto",
+      // width: "70%",
+      // marginLeft: "1em",
+    },
+  },
+
+  logoImg: {
+    height: "3em",
+    width: "3em",
+    marginRight: "0.5em",
+    marginLeft: "0.5em",
+
+    [theme.breakpoints.down("xs")]: {
+      height: "2.5em",
+      width: "2.5em",
+    },
+  },
   logoBtn: {
     fontFamily: "kalam",
     fontWeight: "bold",
     fontSize: "1.2rem",
     color: "secondary",
 
-    [theme.breakpoints.down("md")]: {
-      margin: "auto",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
     },
   },
-
   tabs: {
     marginLeft: "auto",
     [theme.breakpoints.down("md")]: {
@@ -96,7 +125,6 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     background: "black",
     borderRadius: "50%",
-    padding: "2px",
   },
   darkThemeIcon: {
     marginBottom: "6px",
@@ -118,13 +146,13 @@ function ElevationScroll(props) {
 }
 
 function Header(props) {
-  const { switchTheme } = props;
+  const { switchTheme, switchLogo, logoImg } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -153,6 +181,7 @@ function Header(props) {
     {
       name: "Home",
       link: "/",
+      activeIndex: 0,
       icon: <HomeIcon classes={{ root: classes.icons }} />,
     },
     {
@@ -221,54 +250,74 @@ function Header(props) {
       <ElevationScroll>
         <AppBar>
           <Toolbar>
-            <IconButton
-              onClick={handleDrawerToggle}
-              className={classes.iconBtn}
-              disableRipple
-            >
-              <MenuIcon classes={{ root: classes.menuIcon }} />
-            </IconButton>
-            <Button
-              className={classes.logoBtn}
-              color="secondary"
-              component={Link}
-              to="/"
-            >
-              Finance Manager
-            </Button>
-            <Tabs
-              indicatorColor={
-                theme.palette.type === "dark" ? "secondary" : "primary"
-              }
-              value={value}
-              onChange={handleChange}
-              aria-label="simple tabs"
-              className={classes.tabs}
-            >
-              {routes.map((route, index) => (
-                <Tab
+            <Grid container alignItems="center">
+              <IconButton
+                onClick={handleDrawerToggle}
+                className={classes.iconBtn}
+                disableRipple
+              >
+                <MenuIcon classes={{ root: classes.menuIcon }} />
+              </IconButton>
+              <Grid
+                container
+                item
+                justify={matchesMD ? "center" : "flex-start"}
+                alignItems="flex-end"
+                xs
+                className={classes.logoContainer}
+              >
+                <Button onClick={() => setValue(0)} component={Link} to="/">
+                  <img className={classes.logoImg} src={logoImg} alt="logo" />
+                </Button>
+                <Button
+                  className={classes.logoBtn}
+                  color="secondary"
                   component={Link}
-                  to={route.link}
-                  className={classes.tab}
-                  label={route.name}
-                  disableRipple
-                  key={index + route}
-                />
-              ))}
-            </Tabs>
-            <IconButton onClick={switchTheme}>
-              {theme.palette.type === "dark" ? (
-                <HighlightIcon
-                  fontSize={matchesSM ? "small" : "default"}
-                  className={classes.darkThemeIcon}
-                />
-              ) : (
-                <Brightness3Icon
-                  fontSize={matchesSM ? "small" : "default"}
-                  className={classes.lightThemeIcon}
-                />
-              )}
-            </IconButton>
+                  to="/"
+                  onClick={() => setValue(0)}
+                >
+                  Finance Manager
+                </Button>
+              </Grid>
+              <Tabs
+                indicatorColor={
+                  theme.palette.type === "dark" ? "secondary" : "primary"
+                }
+                value={value}
+                onChange={handleChange}
+                aria-label="simple tabs"
+                className={classes.tabs}
+              >
+                {routes.map((route, index) => (
+                  <Tab
+                    component={Link}
+                    to={route.link}
+                    className={classes.tab}
+                    label={route.name}
+                    disableRipple
+                    key={index + route}
+                  />
+                ))}
+              </Tabs>
+              <IconButton
+                onClick={() => {
+                  switchTheme();
+                  switchLogo();
+                }}
+              >
+                {theme.palette.type === "dark" ? (
+                  <HighlightIcon
+                    fontSize={matchesSM ? "small" : "default"}
+                    className={classes.darkThemeIcon}
+                  />
+                ) : (
+                  <Brightness3Icon
+                    fontSize={matchesSM ? "small" : "default"}
+                    className={classes.lightThemeIcon}
+                  />
+                )}
+              </IconButton>
+            </Grid>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

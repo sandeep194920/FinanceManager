@@ -7,8 +7,8 @@ const grey50 = "#fafafa";
 const grey100 = "#f5f5f5";
 const grey800 = "#424242";
 const grey500 = "#9e9e9e";
-const greenAmount = "#8bc34a";
-const redAmount = "#ff6d00";
+const greenAmount = "#2e7d32";
+const redAmount = "#c62828";
 
 // const theme = createMuiTheme({
 //   palette: {

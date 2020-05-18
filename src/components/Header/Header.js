@@ -31,20 +31,15 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar, // this pushes content below toolbar
   },
   logoContainer: {
-    // display: "inline-grid",
-    // gridTemplateColumns: "auto auto",
+    marginLeft: "4%",
     [theme.breakpoints.down("md")]: {
       marginLeft: "auto",
-      // width: "30%",
     },
     [theme.breakpoints.down("sm")]: {
       margin: "auto",
-      // width: "70%",
     },
     [theme.breakpoints.down("xs")]: {
       margin: "auto",
-      // width: "70%",
-      // marginLeft: "1em",
     },
   },
 
@@ -107,10 +102,13 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === "dark" ? "black" : theme.palette.primary.main,
     height: "100vh",
     color: "white",
-    paddingTop: theme.mixins.toolbar.minHeight,
+    // paddingTop: theme.mixins.toolbar.minHeight,
   },
   listItem: {
     opacity: 0.7,
+  },
+  listItemLogo: {
+    marginLeft: "20%",
   },
   icons: {
     color: "white",
@@ -216,6 +214,11 @@ function Header(props) {
       component="nav"
       aria-label="sidedrawer list"
     >
+      <ListItem classes={{ root: classes.listItemLogo }}>
+        <Button onClick={() => setValue(0)} component={Link} to="/">
+          <img className={classes.logoImg} src={logoImg} alt="logo" />
+        </Button>
+      </ListItem>
       {routes.map((route, index) => (
         <React.Fragment key={route + index}>
           <ListItem
@@ -300,6 +303,7 @@ function Header(props) {
                 ))}
               </Tabs>
               <IconButton
+                disableRipple
                 onClick={() => {
                   switchTheme();
                   switchLogo();

@@ -5,8 +5,11 @@ import amber from "@material-ui/core/colors/amber";
 
 const grey50 = "#fafafa";
 const grey100 = "#f5f5f5";
+const grey200 = "#eeeeee";
 const grey800 = "#424242";
 const grey500 = "#9e9e9e";
+const grey700 = "#616161";
+const bluegrey = "#455a64";
 const greenAmount = "#2e7d32";
 const redAmount = "#c62828";
 
@@ -31,8 +34,11 @@ const lightTheme = createMuiTheme({
     common: {
       lightGrey: grey50,
       lightGreyTwo: grey100,
+      grey200: grey200,
       grey500: grey500,
+      grey700: grey700,
       grey800: grey800,
+      bluegrey: bluegrey,
       greenAmount: greenAmount,
       redAmount: redAmount,
     },

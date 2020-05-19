@@ -30,16 +30,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "5em",
     marginTop: "1em",
     marginBottom: "1em",
-    backgroundColor:
-      theme.palette.type === "dark"
-        ? theme.palette.secondary.light
-        : theme.palette.secondary.main,
+    // backgroundColor:
+    //   theme.palette.type === "dark"
+    //     ? theme.palette.secondary.light
+    //     : theme.palette.secondary.main,
     borderRadius: "10px",
     padding: "0.4em",
-    color: "black",
+    // color: "black",
+    color:
+      theme.palette.type === "dark"
+        ? theme.palette.secondary.main
+        : theme.palette.primary.main,
     [theme.breakpoints.down("sm")]: {
       marginLeft: "5em",
-      color: "black",
+      // color: "black",
       fontSize: "0.9em",
     },
     [theme.breakpoints.down("xs")]: {
@@ -51,12 +55,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1em",
     marginBottom: "1em",
     borderRadius: "10px",
-    backgroundColor:
+    // backgroundColor:
+    //   theme.palette.type === "dark"
+    //     ? theme.palette.secondary.light
+    //     : theme.palette.secondary.main,
+    color:
       theme.palette.type === "dark"
-        ? theme.palette.secondary.light
-        : theme.palette.secondary.main,
+        ? theme.palette.secondary.main
+        : theme.palette.primary.main,
     padding: "0.4em",
-    color: "black",
+    // color: "black",
 
     [theme.breakpoints.down("sm")]: {
       marginRight: "5em",
@@ -88,18 +96,22 @@ const useStyles = makeStyles((theme) => ({
         : theme.palette.common.lightGrey,
   },
   darkDisplayCard: {
-    borderBottom:
+    backgroundColor:
       theme.palette.type === "dark"
-        ? "0.6px solid " + theme.palette.common.lightGrey
-        : "none",
-    borderTop:
-      theme.palette.type === "dark"
-        ? "0.6px solid " + theme.palette.common.lightGrey
-        : "none",
-    borderRight:
-      theme.palette.type === "dark"
-        ? "0.6px solid " + theme.palette.common.lightGrey
-        : "none",
+        ? theme.palette.common.grey700
+        : theme.palette.common.lightGrey,
+    // borderBottom
+    //   theme.palette.type === "dark"
+    //     ? "0.6px solid " + theme.palette.common.lightGrey
+    //     : "none",
+    // borderTop:
+    //   theme.palette.type === "dark"
+    //     ? "0.6px solid " + theme.palette.common.lightGrey
+    //     : "none",
+    // borderRight:
+    //   theme.palette.type === "dark"
+    //     ? "0.6px solid " + theme.palette.common.lightGrey
+    //     : "none",
   },
 
   // css related to GroupDetails component only

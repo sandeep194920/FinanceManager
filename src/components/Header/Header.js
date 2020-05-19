@@ -21,7 +21,8 @@ import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import GroupIcon from "@material-ui/icons/Group";
 import ContactsIcon from "@material-ui/icons/Contacts";
 import InfoIcon from "@material-ui/icons/Info";
-import Brightness3Icon from "@material-ui/icons/Brightness3";
+// import Brightness3Icon from "@material-ui/icons/Brightness3";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
 import HighlightIcon from "@material-ui/icons/Highlight";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -121,8 +122,6 @@ const useStyles = makeStyles((theme) => ({
   },
   lightThemeIcon: {
     color: "white",
-    background: "black",
-    borderRadius: "50%",
   },
   darkThemeIcon: {
     marginBottom: "6px",
@@ -315,7 +314,7 @@ function Header(props) {
                     className={classes.darkThemeIcon}
                   />
                 ) : (
-                  <Brightness3Icon
+                  <Brightness4Icon
                     fontSize={matchesSM ? "small" : "default"}
                     className={classes.lightThemeIcon}
                   />

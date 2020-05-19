@@ -131,7 +131,7 @@ export default function FriendsDetails(props) {
             timeout="auto"
             unmountOnExit
           >
-            <Box margin={0}>
+            <Box margin={0} boxShadow={3} className={classes.displayBox}>
               <Grid container justify="space-between">
                 <Typography
                   gutterBottom
@@ -145,7 +145,7 @@ export default function FriendsDetails(props) {
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  Sa194920
+                  User ID - Sa194920
                 </Typography>
               </Grid>
               <TableContainer

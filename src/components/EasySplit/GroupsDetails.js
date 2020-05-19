@@ -20,6 +20,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
+import DetailsModal from "./DetailsModal";
 
 export default function GroupsDetails(props) {
   const {
@@ -31,15 +32,26 @@ export default function GroupsDetails(props) {
     setHideDetails,
     setShowDetails,
   } = props;
-  const classes = useStyles();
   const theme = useTheme();
+  const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const [open, setOpen] = React.useState(false);
+  //dialog
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  const dialogOpenHandler = () => {
+    setDialogOpen(true);
+  };
+
+  const dialogCloseHandler = () => {
+    setDialogOpen(false);
+  };
+
   useEffect(() => {
     if (hideDetails) {
       setHideDetails(false);
@@ -189,7 +201,6 @@ export default function GroupsDetails(props) {
                       <TableRow key={record + index} className={classes.tRow}>
                         <TableCell>{record.date}</TableCell>
                         <TableCell>{record.amount}</TableCell>
-
                         {matchesSM ? null : (
                           <TableCell>{record.paidBy}</TableCell>
                         )}
@@ -197,9 +208,8 @@ export default function GroupsDetails(props) {
                         <TableCell>{record.owe}</TableCell>
                         <TableCell>
                           <IconButton
-                            // onClick={handleDrawerToggle}
-                            // className={classes.iconBtn}
-                            // disableRipple
+                            onClick={dialogOpenHandler}
+                            disableRipple
                             classes={{ root: classes.detailsIcon }}
                           >
                             <CallMadeIcon
@@ -221,6 +231,11 @@ export default function GroupsDetails(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+      {/* When clicked on the details icon */}
+      <DetailsModal
+        dialogOpen={dialogOpen}
+        dialogCloseHandler={dialogCloseHandler}
+      />
     </React.Fragment>
   );
 }

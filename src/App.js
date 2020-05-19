@@ -18,11 +18,9 @@ function App() {
   const switchThemeHandler = () => {
     setTheme((prevState) => {
       if (prevState.palette.type === "dark") {
-        // localStorage.removeItem("theme");
         localStorage.setItem("theme", "light");
         return lightTheme;
       } else {
-        // localStorage.removeItem("theme");
         localStorage.setItem("theme", "dark");
         return darkTheme;
       }
@@ -66,7 +64,7 @@ function App() {
             />
             <Route path="/friends" render={() => <Friends />} />
             <Route path="/groups" render={() => <Groups />} />
-            <Route path="/about" component={() => <div>About Us</div>} />
+            <Route path="/about" render={() => <div>About Us</div>} />
             <Route path="/contact" component={() => <div>Contact Us</div>} />
           </Switch>
           {/* <Footer /> */}

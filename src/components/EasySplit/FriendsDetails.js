@@ -20,6 +20,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
+import DetailsModal from "./DetailsModal";
 
 export default function FriendsDetails(props) {
   const {
@@ -36,11 +37,21 @@ export default function FriendsDetails(props) {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const [open, setOpen] = React.useState(false);
+  //dialog
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+
+  const dialogOpenHandler = () => {
+    setDialogOpen(true);
+  };
+
+  const dialogCloseHandler = () => {
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
     if (hideDetails) {
@@ -56,6 +67,7 @@ export default function FriendsDetails(props) {
     setHideDetails(false);
     setShowDetails(false);
   };
+
   return (
     <React.Fragment>
       <TableRow>
@@ -138,7 +150,7 @@ export default function FriendsDetails(props) {
             timeout="auto"
             unmountOnExit
           >
-            <Box margin={0} className={classes.displayBox}>
+            <Box>
               <Grid container justify="space-between">
                 <Typography
                   gutterBottom
@@ -187,7 +199,7 @@ export default function FriendsDetails(props) {
                         <TableCell>{record.owe}</TableCell>
                         <TableCell>
                           <IconButton
-                            // onClick={handleDrawerToggle}
+                            onClick={dialogOpenHandler}
                             disableRipple
                             classes={{ root: classes.detailsIcon }}
                           >
@@ -210,6 +222,11 @@ export default function FriendsDetails(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+      {/* When clicked on the details icon */}
+      <DetailsModal
+        dialogOpen={dialogOpen}
+        dialogCloseHandler={dialogCloseHandler}
+      />
     </React.Fragment>
   );
 }

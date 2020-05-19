@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import lightTheme from "./components/UI/LightTheme";
@@ -18,8 +18,12 @@ function App() {
   const switchThemeHandler = () => {
     setTheme((prevState) => {
       if (prevState.palette.type === "dark") {
+        // localStorage.removeItem("theme");
+        localStorage.setItem("theme", "light");
         return lightTheme;
       } else {
+        // localStorage.removeItem("theme");
+        localStorage.setItem("theme", "dark");
         return darkTheme;
       }
     });
@@ -33,6 +37,16 @@ function App() {
       }
     });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      setLogoImg(darkLogo);
+      setTheme(darkTheme);
+    } else {
+      setLogoImg(lightLogo);
+      setTheme(lightTheme);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={myTheme}>

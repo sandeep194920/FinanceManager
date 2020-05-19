@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("sm")]: {
       marginRight: "5em",
-      color: "black",
+      // color: "black",
       fontSize: "0.9em",
     },
     [theme.breakpoints.down("xs")]: {

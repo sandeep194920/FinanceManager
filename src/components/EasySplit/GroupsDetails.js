@@ -21,65 +21,6 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
 
-// const useStyles = makeStyles((theme) => ({
-//   // css similar to FriendsDetails
-//   dropdownTcell: {
-//     ...theme.dropdownTcell,
-//   },
-//   tcell: {
-//     fontWeight: 700,
-//   },
-//   tRow: {
-//     height: "3em",
-//   },
-//   userDetails: {
-//     padding: "1em",
-//   },
-//   displayName: {
-//     ...theme.displayName,
-//   },
-//   username: {
-//     marginRight: "5em",
-//     marginTop: "1em",
-//     marginBottom: "1em",
-//     borderRadius: "10px",
-//     backgroundColor:
-//       theme.palette.type === "dark"
-//         ? theme.palette.secondary.light
-//         : theme.palette.secondary.main,
-//     padding: "0.4em",
-//     color: "black",
-
-//     [theme.breakpoints.down("sm")]: {
-//       marginRight: "5em",
-//       color: "black",
-//       fontSize: "0.9em",
-//     },
-//     [theme.breakpoints.down("xs")]: {
-//       marginRight: "2em",
-//     },
-//   },
-//   detailCellHead: {
-//     ...theme.detailCellHead,
-//   },
-//   detailsIcon: {
-//     ...theme.detailsIcon,
-//   },
-//   displayCard: {
-//     ...theme.displayCard,
-//   },
-//   darkDisplayCard: {
-//     ...theme.darkDisplayCard,
-//   },
-//   // css related to this component
-//   memberCount: {
-//     paddingTop: "1em",
-//     fontStyle: "italic",
-//   },
-//   groupNameMembers: {
-//     marginTop: "3em",
-//   },
-// }));
 export default function GroupsDetails(props) {
   const {
     name,
@@ -88,6 +29,7 @@ export default function GroupsDetails(props) {
     showDetails,
     hideDetails,
     setHideDetails,
+    setShowDetails,
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -102,8 +44,16 @@ export default function GroupsDetails(props) {
     if (hideDetails) {
       setHideDetails(false);
       setOpen(false);
+    } else if (showDetails) {
+      setOpen(true);
     }
-  }, [hideDetails, setHideDetails]);
+  }, [hideDetails, setHideDetails, showDetails]);
+
+  const rowDropdownHandler = () => {
+    setOpen(!open);
+    setHideDetails(false);
+    setShowDetails(false);
+  };
 
   return (
     <React.Fragment>
@@ -113,7 +63,7 @@ export default function GroupsDetails(props) {
             size="small"
             style={{ color: "white" }}
             aria-label="expand row"
-            onClick={() => setOpen(!open)}
+            onClick={rowDropdownHandler}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -121,7 +71,6 @@ export default function GroupsDetails(props) {
         <TableCell>
           <Card
             className={[classes.displayCard, classes.darkDisplayCard].join(" ")}
-            // style={{ backgroundColor: theme.palette.common.lightGrey }}
           >
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
@@ -192,11 +141,7 @@ export default function GroupsDetails(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell
-          className={classes.displayCard}
-          // style={{ backgroundColor: theme.palette.common.lightGrey }}
-          colSpan={6}
-        >
+        <TableCell className={classes.displayCard} colSpan={6}>
           <Collapse
             in={(open || showDetails) && !hideDetails}
             timeout="auto"
@@ -216,14 +161,10 @@ export default function GroupsDetails(props) {
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  Sa194920
+                  Created By - Sa194920
                 </Typography>
               </Grid>
-              <TableContainer
-                className={classes.displayCard}
-                // style={{ backgroundColor: theme.palette.common.lightGrey }}
-                component={Paper}
-              >
+              <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>

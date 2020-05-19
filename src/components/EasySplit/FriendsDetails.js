@@ -29,6 +29,7 @@ export default function FriendsDetails(props) {
     showDetails,
     hideDetails,
     setHideDetails,
+    setShowDetails,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -45,9 +46,16 @@ export default function FriendsDetails(props) {
     if (hideDetails) {
       setHideDetails(false);
       setOpen(false);
+    } else if (showDetails) {
+      setOpen(true);
     }
-  }, [hideDetails, setHideDetails]);
+  }, [hideDetails, setHideDetails, showDetails]);
 
+  const rowDropdownHandler = () => {
+    setOpen(!open);
+    setHideDetails(false);
+    setShowDetails(false);
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -56,15 +64,18 @@ export default function FriendsDetails(props) {
             size="small"
             style={{ color: "white" }}
             aria-label="expand row"
-            onClick={() => setOpen(!open)}
+            onClick={rowDropdownHandler}
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {open || showDetails ? (
+              <KeyboardArrowUpIcon />
+            ) : (
+              <KeyboardArrowDownIcon />
+            )}
           </IconButton>
         </TableCell>
         <TableCell>
           <Card
             className={[classes.displayCard, classes.darkDisplayCard].join(" ")}
-            // style={{ background: theme.palette.common.lightGrey }}
           >
             <CardContent>
               <Grid container alignItems="center" justify="space-between">
@@ -121,17 +132,13 @@ export default function FriendsDetails(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell
-          className={classes.displayCard}
-          // style={{ backgroundColor: theme.palette.common.lightGrey }}
-          colSpan={6}
-        >
+        <TableCell className={classes.displayCard} colSpan={6}>
           <Collapse
             in={(open || showDetails) && !hideDetails}
             timeout="auto"
             unmountOnExit
           >
-            <Box margin={0} boxShadow={3} className={classes.displayBox}>
+            <Box margin={0} className={classes.displayBox}>
               <Grid container justify="space-between">
                 <Typography
                   gutterBottom
@@ -148,11 +155,7 @@ export default function FriendsDetails(props) {
                   User ID - Sa194920
                 </Typography>
               </Grid>
-              <TableContainer
-                className={classes.displayCard}
-                // style={{ backgroundColor: theme.palette.common.lightGrey }}
-                component={Paper}
-              >
+              <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
@@ -185,8 +188,7 @@ export default function FriendsDetails(props) {
                         <TableCell>
                           <IconButton
                             // onClick={handleDrawerToggle}
-                            // className={classes.iconBtn}
-                            // disableRipple
+                            disableRipple
                             classes={{ root: classes.detailsIcon }}
                           >
                             <CallMadeIcon

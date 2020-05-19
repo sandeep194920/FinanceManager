@@ -111,6 +111,7 @@ export default function GroupsList(props) {
                   oweAmount={groupInfo.main.oweAmount}
                   details={groupInfo.details}
                   showDetails={showDetails}
+                  setShowDetails={switchShowDetails}
                   hideDetails={hideDetails}
                   setHideDetails={switchHideDetails}
                 />

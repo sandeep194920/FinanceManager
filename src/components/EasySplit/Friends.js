@@ -13,30 +13,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 
-// const useStyles = makeStyles((theme) => ({
-//   friendsContainer: {
-//     ...theme.container,
-//   },
-//   friendsHeading: {
-//     ...theme.heading,
-//   },
-//   table: {
-//     ...theme.table,
-//   },
-//   filterArea: {
-//     ...theme.filterArea,
-//   },
-//   formLabel: {
-//     ...theme.formLabel,
-//   },
-//   formControlLabel: {
-//     ...theme.formControlLabel,
-//   },
-//   toggleSwitch: {
-//     ...theme.toggleSwitch,
-//   },
-// }));
-
 export default function FriendsList(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -113,6 +89,7 @@ export default function FriendsList(props) {
                   oweAmount={friendInfo.main.oweAmount}
                   details={friendInfo.details}
                   showDetails={showDetails}
+                  setShowDetails={switchShowDetails}
                   hideDetails={hideDetails}
                   setHideDetails={switchHideDetails}
                 />

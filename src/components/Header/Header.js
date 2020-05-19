@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "kalam",
     fontWeight: "bold",
     fontSize: "1.2rem",
-    color: "secondary",
+    color: "white",
 
     [theme.breakpoints.down("xs")]: {
       fontSize: "1rem",
@@ -273,7 +273,7 @@ function Header(props) {
                 </Button>
                 <Button
                   className={classes.logoBtn}
-                  color="secondary"
+                  // color="secondary"
                   component={Link}
                   to="/"
                   onClick={() => setValue(0)}

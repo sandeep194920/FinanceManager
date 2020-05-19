@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "5em",
     marginTop: "1em",
     marginBottom: "1em",
+    fontSize: "1rem",
     // backgroundColor:
     //   theme.palette.type === "dark"
     //     ? theme.palette.secondary.light
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1em",
     marginBottom: "1em",
     borderRadius: "10px",
+    fontSize: "1rem",
     // backgroundColor:
     //   theme.palette.type === "dark"
     //     ? theme.palette.secondary.light

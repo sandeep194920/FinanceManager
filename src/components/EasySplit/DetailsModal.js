@@ -6,20 +6,43 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
+import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import CallSplitIcon from "@material-ui/icons/CallSplit";
+import CategoryIcon from "@material-ui/icons/Category";
+import DetailsIcon from "@material-ui/icons/Details";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
     margin: "auto",
   },
-  dialogContainer: {},
+  dialogContainer: {
+    // marginBottom: "1em",
+  },
+  dialogActions: {
+    marginBottom: "1em",
+    marginRight: "1em",
+  },
   detailItem: {
     marginBottom: "10px",
   },
   detailHead: {
     marginRight: "7em",
+  },
+  listIcon: {
+    minWidth: "38px",
+  },
+  listItemTextHead: {
+    marginRight: "6em",
   },
 }));
 
@@ -45,7 +68,10 @@ export default function DetailsModal(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">
+        <DialogTitle
+          style={{ marginTop: "1em", marginLeft: "5%" }}
+          id="alert-dialog-slide-title"
+        >
           <Typography
             color={theme.palette.type === "light" ? "primary" : "secondary"}
             variant={matchesSM ? "subtitle2" : "body1"}
@@ -53,93 +79,110 @@ export default function DetailsModal(props) {
             Sandeep Amarnath (Sa194920)
           </Typography>
         </DialogTitle>
-        <DialogContent>
-          <Grid
-            className={classes.dialogContainer}
-            container
-            spacing={2}
-            direction="column"
-          >
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Transaction Date &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                20 Mar 2019
-              </Typography>
-            </Grid>
+        <DialogContent className={classes.dialogContainer}>
+          <List>
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <DateRangeIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                primary="Transaction Date"
+              />
+              <ListItemText primary="20 March 2020" />
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <AccountBalanceWalletOutlinedIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                style={{ marginRight: "0em" }}
+                primary="Transaction Amount"
+              />
+              <ListItemText primary="100$" />
+            </ListItem>
+            <Divider />
 
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Transaction Amount &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                20$
-              </Typography>
-            </Grid>
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <PersonOutlineOutlinedIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                // style={{ marginRight: "0em" }}
+                primary="Paid by"
+              />
+              <ListItemText primary="You" />
+            </ListItem>
+            <Divider />
 
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Paid by &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                You
-              </Typography>
-            </Grid>
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <CallSplitIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                style={{ marginRight: "8em" }}
+                primary="Split"
+              />
+              <ListItemText primary="Equal" />
+            </ListItem>
+            <Divider />
 
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Split type &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                Equal
-              </Typography>
-            </Grid>
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <CategoryIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                style={{ marginRight: "9.5em" }}
+                primary="Category"
+              />
+              <ListItemText primary="Entertainment" />
+            </ListItem>
+            <Divider />
 
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Category &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                Entertainment
-              </Typography>
-            </Grid>
-
-            <Grid container item justify="space-between" alignItems="center">
-              <Typography
-                className={classes.detailHead}
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                Details &nbsp;
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary">
-                Watched Starwars movie
-              </Typography>
-            </Grid>
-          </Grid>
+            <ListItem>
+              <ListItemIcon classes={{ root: classes.listIcon }}>
+                <DetailsIcon
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ root: classes.listItemTextHead }}
+                style={{ marginRight: "11em" }}
+                primary="Details"
+              />
+              <ListItemText primary="Starwars movie" />
+            </ListItem>
+            <Divider />
+          </List>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className={classes.dialogActions}>
           <Button
             onClick={dialogCloseHandler}
             color={theme.palette.type === "light" ? "primary" : "secondary"}

@@ -293,20 +293,36 @@ export default function DetailsModal(props) {
           </DialogContent>
         </Grid>
         <DialogActions className={classes.dialogActions}>
-          <Button
-            onClick={dialogCloseHandler}
-            color={theme.palette.type === "light" ? "primary" : "secondary"}
-            size={matchesSM ? "small" : "medium"}
-          >
-            Edit
-          </Button>
-          <Button
-            onClick={dialogCloseHandler}
-            color={theme.palette.type === "light" ? "primary" : "secondary"}
-            size={matchesSM ? "small" : "medium"}
-          >
-            Cancel
-          </Button>
+          <Grid container>
+            <Button
+              style={{
+                marginLeft: "35px",
+                color: theme.palette.common.redAmount,
+              }}
+              onClick={dialogCloseHandler}
+              color={theme.palette.type === "light" ? "primary" : "secondary"}
+              size={matchesSM ? "small" : "medium"}
+            >
+              Delete
+            </Button>
+
+            <div style={{ marginLeft: "auto" }}>
+              <Button
+                onClick={dialogCloseHandler}
+                color={theme.palette.type === "light" ? "primary" : "secondary"}
+                size={matchesSM ? "small" : "medium"}
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={dialogCloseHandler}
+                color={theme.palette.type === "light" ? "primary" : "secondary"}
+                size={matchesSM ? "small" : "medium"}
+              >
+                Cancel
+              </Button>
+            </div>
+          </Grid>
         </DialogActions>
       </Dialog>
     </React.Fragment>

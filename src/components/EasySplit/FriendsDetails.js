@@ -112,8 +112,8 @@ export default function FriendsDetails(props) {
                         style={{
                           color:
                             oweAmount >= 0
-                              ? theme.palette.common.greenAmount
-                              : theme.palette.common.redAmount,
+                              ? theme.palette.common.green
+                              : theme.palette.common.red,
                         }}
                         variant={matchesXS ? "subtitle2" : "h6"}
                         gutterBottom

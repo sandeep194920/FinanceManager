@@ -21,6 +21,7 @@ import CallSplitIcon from "@material-ui/icons/CallSplit";
 import CategoryIcon from "@material-ui/icons/Category";
 import DetailsIcon from "@material-ui/icons/Details";
 import Grid from "@material-ui/core/Grid";
+import OkCancelModal from "../EasySplit/OkCancelModal";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -79,6 +80,15 @@ export default function DetailsModal(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+
+  const deleteDialogOpenHandler = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const deleteDialogCloseHandler = () => {
+    setDeleteDialogOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -297,9 +307,9 @@ export default function DetailsModal(props) {
             <Button
               style={{
                 marginLeft: "35px",
-                color: theme.palette.common.redAmount,
+                color: theme.palette.common.red,
               }}
-              onClick={dialogCloseHandler}
+              onClick={deleteDialogOpenHandler}
               color={theme.palette.type === "light" ? "primary" : "secondary"}
               size={matchesSM ? "small" : "medium"}
             >
@@ -325,6 +335,10 @@ export default function DetailsModal(props) {
           </Grid>
         </DialogActions>
       </Dialog>
+      <OkCancelModal
+        dialogOpen={deleteDialogOpen}
+        dialogCloseHandler={deleteDialogCloseHandler}
+      />
     </React.Fragment>
   );
 }

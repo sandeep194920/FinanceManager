@@ -123,8 +123,8 @@ export default function GroupsDetails(props) {
                         style={{
                           color:
                             oweAmount >= 0
-                              ? theme.palette.common.greenAmount
-                              : theme.palette.common.redAmount,
+                              ? theme.palette.common.green
+                              : theme.palette.common.red,
                         }}
                         variant={matchesSM ? "subtitle2" : "h6"}
                         gutterBottom

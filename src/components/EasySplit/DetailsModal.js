@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -22,6 +22,11 @@ import CategoryIcon from "@material-ui/icons/Category";
 import DetailsIcon from "@material-ui/icons/Details";
 import Grid from "@material-ui/core/Grid";
 import OkCancelModal from "../EasySplit/OkCancelModal";
+import TextField from "@material-ui/core/TextField";
+// import {
+//   detailFields,
+//   editTextFields,
+// } from "../../data/EasySplit/EasySplitDetails";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -68,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  dropDownText: {
+    minWidth: "10.2em",
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -80,6 +88,251 @@ export default function DetailsModal(props) {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
+  // Edit details related below
+  const [editMode, setEditMode] = useState(false);
+  const [paidBy, setPaidBy] = React.useState("you");
+  const [splitType, setSplitType] = React.useState("equal");
+  const [category, setCategory] = React.useState("Entertainment");
+
+  const whopaid = [
+    {
+      value: "you",
+      label: "You",
+    },
+    {
+      value: "sandeep",
+      label: "Sandeep",
+    },
+  ];
+
+  const splitTypes = [
+    {
+      value: "equal",
+      label: "Equal",
+    },
+    {
+      value: "nosplit",
+      label: "No Split",
+    },
+    {
+      value: "custom",
+      label: "Custom",
+    },
+  ];
+
+  const categories = [
+    {
+      value: "entertainment",
+      label: "Entertainment",
+    },
+    {
+      value: "groceries",
+      label: "Groceries",
+    },
+    {
+      value: "movies",
+      label: "Movies",
+    },
+    {
+      value: "other",
+      label: "Other",
+    },
+  ];
+
+  const editOpenHandler = () => {
+    setEditMode(true);
+  };
+
+  const editCloseHandler = () => {
+    setEditMode(false);
+  };
+
+  // jsx related to edit Details
+
+  const editTextFields = {
+    editTransactionDate: (
+      <TextField
+        id="date"
+        type="date"
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        defaultValue="2017-05-24"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    ),
+    editTransactionAmount: (
+      <TextField
+        id="standard-number"
+        type="number"
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        defaultValue="2400"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    ),
+    editPaidBy: (
+      <TextField
+        id="standard-select-currency-native"
+        classes={{ root: classes.dropDownText }}
+        select
+        value={paidBy}
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        onChange={(event) => setPaidBy(event.target.value)}
+        SelectProps={{
+          native: true,
+        }}
+      >
+        {whopaid.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </TextField>
+    ),
+    editSplitType: (
+      <TextField
+        id="standard-select-currency-native"
+        classes={{ root: classes.dropDownText }}
+        select
+        value={splitType}
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        onChange={(event) => setSplitType(event.target.value)}
+        SelectProps={{
+          native: true,
+        }}
+      >
+        {splitTypes.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </TextField>
+    ),
+    editCategory: (
+      <TextField
+        id="standard-select-currency-native"
+        classes={{ root: classes.dropDownText }}
+        select
+        value={category}
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        onChange={(event) => setCategory(event.target.value)}
+        SelectProps={{
+          native: true,
+        }}
+      >
+        {categories.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </TextField>
+    ),
+    editYouOwe: (
+      <TextField
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        type="number"
+        defaultValue="1200"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    ),
+    editDetails: (
+      <TextField
+        id="standard-txt"
+        color={theme.palette.type === "dark" ? "secondary" : "primary"}
+        defaultValue="Watched Starwars movie"
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+    ),
+  };
+
+  const detailFields = {
+    transactionDate: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="20 March 2020"
+      />
+    ),
+    transactionAmount: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="200$"
+      />
+    ),
+    paidBy: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="You"
+      />
+    ),
+    splitType: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="Equal"
+      />
+    ),
+    category: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="Entertainment"
+      />
+    ),
+    youOwe: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="1200$"
+      />
+    ),
+    details: (
+      <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        style={{ marginLeft: "39px" }}
+        primary="Watched Starwars"
+      />
+    ),
+  };
+
+  let transactionDateField = detailFields.transactionDate;
+  let transactionAmountField = detailFields.transactionAmount;
+  let paidByField = detailFields.paidBy;
+  let splitTypeField = detailFields.splitType;
+  let categoriesField = detailFields.category;
+  let youOweField = detailFields.youOwe;
+  let detailsField = detailFields.details;
+
+  if (editMode) {
+    transactionDateField = editTextFields.editTransactionDate;
+    transactionAmountField = editTextFields.editTransactionAmount;
+    paidByField = editTextFields.editPaidBy;
+    splitTypeField = editTextFields.editSplitType;
+    categoriesField = editTextFields.editCategory;
+    youOweField = editTextFields.editYouOwe;
+    detailsField = editTextFields.editDetails;
+  }
+
+  // Edit details related above
+
+  // related to child container OkCancel Modal below
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
   const deleteDialogOpenHandler = () => {
@@ -89,6 +342,8 @@ export default function DetailsModal(props) {
   const deleteDialogCloseHandler = () => {
     setDeleteDialogOpen(false);
   };
+
+  // related to child container OkCancel Modal above
 
   return (
     <React.Fragment>
@@ -114,226 +369,386 @@ export default function DetailsModal(props) {
           </Typography>
         </DialogTitle>
 
-        <Grid container>
-          <DialogContent classes={{ root: classes.dialogContainer }}>
-            <List>
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <DateRangeIcon
-                        fontSize={matchesSM ? "small" : "default"}
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
+        <form>
+          <Grid container>
+            <DialogContent classes={{ root: classes.dialogContainer }}>
+              <List>
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <DateRangeIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{
+                          root: classes.listItemText,
+                        }}
+                        primary={matchesSM ? "Date" : "Transaction Date"}
                       />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary={matchesSM ? "Date" : "Transaction Date"}
-                    />
-                  </Grid>
-                  <Grid>
-                    <ListItemText
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       primary="20 March 2020"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <AccountBalanceWalletOutlinedIcon
-                        fontSize={matchesSM ? "small" : "default"}
+                    /> */}
+                      {/* <TextField
+                        id="date"
+                        type="date"
                         color={
                           theme.palette.type === "dark"
                             ? "secondary"
                             : "primary"
                         }
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ root: classes.listItemText }}
-                      primary={matchesSM ? "Amount" : "Transaction Amount"}
-                    />
+                        defaultValue="2017-05-24"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      /> */}
+                      {transactionDateField}
+                    </Grid>
                   </Grid>
-                  <Grid>
-                    <ListItemText
+                </ListItem>
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <AccountBalanceWalletOutlinedIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary={matchesSM ? "Amount" : "Transaction Amount"}
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       primary="200$"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <PersonOutlineOutlinedIcon
-                        fontSize={matchesSM ? "small" : "default"}
+                    /> */}
+                      {/* <TextField
+                        id="standard-number"
+                        type="number"
                         color={
                           theme.palette.type === "dark"
                             ? "secondary"
                             : "primary"
                         }
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ root: classes.listItemText }}
-                      primary="Paid by"
-                    />
+                        defaultValue="2400"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      /> */}
+                      {transactionAmountField}
+                    </Grid>
                   </Grid>
-                  <Grid>
-                    <ListItemText
+                </ListItem>
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <PersonOutlineOutlinedIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary="Paid by"
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       primary="You"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <CallSplitIcon
-                        fontSize={matchesSM ? "small" : "default"}
+                    /> */}
+                      {/* <TextField
+                        id="standard-select-currency-native"
+                        classes={{ root: classes.dropDownText }}
+                        select
+                        value={paidBy}
                         color={
                           theme.palette.type === "dark"
                             ? "secondary"
                             : "primary"
                         }
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ root: classes.listItemText }}
-                      primary="Split type"
-                    />
+                        onChange={(event) => setPaidBy(event.target.value)}
+                        SelectProps={{
+                          native: true,
+                        }}
+                      >
+                        {whopaid.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField> */}
+                      {paidByField}
+                    </Grid>
                   </Grid>
-                  <Grid>
-                    <ListItemText
+                </ListItem>
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <CallSplitIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary="Split type"
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       primary="Equal"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <CategoryIcon
-                        fontSize={matchesSM ? "small" : "default"}
+                    /> */}
+                      {/* <TextField
+                        id="standard-select-currency-native"
+                        classes={{ root: classes.dropDownText }}
+                        select
+                        value={splitType}
                         color={
                           theme.palette.type === "dark"
                             ? "secondary"
                             : "primary"
                         }
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ root: classes.listItemText }}
-                      primary="Category"
-                    />
+                        onChange={(event) => setSplitType(event.target.value)}
+                        SelectProps={{
+                          native: true,
+                        }}
+                      >
+                        {splitTypes.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField> */}
+                      {splitTypeField}
+                    </Grid>
                   </Grid>
-                  <Grid>
-                    <ListItemText
+                </ListItem>
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <CategoryIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary="Category"
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       primary="Entertainment"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item style={{ display: "inherit" }}>
-                    <ListItemIcon classes={{ root: classes.listIcon }}>
-                      <DetailsIcon
-                        fontSize={matchesSM ? "small" : "default"}
+                    /> */}
+                      {/* <TextField
+                        id="standard-select-currency-native"
+                        classes={{ root: classes.dropDownText }}
+                        select
+                        value={category}
                         color={
                           theme.palette.type === "dark"
                             ? "secondary"
                             : "primary"
                         }
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ root: classes.listItemText }}
-                      primary="Details"
-                    />
+                        onChange={(event) => setCategory(event.target.value)}
+                        SelectProps={{
+                          native: true,
+                        }}
+                      >
+                        {categories.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </TextField> */}
+                      {categoriesField}
+                    </Grid>
                   </Grid>
-                  <Grid>
-                    <ListItemText
+                </ListItem>
+                <Divider />
+
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <CategoryIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary="You Owe"
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
+        classes={{
+          root: classes.listItemText,
+        }}
+        primary="Entertainment"
+      /> */}
+                      {/* <TextField
+                        color={
+                          theme.palette.type === "dark"
+                            ? "secondary"
+                            : "primary"
+                        }
+                        type="number"
+                        defaultValue="1200"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      /> */}
+                      {youOweField}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <Divider />
+
+                <ListItem>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={{ display: "inherit" }}>
+                      <ListItemIcon classes={{ root: classes.listIcon }}>
+                        <DetailsIcon
+                          fontSize={matchesSM ? "small" : "default"}
+                          color={
+                            theme.palette.type === "dark"
+                              ? "secondary"
+                              : "primary"
+                          }
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ root: classes.listItemText }}
+                        primary="Details"
+                      />
+                    </Grid>
+                    <Grid>
+                      {/* <ListItemText
                       classes={{
                         root: classes.listItemText,
                       }}
                       style={{ marginLeft: "39px" }}
                       primary="Watched Starwars"
-                    />
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-            </List>
-          </DialogContent>
-        </Grid>
-        <DialogActions className={classes.dialogActions}>
-          <Grid container>
-            <Button
-              style={{
-                marginLeft: "35px",
-                color: theme.palette.common.red,
-              }}
-              onClick={deleteDialogOpenHandler}
-              color={theme.palette.type === "light" ? "primary" : "secondary"}
-              size={matchesSM ? "small" : "medium"}
-            >
-              Delete
-            </Button>
+                    /> */}
 
-            <div style={{ marginLeft: "auto" }}>
-              <Button
-                onClick={dialogCloseHandler}
-                color={theme.palette.type === "light" ? "primary" : "secondary"}
-                size={matchesSM ? "small" : "medium"}
-              >
-                Edit
-              </Button>
-              <Button
-                onClick={dialogCloseHandler}
-                color={theme.palette.type === "light" ? "primary" : "secondary"}
-                size={matchesSM ? "small" : "medium"}
-              >
-                Cancel
-              </Button>
-            </div>
+                      {/* <TextField
+                        id="standard-txt"
+                        color={
+                          theme.palette.type === "dark"
+                            ? "secondary"
+                            : "primary"
+                        }
+                        defaultValue="Watched Starwars movie"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      /> */}
+                      {detailsField}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <Divider />
+              </List>
+            </DialogContent>
           </Grid>
-        </DialogActions>
+          <DialogActions className={classes.dialogActions}>
+            <Grid container>
+              <Button
+                style={{
+                  marginLeft: "35px",
+                  color: theme.palette.common.red,
+                }}
+                onClick={deleteDialogOpenHandler}
+                color={theme.palette.type === "light" ? "primary" : "secondary"}
+                size={matchesSM ? "small" : "medium"}
+              >
+                Delete
+              </Button>
+
+              <div style={{ marginLeft: "auto" }}>
+                <Button
+                  onClick={editMode ? editCloseHandler : editOpenHandler}
+                  color={
+                    theme.palette.type === "light" ? "primary" : "secondary"
+                  }
+                  size={matchesSM ? "small" : "medium"}
+                >
+                  {editMode ? "Update" : "Edit"}
+                </Button>
+
+                <Button
+                  onClick={dialogCloseHandler}
+                  color={
+                    theme.palette.type === "light" ? "primary" : "secondary"
+                  }
+                  size={matchesSM ? "small" : "medium"}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Grid>
+          </DialogActions>
+        </form>
       </Dialog>
       <OkCancelModal
         dialogOpen={deleteDialogOpen}

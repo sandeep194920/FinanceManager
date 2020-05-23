@@ -69,14 +69,11 @@ export default function OkCancelModal(props) {
       >
         <DialogTitle
           disableTypography
-          classes={{ root: classes.dialogTitle }}
+          //   classes={{ root: classes.dialogTitle }}
           id="alert-dialog-slide-title"
         >
-          <Typography
-            // color={theme.palette.type === "light" ? "primary" : "secondary"}
-            variant={matchesSM ? "subtitle2" : "subtitle1"}
-          >
-            Are you sure you want to delete this Transaction ?
+          <Typography variant={matchesSM ? "subtitle2" : "subtitle1"}>
+            Are you sure you want to delete this transaction ?
           </Typography>
         </DialogTitle>
         <DialogActions className={classes.dialogActions}>

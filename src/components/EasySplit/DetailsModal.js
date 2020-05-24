@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -23,10 +23,6 @@ import DetailsIcon from "@material-ui/icons/Details";
 import Grid from "@material-ui/core/Grid";
 import OkCancelModal from "../EasySplit/OkCancelModal";
 import TextField from "@material-ui/core/TextField";
-// import {
-//   detailFields,
-//   editTextFields,
-// } from "../../data/EasySplit/EasySplitDetails";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -83,14 +79,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DetailsModal(props) {
-  const { dialogOpen, dialogCloseHandler } = props;
+  const {
+    dialogOpen,
+    dialogCloseHandler,
+    editMode,
+    editCloseHandler,
+    editOpenHandler,
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // Edit details related below
-  const [editMode, setEditMode] = useState(false);
   const [paidBy, setPaidBy] = React.useState("you");
   const [splitType, setSplitType] = React.useState("equal");
   const [category, setCategory] = React.useState("Entertainment");
@@ -139,14 +140,6 @@ export default function DetailsModal(props) {
       label: "Other",
     },
   ];
-
-  const editOpenHandler = () => {
-    setEditMode(true);
-  };
-
-  const editCloseHandler = () => {
-    setEditMode(false);
-  };
 
   // jsx related to edit Details
 
@@ -393,28 +386,7 @@ export default function DetailsModal(props) {
                         primary={matchesSM ? "Date" : "Transaction Date"}
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary="20 March 2020"
-                    /> */}
-                      {/* <TextField
-                        id="date"
-                        type="date"
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        defaultValue="2017-05-24"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      /> */}
-                      {transactionDateField}
-                    </Grid>
+                    <Grid>{transactionDateField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />
@@ -437,28 +409,7 @@ export default function DetailsModal(props) {
                         primary={matchesSM ? "Amount" : "Transaction Amount"}
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary="200$"
-                    /> */}
-                      {/* <TextField
-                        id="standard-number"
-                        type="number"
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        defaultValue="2400"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      /> */}
-                      {transactionAmountField}
-                    </Grid>
+                    <Grid>{transactionAmountField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />
@@ -481,36 +432,7 @@ export default function DetailsModal(props) {
                         primary="Paid by"
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary="You"
-                    /> */}
-                      {/* <TextField
-                        id="standard-select-currency-native"
-                        classes={{ root: classes.dropDownText }}
-                        select
-                        value={paidBy}
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        onChange={(event) => setPaidBy(event.target.value)}
-                        SelectProps={{
-                          native: true,
-                        }}
-                      >
-                        {whopaid.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </TextField> */}
-                      {paidByField}
-                    </Grid>
+                    <Grid>{paidByField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />
@@ -533,36 +455,7 @@ export default function DetailsModal(props) {
                         primary="Split type"
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary="Equal"
-                    /> */}
-                      {/* <TextField
-                        id="standard-select-currency-native"
-                        classes={{ root: classes.dropDownText }}
-                        select
-                        value={splitType}
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        onChange={(event) => setSplitType(event.target.value)}
-                        SelectProps={{
-                          native: true,
-                        }}
-                      >
-                        {splitTypes.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </TextField> */}
-                      {splitTypeField}
-                    </Grid>
+                    <Grid>{splitTypeField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />
@@ -585,40 +478,9 @@ export default function DetailsModal(props) {
                         primary="Category"
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      primary="Entertainment"
-                    /> */}
-                      {/* <TextField
-                        id="standard-select-currency-native"
-                        classes={{ root: classes.dropDownText }}
-                        select
-                        value={category}
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        onChange={(event) => setCategory(event.target.value)}
-                        SelectProps={{
-                          native: true,
-                        }}
-                      >
-                        {categories.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </TextField> */}
-                      {categoriesField}
-                    </Grid>
+                    <Grid>{categoriesField}</Grid>
                   </Grid>
                 </ListItem>
-                <Divider />
-
                 <Divider />
 
                 <ListItem>
@@ -639,27 +501,7 @@ export default function DetailsModal(props) {
                         primary="You Owe"
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-        classes={{
-          root: classes.listItemText,
-        }}
-        primary="Entertainment"
-      /> */}
-                      {/* <TextField
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        type="number"
-                        defaultValue="1200"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      /> */}
-                      {youOweField}
-                    </Grid>
+                    <Grid>{youOweField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />
@@ -682,29 +524,7 @@ export default function DetailsModal(props) {
                         primary="Details"
                       />
                     </Grid>
-                    <Grid>
-                      {/* <ListItemText
-                      classes={{
-                        root: classes.listItemText,
-                      }}
-                      style={{ marginLeft: "39px" }}
-                      primary="Watched Starwars"
-                    /> */}
-
-                      {/* <TextField
-                        id="standard-txt"
-                        color={
-                          theme.palette.type === "dark"
-                            ? "secondary"
-                            : "primary"
-                        }
-                        defaultValue="Watched Starwars movie"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      /> */}
-                      {detailsField}
-                    </Grid>
+                    <Grid>{detailsField}</Grid>
                   </Grid>
                 </ListItem>
                 <Divider />

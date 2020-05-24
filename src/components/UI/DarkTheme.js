@@ -11,6 +11,7 @@ const grey700 = "#616161";
 const bluegrey = "#455a64";
 const green = "#aed581"; // different in Lighttheme
 const red = "#ff8f00"; // different in Lighttheme
+// const amberSecondary = "#ffc400"; // this is the amber color defined for ease
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -34,6 +35,60 @@ const darkTheme = createMuiTheme({
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "black",
+      },
+    },
+
+    // Date picker related
+
+    MuiPickersToolbar: {
+      toolbar: {
+        // backgroundColor: amber.A200,
+      },
+    },
+    // date
+    MuiPickersToolbarText: {
+      toolbarTxt: {
+        color: amber["400"],
+      },
+    },
+    // when date is clicked then the text color appears primary so should be changed to secondary
+    MuiTypography: {
+      colorPrimary: {
+        color: amber["400"],
+      },
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: amber.A200,
+        // color: "black",
+      },
+    },
+    MuiPickersDay: {
+      day: {
+        // color: amber.A700,
+      },
+      daySelected: {
+        backgroundColor: amber["400"],
+        color: "black",
+        "&:hover": {
+          backgroundColor: amber["400"],
+        },
+      },
+      dayDisabled: {
+        color: amber["100"],
+      },
+      current: {
+        color: amber["900"],
+      },
+    },
+
+    MuiButton: {
+      textPrimary: {
+        color: "white",
+        "&:hover": {
+          backgroundColor: amber["400"],
+          color: "black",
+        },
       },
     },
   },

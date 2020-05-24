@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -35,10 +35,12 @@ export default function GroupsDetails(props) {
   const theme = useTheme();
   const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  //edit
+  const [editMode, setEditMode] = useState(false);
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   //dialog
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   if (matchesSM) {
@@ -50,6 +52,7 @@ export default function GroupsDetails(props) {
 
   const dialogCloseHandler = () => {
     setDialogOpen(false);
+    setEditMode(false);
   };
 
   useEffect(() => {
@@ -65,6 +68,15 @@ export default function GroupsDetails(props) {
     setOpen(!open);
     setHideDetails(false);
     setShowDetails(false);
+  };
+
+  //dialog
+  const editOpenHandler = () => {
+    setEditMode(true);
+  };
+
+  const editCloseHandler = () => {
+    setEditMode(false);
   };
 
   return (
@@ -234,7 +246,10 @@ export default function GroupsDetails(props) {
       {/* When clicked on the details icon */}
       <DetailsModal
         dialogOpen={dialogOpen}
+        editMode={editMode}
         dialogCloseHandler={dialogCloseHandler}
+        editCloseHandler={editCloseHandler}
+        editOpenHandler={editOpenHandler}
       />
     </React.Fragment>
   );

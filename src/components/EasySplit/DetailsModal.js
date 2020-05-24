@@ -23,6 +23,13 @@ import DetailsIcon from "@material-ui/icons/Details";
 import Grid from "@material-ui/core/Grid";
 import OkCancelModal from "../EasySplit/OkCancelModal";
 import TextField from "@material-ui/core/TextField";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import { DatePicker } from "@material-ui/pickers";
+import {
+  MuiPickersUtilsProvider,
+  // KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -67,10 +74,37 @@ const useStyles = makeStyles((theme) => ({
       "& .MuiTypography-body1": {
         fontSize: "0.8em",
       },
+      "& .MuiInputBase-root": {
+        fontSize: "0.8em",
+      },
+    },
+  },
+  detailDate: {
+    [theme.breakpoints.down("xs")]: {
+      width: "6.5em",
     },
   },
   dropDownText: {
     minWidth: "10.2em",
+    [theme.breakpoints.down("xs")]: {
+      minWidth: "6.5em",
+      "& .MuiTypography-body1": {
+        fontSize: "0.8em",
+      },
+      "& .MuiInputBase-root": {
+        fontSize: "0.8em",
+      },
+    },
+  },
+  detailNumber: {
+    [theme.breakpoints.down("xs")]: {
+      width: "6.5em",
+    },
+  },
+  detailText: {
+    [theme.breakpoints.down("xs")]: {
+      width: "6.5em",
+    },
   },
 }));
 
@@ -95,6 +129,13 @@ export default function DetailsModal(props) {
   const [paidBy, setPaidBy] = React.useState("you");
   const [splitType, setSplitType] = React.useState("equal");
   const [category, setCategory] = React.useState("Entertainment");
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("2014-08-18T21:11:54")
+  );
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const whopaid = [
     {
@@ -145,15 +186,32 @@ export default function DetailsModal(props) {
 
   const editTextFields = {
     editTransactionDate: (
-      <TextField
-        id="date"
-        type="date"
-        color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue="2017-05-24"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      // <TextField
+      //   id="date"
+      //   type="date"
+      //   color={theme.palette.type === "dark" ? "secondary" : "primary"}
+      //   defaultValue="2017-05-24"
+      //   classes={{
+      //     root: classes.listItemText,
+      //   }}
+      //   className={classes.detailDate}
+      //   InputLabelProps={{
+      //     shrink: true,
+      //   }}
+      // />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <DatePicker
+          id="date-picker-dialog"
+          format="MM/dd/yyyy"
+          color={theme.palette.type === "dark" ? "secondary" : "primary"}
+          value={selectedDate}
+          onChange={handleDateChange}
+          classes={{
+            root: classes.listItemText,
+          }}
+          className={classes.detailDate}
+        />
+      </MuiPickersUtilsProvider>
     ),
     editTransactionAmount: (
       <TextField
@@ -161,6 +219,10 @@ export default function DetailsModal(props) {
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
         defaultValue="2400"
+        classes={{
+          root: classes.listItemText,
+        }}
+        className={classes.detailNumber}
         InputLabelProps={{
           shrink: true,
         }}
@@ -212,6 +274,9 @@ export default function DetailsModal(props) {
         value={category}
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
         onChange={(event) => setCategory(event.target.value)}
+        // classes={{
+        //   root: classes.listItemText,
+        // }}
         SelectProps={{
           native: true,
         }}
@@ -227,6 +292,10 @@ export default function DetailsModal(props) {
       <TextField
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
         type="number"
+        classes={{
+          root: classes.listItemText,
+        }}
+        className={classes.detailNumber}
         defaultValue="1200"
         InputLabelProps={{
           shrink: true,
@@ -236,8 +305,12 @@ export default function DetailsModal(props) {
     editDetails: (
       <TextField
         id="standard-txt"
+        classes={{
+          root: classes.listItemText,
+        }}
+        className={classes.detailText}
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue="Watched Starwars movie"
+        defaultValue="Watched"
         InputLabelProps={{
           shrink: true,
         }}

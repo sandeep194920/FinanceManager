@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,7 +13,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 
-export default function FriendsList(props) {
+function FriendsList(props) {
+  console.log("Friends");
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -23,15 +24,15 @@ export default function FriendsList(props) {
   const [showDetails, switchShowDetails] = useState(false);
   const [hideDetails, switchHideDetails] = useState(false);
 
-  const showDetailsToggleHandler = () => {
+  const showDetailsToggleHandler = useCallback(() => {
     switchShowDetails(true);
     switchHideDetails(false);
-  };
+  }, [switchShowDetails, switchHideDetails]);
 
-  const hideDetailsToggleHandler = () => {
+  const hideDetailsToggleHandler = useCallback(() => {
     switchShowDetails(false);
     switchHideDetails(true);
-  };
+  }, [switchHideDetails, switchShowDetails]);
 
   return (
     <Grid
@@ -101,3 +102,4 @@ export default function FriendsList(props) {
     </Grid>
   );
 }
+export default React.memo(FriendsList);

@@ -112,25 +112,35 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DetailsModal(props) {
+function DetailsModal(props) {
+  console.log("DetailsModal");
   const {
     dialogOpen,
     dialogCloseHandler,
     editMode,
     editCloseHandler,
     editOpenHandler,
+    currentDetails,
   } = props;
+
+  // currentDetails date format update
+  const formattedDate = currentDetails.date.split("-");
+  const day = formattedDate[0];
+  const month = formattedDate[1];
+  const year = formattedDate[2];
+
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // Edit details related below
-  const [paidBy, setPaidBy] = React.useState("you");
-  const [splitType, setSplitType] = React.useState("equal");
-  const [category, setCategory] = React.useState("Entertainment");
+  const [paidBy, setPaidBy] = React.useState(currentDetails.paidBy);
+  const [splitType, setSplitType] = React.useState(currentDetails.type);
+  const [category, setCategory] = React.useState(currentDetails.category);
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    // new Date("2014-08-18" + "T21:11:54")
+    new Date(`${year}-${month}-${day}T21:11:54`)
   );
 
   const handleDateChange = (date) => {
@@ -186,19 +196,6 @@ export default function DetailsModal(props) {
 
   const editTextFields = {
     editTransactionDate: (
-      // <TextField
-      //   id="date"
-      //   type="date"
-      //   color={theme.palette.type === "dark" ? "secondary" : "primary"}
-      //   defaultValue="2017-05-24"
-      //   classes={{
-      //     root: classes.listItemText,
-      //   }}
-      //   className={classes.detailDate}
-      //   InputLabelProps={{
-      //     shrink: true,
-      //   }}
-      // />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           id="date-picker-dialog"
@@ -218,7 +215,7 @@ export default function DetailsModal(props) {
         id="standard-number"
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue="2400"
+        defaultValue={currentDetails.transactionAmount}
         classes={{
           root: classes.listItemText,
         }}
@@ -296,7 +293,7 @@ export default function DetailsModal(props) {
           root: classes.listItemText,
         }}
         className={classes.detailNumber}
-        defaultValue="1200"
+        defaultValue={`${currentDetails.owe}`}
         InputLabelProps={{
           shrink: true,
         }}
@@ -310,7 +307,7 @@ export default function DetailsModal(props) {
         }}
         className={classes.detailText}
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue="Watched"
+        defaultValue={currentDetails.details}
         InputLabelProps={{
           shrink: true,
         }}
@@ -324,7 +321,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="20 March 2020"
+        primary={currentDetails.date}
       />
     ),
     transactionAmount: (
@@ -332,7 +329,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="200$"
+        primary={"$" + currentDetails.transactionAmount}
       />
     ),
     paidBy: (
@@ -340,7 +337,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="You"
+        primary={currentDetails.paidBy}
       />
     ),
     splitType: (
@@ -348,7 +345,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="Equal"
+        primary={currentDetails.type}
       />
     ),
     category: (
@@ -356,7 +353,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="Entertainment"
+        primary={currentDetails.category}
       />
     ),
     youOwe: (
@@ -364,7 +361,7 @@ export default function DetailsModal(props) {
         classes={{
           root: classes.listItemText,
         }}
-        primary="1200$"
+        primary={`$${currentDetails.owe}`}
       />
     ),
     details: (
@@ -373,7 +370,7 @@ export default function DetailsModal(props) {
           root: classes.listItemText,
         }}
         style={{ marginLeft: "39px" }}
-        primary="Watched Starwars"
+        primary={currentDetails.details}
       />
     ),
   };
@@ -650,3 +647,5 @@ export default function DetailsModal(props) {
     </React.Fragment>
   );
 }
+
+export default React.memo(DetailsModal);

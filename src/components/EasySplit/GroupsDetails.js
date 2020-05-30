@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -22,7 +22,9 @@ import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
 
-export default function GroupsDetails(props) {
+function GroupsDetails(props) {
+  console.log("GroupsDetails");
+
   const {
     name,
     oweAmount,
@@ -35,25 +37,27 @@ export default function GroupsDetails(props) {
   const theme = useTheme();
   const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  //edit
-  const [editMode, setEditMode] = useState(false);
   // const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const [open, setOpen] = useState(false);
+  //edit
+  const [editMode, setEditMode] = useState(false);
   //dialog
   const [dialogOpen, setDialogOpen] = useState(false);
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
+  const [currentDetails, setCurrentDetails] = useState({});
+
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
-  const dialogOpenHandler = () => {
+  const dialogOpenHandler = useCallback(() => {
     setDialogOpen(true);
-  };
+  }, [setDialogOpen]);
 
-  const dialogCloseHandler = () => {
+  const dialogCloseHandler = useCallback(() => {
     setDialogOpen(false);
     setEditMode(false);
-  };
+  }, [setDialogOpen, setEditMode]);
 
   useEffect(() => {
     if (hideDetails) {
@@ -71,14 +75,13 @@ export default function GroupsDetails(props) {
   };
 
   //dialog
-  const editOpenHandler = () => {
+  const editOpenHandler = useCallback(() => {
     setEditMode(true);
-  };
+  }, [setEditMode]);
 
-  const editCloseHandler = () => {
+  const editCloseHandler = useCallback(() => {
     setEditMode(false);
-  };
-
+  }, [setEditMode]);
   return (
     <React.Fragment>
       <TableRow>
@@ -89,7 +92,11 @@ export default function GroupsDetails(props) {
             aria-label="expand row"
             onClick={rowDropdownHandler}
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {open || showDetails ? (
+              <KeyboardArrowUpIcon />
+            ) : (
+              <KeyboardArrowDownIcon />
+            )}
           </IconButton>
         </TableCell>
         <TableCell>
@@ -212,7 +219,7 @@ export default function GroupsDetails(props) {
                     {details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
                         <TableCell>{record.date}</TableCell>
-                        <TableCell>{record.amount}</TableCell>
+                        <TableCell>{record.transactionAmount}</TableCell>
                         {matchesSM ? null : (
                           <TableCell>{record.paidBy}</TableCell>
                         )}
@@ -220,7 +227,10 @@ export default function GroupsDetails(props) {
                         <TableCell>{record.owe}</TableCell>
                         <TableCell>
                           <IconButton
-                            onClick={dialogOpenHandler}
+                            onClick={() => {
+                              dialogOpenHandler();
+                              setCurrentDetails({ ...record });
+                            }}
                             disableRipple
                             classes={{ root: classes.detailsIcon }}
                           >
@@ -244,13 +254,18 @@ export default function GroupsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      <DetailsModal
-        dialogOpen={dialogOpen}
-        editMode={editMode}
-        dialogCloseHandler={dialogCloseHandler}
-        editCloseHandler={editCloseHandler}
-        editOpenHandler={editOpenHandler}
-      />
+      {dialogOpen ? (
+        <DetailsModal
+          dialogOpen={dialogOpen}
+          editMode={editMode}
+          dialogCloseHandler={dialogCloseHandler}
+          editCloseHandler={editCloseHandler}
+          editOpenHandler={editOpenHandler}
+          currentDetails={currentDetails}
+        />
+      ) : null}
     </React.Fragment>
   );
 }
+
+export default React.memo(GroupsDetails);

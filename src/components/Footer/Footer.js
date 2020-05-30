@@ -6,6 +6,7 @@ import CopyrightIcon from "@material-ui/icons/Copyright";
 import Hidden from "@material-ui/core/Hidden";
 
 const Footer = () => {
+  console.log("Footer");
   const useStyles = makeStyles((theme) => ({
     footer: {
       backgroundColor: theme.palette.primary.main,
@@ -85,5 +86,5 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);
 //<Grid item>Copyright c 2020. All rights reserved</Grid>

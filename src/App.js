@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./components/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import lightTheme from "./components/UI/LightTheme";
@@ -10,12 +10,13 @@ import Friends from "./components/EasySplit/Friends";
 import Paper from "@material-ui/core/Paper";
 import darkLogo from "./assets/darkLogo.png";
 import lightLogo from "./assets/lightLogo.png";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   const [myTheme, setTheme] = useState(lightTheme);
   const [logoImg, setLogoImg] = useState(lightLogo);
 
-  const switchThemeHandler = () => {
+  const switchThemeHandler = useCallback(() => {
     setTheme((prevState) => {
       if (prevState.palette.type === "dark") {
         localStorage.setItem("theme", "light");
@@ -25,8 +26,8 @@ function App() {
         return darkTheme;
       }
     });
-  };
-  const switchLogoHandler = () => {
+  }, [setTheme]);
+  const switchLogoHandler = useCallback(() => {
     setLogoImg(() => {
       if (myTheme.palette.type === "dark") {
         return lightLogo;
@@ -34,7 +35,7 @@ function App() {
         return darkLogo;
       }
     });
-  };
+  }, [setLogoImg, myTheme.palette.type]);
 
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
@@ -44,7 +45,7 @@ function App() {
       setLogoImg(lightLogo);
       setTheme(lightTheme);
     }
-  }, []);
+  }, [setLogoImg, setTheme]);
 
   return (
     <ThemeProvider theme={myTheme}>
@@ -64,7 +65,7 @@ function App() {
             />
             <Route path="/friends" render={() => <Friends />} />
             <Route path="/groups" render={() => <Groups />} />
-            <Route path="/about" render={() => <div>About Us</div>} />
+            <Route path="/about" render={() => <AboutUs />} />
             <Route path="/contact" component={() => <div>Contact Us</div>} />
           </Switch>
           {/* <Footer /> */}
@@ -74,4 +75,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);

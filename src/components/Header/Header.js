@@ -143,6 +143,9 @@ function ElevationScroll(props) {
 }
 
 function Header(props) {
+  React.useEffect(() => {
+    console.log("Header");
+  });
   const { switchTheme, switchLogo, logoImg } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -330,4 +333,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default React.memo(Header);

@@ -2,6 +2,8 @@ export const friendsInfo = [
   {
     main: {
       displayName: "Sandeep",
+      userId: "Sa194920",
+      fullName: "Sandeep Amarnath",
       oweAmount: 50,
     },
     details: [
@@ -36,8 +38,10 @@ export const friendsInfo = [
   },
   {
     main: {
-      displayName: "Sandeep",
-      oweAmount: 50,
+      displayName: "Karthik",
+      userId: "ky123465",
+      fullName: "Murali Karthik",
+      oweAmount: -500,
     },
     details: [
       {

@@ -26,9 +26,8 @@ function FriendsDetails(props) {
   console.log("FriendsDetails");
 
   const {
-    name,
-    oweAmount,
     details,
+    mainInfo,
     showDetails,
     hideDetails,
     setHideDetails,
@@ -108,7 +107,7 @@ function FriendsDetails(props) {
               <Grid container alignItems="center" justify="space-between">
                 <Grid item>
                   <Typography variant={matchesXS ? "subtitle2" : "body1"}>
-                    {name}
+                    {mainInfo.displayName}
                   </Typography>
                 </Grid>
                 <Grid item xs={matchesXS ? 6 : 4}>
@@ -121,21 +120,23 @@ function FriendsDetails(props) {
                     >
                       <Typography variant="caption" gutterBottom>
                         You Owe&nbsp;&nbsp;&nbsp;
-                        {oweAmount > 0 ? <span>&nbsp;&nbsp;&nbsp;</span> : null}
+                        {mainInfo.oweAmount > 0 ? (
+                          <span>&nbsp;&nbsp;&nbsp;</span>
+                        ) : null}
                       </Typography>
                       <Typography
                         style={{
                           color:
-                            oweAmount >= 0
+                            mainInfo.oweAmount >= 0
                               ? theme.palette.common.green
                               : theme.palette.common.red,
                         }}
                         variant={matchesXS ? "subtitle2" : "h6"}
                         gutterBottom
                       >
-                        {oweAmount > 0
-                          ? "$" + oweAmount
-                          : "- $" + oweAmount * -1}
+                        {mainInfo.oweAmount > 0
+                          ? "$" + mainInfo.oweAmount
+                          : "- $" + mainInfo.oweAmount * -1}
                       </Typography>
                     </Grid>
                     <Button
@@ -172,14 +173,14 @@ function FriendsDetails(props) {
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  Sandeep Amarnath
+                  {mainInfo.fullName}
                 </Typography>
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  User ID - Sa194920
+                  User ID - {mainInfo.userId}
                 </Typography>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>

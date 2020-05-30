@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,50 +13,28 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 
-// const useStyles = makeStyles((theme) => ({
-//   groupContainer: {
-//     ...theme.container,
-//   },
-//   groupHeading: {
-//     ...theme.heading,
-//   },
-//   table: {
-//     ...theme.table,
-//   },
-//   filterArea: {
-//     ...theme.filterArea,
-//   },
-//   formLabel: {
-//     ...theme.formLabel,
-//   },
-//   formControlLabel: {
-//     ...theme.formControlLabel,
-//   },
-//   toggleSwitch: {
-//     ...theme.toggleSwitch,
-//   },
-// }));
-
-export default function GroupsList(props) {
+function GroupsList(props) {
+  console.log("Groups");
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
-  // switch details
+  // switch show and hide details
   const [showDetails, switchShowDetails] = useState(false);
   const [hideDetails, switchHideDetails] = useState(false);
 
-  const showDetailsToggleHandler = () => {
+  const showDetailsToggleHandler = useCallback(() => {
     switchShowDetails(true);
     switchHideDetails(false);
-  };
+  }, [switchShowDetails, switchHideDetails]);
 
-  const hideDetailsToggleHandler = () => {
+  const hideDetailsToggleHandler = useCallback(() => {
     switchShowDetails(false);
     switchHideDetails(true);
-  };
+  }, [switchHideDetails, switchShowDetails]);
 
+  console.log(groupsInfo.length);
   return (
     <Grid
       className={classes.container}
@@ -107,9 +85,8 @@ export default function GroupsList(props) {
               {groupsInfo.map((groupInfo, index) => (
                 <GroupsDetails
                   key={groupInfo + index}
-                  name={groupInfo.main.displayName}
-                  oweAmount={groupInfo.main.oweAmount}
                   details={groupInfo.details}
+                  mainInfo={groupInfo.main}
                   showDetails={showDetails}
                   setShowDetails={switchShowDetails}
                   hideDetails={hideDetails}
@@ -123,3 +100,5 @@ export default function GroupsList(props) {
     </Grid>
   );
 }
+
+export default React.memo(GroupsList);

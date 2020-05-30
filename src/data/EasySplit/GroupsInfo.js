@@ -2,7 +2,10 @@ export const groupsInfo = [
   {
     main: {
       displayName: "Ontario street group",
-      oweAmount: 50,
+      userId: "Sa194920",
+      fullName: "Sandeep Amarnath",
+      oweAmount: -590,
+      groupMembersLength: 4,
     },
     details: [
       {
@@ -36,8 +39,11 @@ export const groupsInfo = [
   },
   {
     main: {
-      displayName: "Ontario street group",
+      displayName: "Toronto Group",
+      userId: "Sa194920",
+      fullName: "Karthik Murali",
       oweAmount: 50,
+      groupMembersLength: 3,
     },
     details: [
       {

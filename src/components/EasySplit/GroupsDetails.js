@@ -26,9 +26,8 @@ function GroupsDetails(props) {
   console.log("GroupsDetails");
 
   const {
-    name,
-    oweAmount,
     details,
+    mainInfo,
     showDetails,
     hideDetails,
     setHideDetails,
@@ -50,6 +49,7 @@ function GroupsDetails(props) {
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+
   const dialogOpenHandler = useCallback(() => {
     setDialogOpen(true);
   }, [setDialogOpen]);
@@ -116,13 +116,13 @@ function GroupsDetails(props) {
                       gutterBottom
                       variant={matchesSM ? "subtitle2" : "body1"}
                     >
-                      {name}
+                      {mainInfo.displayName}
                     </Typography>
                     <Typography
                       className={classes.memberCount}
                       variant="caption"
                     >
-                      (3 Members)
+                      ({mainInfo.groupMembersLength + " Members"})
                     </Typography>
                   </Grid>
                 </Grid>
@@ -136,21 +136,23 @@ function GroupsDetails(props) {
                     >
                       <Typography variant="caption" gutterBottom>
                         You Owe&nbsp;&nbsp;&nbsp;
-                        {oweAmount > 0 ? <span>&nbsp;&nbsp;&nbsp;</span> : null}
+                        {mainInfo.oweAmount > 0 ? (
+                          <span>&nbsp;&nbsp;&nbsp;</span>
+                        ) : null}
                       </Typography>
                       <Typography
                         style={{
                           color:
-                            oweAmount >= 0
+                            mainInfo.oweAmount >= 0
                               ? theme.palette.common.green
                               : theme.palette.common.red,
                         }}
                         variant={matchesSM ? "subtitle2" : "h6"}
                         gutterBottom
                       >
-                        {oweAmount > 0
-                          ? "$" + oweAmount
-                          : "- $" + oweAmount * -1}
+                        {mainInfo.oweAmount > 0
+                          ? "$" + mainInfo.oweAmount
+                          : "- $" + mainInfo.oweAmount * -1}
                       </Typography>
                     </Grid>
                     <Button
@@ -185,14 +187,14 @@ function GroupsDetails(props) {
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  Sandeep Amarnath
+                  {mainInfo.fullName}
                 </Typography>
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  Created By - Sa194920
+                  Created By - {mainInfo.userId}
                 </Typography>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>
@@ -254,7 +256,7 @@ function GroupsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      {dialogOpen ? (
+      {dialogOpen ? ( // performance optimized here due to this check
         <DetailsModal
           dialogOpen={dialogOpen}
           editMode={editMode}

@@ -12,6 +12,8 @@ import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
+// redux
+import { connect } from "react-redux";
 
 function FriendsList(props) {
   console.log("Friends");
@@ -46,7 +48,7 @@ function FriendsList(props) {
         variant={matchesSM ? "subtitle1" : "h6"}
         gutterBottom
       >
-        Friends
+        Friends {props.test}
       </Typography>
       <Grid container justify="center">
         <TableContainer className={classes.table} component={Paper}>
@@ -101,4 +103,26 @@ function FriendsList(props) {
     </Grid>
   );
 }
-export default React.memo(FriendsList);
+
+const mapStateToProps = (state) => {
+  return {
+    test: state.test,
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onIngredientAdded: (ingName) =>
+//       dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+//     onIngredientRemoved: (ingName) =>
+//       dispatch({
+//         type: actionTypes.REMOVE_INGREDIENT,
+//         ingredientName: ingName,
+//       }),
+//   };
+// };
+
+export default connect(
+  mapStateToProps
+  // mapDispatchToProps
+)(React.memo(FriendsList));

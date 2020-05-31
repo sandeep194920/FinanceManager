@@ -1,7 +1,6 @@
 import { friendsInfo } from "../../../data/EasySplit/FriendsInfo";
 const initState = {
-  friendsInfo: { ...friendsInfo },
-  test: "Test is Sandeep",
+  friendsInfo: friendsInfo,
 };
 
 const friendsReducer = (state = initState, action) => {

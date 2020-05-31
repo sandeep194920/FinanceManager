@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import FriendsshowDetails from "./FriendsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { friendsInfo } from "../../data/EasySplit/FriendsInfo";
+// import { friendsInfo } from "../../data/EasySplit/FriendsInfo"; // This comes from friendsReducer
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
@@ -48,7 +48,7 @@ function FriendsList(props) {
         variant={matchesSM ? "subtitle1" : "h6"}
         gutterBottom
       >
-        Friends {props.test}
+        Friends
       </Typography>
       <Grid container justify="center">
         <TableContainer className={classes.table} component={Paper}>
@@ -85,7 +85,7 @@ function FriendsList(props) {
           </Grid>
           <Table>
             <TableBody>
-              {friendsInfo.map((friendInfo, index) => (
+              {props.friendsInfo.map((friendInfo, index) => (
                 <FriendsshowDetails
                   key={friendInfo + index}
                   details={friendInfo.details}
@@ -106,7 +106,8 @@ function FriendsList(props) {
 
 const mapStateToProps = (state) => {
   return {
-    test: state.test,
+    test: state.friends.test,
+    friendsInfo: state.friends.friendsInfo,
   };
 };
 

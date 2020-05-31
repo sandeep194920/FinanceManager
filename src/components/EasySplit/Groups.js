@@ -8,10 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import GroupsDetails from "./GroupsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { groupsInfo } from "../../data/EasySplit/GroupsInfo";
+// import { groupsInfo } from "../../data/EasySplit/GroupsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
+// redux
+import { connect } from "react-redux";
 
 function GroupsList(props) {
   console.log("Groups");
@@ -34,7 +36,7 @@ function GroupsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
-  console.log(groupsInfo.length);
+  console.log(props.groupsInfo.length);
   return (
     <Grid
       className={classes.container}
@@ -82,7 +84,7 @@ function GroupsList(props) {
           </Grid>
           <Table>
             <TableBody>
-              {groupsInfo.map((groupInfo, index) => (
+              {props.groupsInfo.map((groupInfo, index) => (
                 <GroupsDetails
                   key={groupInfo + index}
                   details={groupInfo.details}
@@ -101,4 +103,23 @@ function GroupsList(props) {
   );
 }
 
-export default React.memo(GroupsList);
+const mapStateToProps = (state) => {
+  return {
+    test: state.groups.test,
+    groupsInfo: state.groups.groupsInfo,
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onIngredientAdded: (ingName) =>
+//       dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+//     onIngredientRemoved: (ingName) =>
+//       dispatch({
+//         type: actionTypes.REMOVE_INGREDIENT,
+//         ingredientName: ingName,
+//       }),
+//   };
+// };
+
+export default connect(mapStateToProps)(React.memo(GroupsList));

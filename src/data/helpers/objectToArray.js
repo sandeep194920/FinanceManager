@@ -9,11 +9,11 @@ Object.size = function (obj) {
 
 export const objToArray = (obj, mainKey, innerKey) => {
   const arr = [];
-  let innerArr = [];
+  const innerArr = [];
   const keys = Object.keys(obj);
 
   if (innerKey) {
-    keys.forEach((key, index) => {
+    keys.forEach((key) => {
       for (let i = 0; i < Object.size(obj[key][innerKey]); i++) {
         innerArr.push({ ...obj[key][innerKey][i] });
       }

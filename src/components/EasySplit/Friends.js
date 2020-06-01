@@ -12,6 +12,7 @@ import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
+import { objToArray } from "../../data/helpers/objectToArray";
 // redux
 import { connect } from "react-redux";
 
@@ -35,6 +36,41 @@ function FriendsList(props) {
     switchShowDetails(false);
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
+
+  // convert props.friendsInfo object to array --> firebase accepts only objects but down we are using in array format, so we do this conversion
+  // const friendsArr = [];
+  // let friendsDetails = [];
+  // const friendsKeys = Object.keys(friendsInfoTest); // this will have Sa194920
+  // // now i need Sa194920[main] and Sa194920[details]
+  // // let friendsDetailsKey = Object.keys(friendsInfoTest.details); // this gives keys like 0,1,2 ...
+  // // console.log(friendsKeys);
+
+  // // Get the size of an object
+  // Object.size = function (obj) {
+  //   let size = 0,
+  //     details;
+  //   for (details in obj) {
+  //     if (obj.hasOwnProperty(details)) size++;
+  //   }
+  //   return size;
+  // };
+
+  // friendsKeys.map((user, index) => {
+  //   for (let i = 0; i < Object.size(friendsInfoTest[user]["details"]); i++) {
+  //     friendsDetails.push({ ...friendsInfoTest[user]["details"][i] });
+  //   }
+  //   return 0;
+  // });
+
+  // friendsKeys.forEach((user) => {
+  //   friendsArr.push({
+  //     main: friendsInfoTest[user]["main"],
+  //     details: friendsDetails,
+  //   });
+  // });
+
+  const friendsArray = objToArray(props.friendsInfo, "main", "details");
+  // console.log(friendsArray);
 
   return (
     <Grid
@@ -85,7 +121,7 @@ function FriendsList(props) {
           </Grid>
           <Table>
             <TableBody>
-              {props.friendsInfo.map((friendInfo, index) => (
+              {friendsArray.map((friendInfo, index) => (
                 <FriendsshowDetails
                   key={friendInfo + index}
                   details={friendInfo.details}
@@ -97,6 +133,10 @@ function FriendsList(props) {
                 />
               ))}
             </TableBody>
+
+            {/* <TableBody>
+             {}
+            </TableBody> */}
           </Table>
         </TableContainer>
       </Grid>

@@ -1,4 +1,4 @@
-import { friendsInfo } from "../../../data/EasySplit/FriendsInfo";
+import { friendsInfo } from "../../../../data/EasySplit/FriendsInfo";
 const initState = {
   friendsInfo: friendsInfo,
 };

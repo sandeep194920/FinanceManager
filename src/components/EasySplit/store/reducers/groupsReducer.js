@@ -1,4 +1,4 @@
-import { groupsInfo } from "../../../data/EasySplit/GroupsInfo";
+import { groupsInfo } from "../../../../data/EasySplit/GroupsInfo";
 const initState = {
   groupsInfo: groupsInfo,
 };

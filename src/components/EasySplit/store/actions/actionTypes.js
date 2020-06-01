@@ -1,0 +1,2 @@
+export const SET_FRIENDS = "SET_FRIENDS";
+export const FETCH_FRIENDS_FAILED = "FETCH_FRIENDS_FAILED";

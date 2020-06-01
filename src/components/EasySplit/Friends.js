@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,9 +13,11 @@ import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 import { objToArray } from "../../data/helpers/objectToArray";
 import { connect } from "react-redux";
+import * as actionTypes from "./store/actions";
 
 function FriendsList(props) {
   console.log("Friends");
+  const { onInitFriends } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -38,6 +40,10 @@ function FriendsList(props) {
   //converting props.friendsInfo to array
   const friendsArray = objToArray(props.friendsInfo, "main", "details");
 
+  useEffect(() => {
+    console.log("Reached useEffect");
+    onInitFriends();
+  }, [onInitFriends]);
   return (
     <Grid
       className={classes.container}
@@ -113,19 +119,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onIngredientAdded: (ingName) =>
-//       dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
-//     onIngredientRemoved: (ingName) =>
-//       dispatch({
-//         type: actionTypes.REMOVE_INGREDIENT,
-//         ingredientName: ingName,
-//       }),
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onInitFriends: () => dispatch(actionTypes.initFriends()),
+  };
+};
 
 export default connect(
-  mapStateToProps
-  // mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(React.memo(FriendsList));

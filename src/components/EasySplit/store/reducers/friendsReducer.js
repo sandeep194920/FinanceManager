@@ -1,10 +1,22 @@
-import { friendsInfo } from "../../../../data/EasySplit/FriendsInfo";
+// import { friendsInfo } from "../../../../data/EasySplit/FriendsInfo";
+import * as actionTypes from "../actions/actionTypes";
+
 const initState = {
-  friendsInfo: friendsInfo,
+  friendsInfo: {},
 };
 
 const friendsReducer = (state = initState, action) => {
-  console.log("Reducer implemented");
-  return state;
+  // console.log("Reducer implemented");
+  // return state;
+
+  switch (action.type) {
+    case actionTypes.SET_FRIENDS:
+      return {
+        ...state,
+        friendsInfo: action.friends,
+      };
+    default:
+      return state;
+  }
 };
 export default friendsReducer;

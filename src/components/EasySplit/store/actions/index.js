@@ -1,0 +1,1 @@
+export { initFriends } from "./friends";

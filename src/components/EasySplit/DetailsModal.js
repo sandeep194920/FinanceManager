@@ -20,6 +20,7 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import CallSplitIcon from "@material-ui/icons/CallSplit";
 import CategoryIcon from "@material-ui/icons/Category";
 import DetailsIcon from "@material-ui/icons/Details";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import Grid from "@material-ui/core/Grid";
 import OkCancelModal from "../EasySplit/OkCancelModal";
 import TextField from "@material-ui/core/TextField";
@@ -557,7 +558,7 @@ function DetailsModal(props) {
                   <Grid container alignItems="center" justify="space-between">
                     <Grid item style={{ display: "inherit" }}>
                       <ListItemIcon classes={{ root: classes.listIcon }}>
-                        <CategoryIcon
+                        <AttachMoneyIcon
                           fontSize={matchesSM ? "small" : "default"}
                           color={
                             theme.palette.type === "dark"

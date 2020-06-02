@@ -1,8 +1,8 @@
-// import { friendsInfo } from "../../../../data/EasySplit/FriendsInfo";
 import * as actionTypes from "../actions/actionTypes";
 
 const initState = {
   friendsInfo: {},
+  loading: true,
 };
 
 const friendsReducer = (state = initState, action) => {
@@ -11,6 +11,7 @@ const friendsReducer = (state = initState, action) => {
       return {
         ...state,
         friendsInfo: action.friends,
+        loading: false,
       };
     default:
       return state;

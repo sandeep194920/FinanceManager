@@ -14,10 +14,11 @@ import useStyles from "../EasySplit/FriendsGroupsStyles";
 import { objToArray } from "../../data/helpers/objectToArray";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function FriendsList(props) {
   console.log("Friends");
-  const { onInitFriends, friendsInfo } = props;
+  const { onInitFriends, friendsInfo, loading } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -43,6 +44,31 @@ function FriendsList(props) {
   useEffect(() => {
     onInitFriends();
   }, [onInitFriends]);
+
+  let friends = (
+    <LinearProgress
+      color={theme.palette.type === "dark" ? "secondary" : "primary"}
+    />
+  );
+  if (!loading) {
+    friends = (
+      <Table>
+        <TableBody>
+          {friendsArray.map((friendInfo, index) => (
+            <FriendsshowDetails
+              key={friendInfo + index}
+              details={friendInfo.details}
+              mainInfo={friendInfo.main}
+              showDetails={showDetails}
+              setShowDetails={switchShowDetails}
+              hideDetails={hideDetails}
+              setHideDetails={switchHideDetails}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    );
+  }
 
   return (
     <Grid
@@ -91,21 +117,7 @@ function FriendsList(props) {
               className={classes.formControlLabel}
             />
           </Grid>
-          <Table>
-            <TableBody>
-              {friendsArray.map((friendInfo, index) => (
-                <FriendsshowDetails
-                  key={friendInfo + index}
-                  details={friendInfo.details}
-                  mainInfo={friendInfo.main}
-                  showDetails={showDetails}
-                  setShowDetails={switchShowDetails}
-                  hideDetails={hideDetails}
-                  setHideDetails={switchHideDetails}
-                />
-              ))}
-            </TableBody>
-          </Table>
+          {friends}
         </TableContainer>
       </Grid>
     </Grid>
@@ -114,7 +126,7 @@ function FriendsList(props) {
 
 const mapStateToProps = (state) => {
   return {
-    test: state.friends.test,
+    loading: state.friends.loading,
     friendsInfo: state.friends.friendsInfo,
   };
 };

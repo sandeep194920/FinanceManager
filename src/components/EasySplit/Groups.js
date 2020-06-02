@@ -8,17 +8,17 @@ import Typography from "@material-ui/core/Typography";
 import GroupsDetails from "./GroupsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-// import { groupsInfo } from "../../data/EasySplit/GroupsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 import { objToArray } from "../../data/helpers/objectToArray";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function GroupsList(props) {
   console.log("Groups");
-  const { onInitGroups, groupsInfo } = props;
+  const { onInitGroups, groupsInfo, loading } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -44,6 +44,32 @@ function GroupsList(props) {
   useEffect(() => {
     onInitGroups();
   }, [onInitGroups]);
+
+  let groups = (
+    <LinearProgress
+      color={theme.palette.type === "dark" ? "secondary" : "primary"}
+    />
+  );
+
+  if (!loading) {
+    groups = (
+      <Table>
+        <TableBody>
+          {groupsArray.map((groupInfo, index) => (
+            <GroupsDetails
+              key={groupInfo + index}
+              details={groupInfo.details}
+              mainInfo={groupInfo.main}
+              showDetails={showDetails}
+              setShowDetails={switchShowDetails}
+              hideDetails={hideDetails}
+              setHideDetails={switchHideDetails}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    );
+  }
 
   return (
     <Grid
@@ -90,21 +116,7 @@ function GroupsList(props) {
               className={classes.formControlLabel}
             />
           </Grid>
-          <Table>
-            <TableBody>
-              {groupsArray.map((groupInfo, index) => (
-                <GroupsDetails
-                  key={groupInfo + index}
-                  details={groupInfo.details}
-                  mainInfo={groupInfo.main}
-                  showDetails={showDetails}
-                  setShowDetails={switchShowDetails}
-                  hideDetails={hideDetails}
-                  setHideDetails={switchHideDetails}
-                />
-              ))}
-            </TableBody>
-          </Table>
+          {groups}
         </TableContainer>
       </Grid>
     </Grid>
@@ -113,7 +125,7 @@ function GroupsList(props) {
 
 const mapStateToProps = (state) => {
   return {
-    test: state.groups.test,
+    loading: state.groups.loading,
     groupsInfo: state.groups.groupsInfo,
   };
 };

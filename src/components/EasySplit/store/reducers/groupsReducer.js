@@ -1,8 +1,8 @@
-// import { groupsInfo } from "../../../../data/EasySplit/GroupsInfo";
 import * as actionTypes from "../actions/actionTypes";
 
 const initState = {
   groupsInfo: {},
+  loading: true,
 };
 
 const groupsReducer = (state = initState, action) => {
@@ -11,6 +11,7 @@ const groupsReducer = (state = initState, action) => {
       return {
         ...state,
         groupsInfo: action.groups,
+        loading: false,
       };
     default:
       return state;

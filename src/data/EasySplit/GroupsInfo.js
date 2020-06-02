@@ -1,5 +1,84 @@
-export const groupsInfo = [
-  {
+// export const groupsInfo = [
+//   {
+//     main: {
+//       displayName: "Ontario street group",
+//       userId: "Sa194920",
+//       fullName: "Sandeep Amarnath",
+//       oweAmount: -590,
+//       groupMembersLength: 4,
+//     },
+//     details: [
+//       {
+//         date: "18-08-2018",
+//         transactionAmount: "30",
+//         paidBy: "You",
+//         type: "Custom",
+//         category: "Entertainment",
+//         owe: "20",
+//         details: "Watched starwars movie",
+//       },
+//       {
+//         date: "03-04-2019",
+//         transactionAmount: "40",
+//         paidBy: "You",
+//         type: "No split",
+//         category: "Buffet",
+//         owe: "10",
+//         details: "Saravana bhavan",
+//       },
+//       {
+//         date: "02-12-2020",
+//         transactionAmount: "60",
+//         paidBy: "Sandeep",
+//         type: "Equal",
+//         category: "Fitness",
+//         owe: "200",
+//         details: "Whey protein",
+//       },
+//     ],
+//   },
+//   {
+//     main: {
+//       displayName: "Toronto Group",
+//       userId: "Sa194920",
+//       fullName: "Karthik Murali",
+//       oweAmount: 50,
+//       groupMembersLength: 3,
+//     },
+//     details: [
+//       {
+//         date: "18-08-2018",
+//         transactionAmount: "30",
+//         paidBy: "You",
+//         type: "Custom",
+//         category: "Entertainment",
+//         owe: "20",
+//         details: "Watched starwars movie",
+//       },
+//       {
+//         date: "03-04-2019",
+//         transactionAmount: "40",
+//         paidBy: "You",
+//         type: "No split",
+//         category: "Buffet",
+//         owe: "10",
+//         details: "Saravana bhavan",
+//       },
+//       {
+//         date: "02-12-2020",
+//         transactionAmount: "60",
+//         paidBy: "Sandeep",
+//         type: "Equal",
+//         category: "Fitness",
+//         owe: "200",
+//         details: "Whey protein",
+//       },
+//     ],
+//   },
+// ];
+
+export const groupsInfo = {
+  group123: {
     main: {
       displayName: "Ontario street group",
       userId: "Sa194920",
@@ -7,8 +86,8 @@ export const groupsInfo = [
       oweAmount: -590,
       groupMembersLength: 4,
     },
-    details: [
-      {
+    details: {
+      0: {
         date: "18-08-2018",
         transactionAmount: "30",
         paidBy: "You",
@@ -17,7 +96,7 @@ export const groupsInfo = [
         owe: "20",
         details: "Watched starwars movie",
       },
-      {
+      1: {
         date: "03-04-2019",
         transactionAmount: "40",
         paidBy: "You",
@@ -26,7 +105,7 @@ export const groupsInfo = [
         owe: "10",
         details: "Saravana bhavan",
       },
-      {
+      2: {
         date: "02-12-2020",
         transactionAmount: "60",
         paidBy: "Sandeep",
@@ -35,18 +114,19 @@ export const groupsInfo = [
         owe: "200",
         details: "Whey protein",
       },
-    ],
-  },
-  {
-    main: {
-      displayName: "Toronto Group",
-      userId: "Sa194920",
-      fullName: "Karthik Murali",
-      oweAmount: 50,
-      groupMembersLength: 3,
     },
-    details: [
-      {
+  },
+
+  group456: {
+    main: {
+      displayName: "Toronto group",
+      userId: "Sa194920",
+      fullName: "Sandeep Amarnath",
+      oweAmount: -590,
+      groupMembersLength: 4,
+    },
+    details: {
+      0: {
         date: "18-08-2018",
         transactionAmount: "30",
         paidBy: "You",
@@ -55,7 +135,7 @@ export const groupsInfo = [
         owe: "20",
         details: "Watched starwars movie",
       },
-      {
+      1: {
         date: "03-04-2019",
         transactionAmount: "40",
         paidBy: "You",
@@ -64,7 +144,7 @@ export const groupsInfo = [
         owe: "10",
         details: "Saravana bhavan",
       },
-      {
+      2: {
         date: "02-12-2020",
         transactionAmount: "60",
         paidBy: "Sandeep",
@@ -73,6 +153,6 @@ export const groupsInfo = [
         owe: "200",
         details: "Whey protein",
       },
-    ],
+    },
   },
-];
+};

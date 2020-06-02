@@ -6,7 +6,7 @@ import * as actionTypes from "../actions/actionTypes";
 // helper for groups fetch (sync) helper
 export const setGroups = (groups) => {
   return {
-    type: actionTypes.SET_groups,
+    type: actionTypes.SET_GROUPS,
     groups: groups,
   };
 };
@@ -14,7 +14,7 @@ export const setGroups = (groups) => {
 // fetch ingredients failed (sync) helper
 export const fetchGroupsFailed = () => {
   return {
-    type: actionTypes.FETCH_groups_FAILED,
+    type: actionTypes.FETCH_GROUPS_FAILED,
   };
 };
 

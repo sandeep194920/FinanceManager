@@ -1,10 +1,19 @@
-import { groupsInfo } from "../../../../data/EasySplit/GroupsInfo";
+// import { groupsInfo } from "../../../../data/EasySplit/GroupsInfo";
+import * as actionTypes from "../actions/actionTypes";
+
 const initState = {
-  groupsInfo: groupsInfo,
+  groupsInfo: {},
 };
 
 const groupsReducer = (state = initState, action) => {
-  console.log("Group Reducer implemented");
-  return state;
+  switch (action.type) {
+    case actionTypes.SET_GROUPS:
+      return {
+        ...state,
+        groupsInfo: action.groups,
+      };
+    default:
+      return state;
+  }
 };
 export default groupsReducer;

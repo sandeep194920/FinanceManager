@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -12,11 +12,13 @@ import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
-// redux
+import { objToArray } from "../../data/helpers/objectToArray";
 import { connect } from "react-redux";
+import * as actionTypes from "./store/actions";
 
 function GroupsList(props) {
   console.log("Groups");
+  const { onInitGroups, groupsInfo } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -36,7 +38,13 @@ function GroupsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
-  console.log(props.groupsInfo.length);
+  //converting props.friendsInfo to array
+  const groupsArray = objToArray(groupsInfo, "main", "details");
+
+  useEffect(() => {
+    onInitGroups();
+  }, [onInitGroups]);
+
   return (
     <Grid
       className={classes.container}
@@ -84,7 +92,7 @@ function GroupsList(props) {
           </Grid>
           <Table>
             <TableBody>
-              {props.groupsInfo.map((groupInfo, index) => (
+              {groupsArray.map((groupInfo, index) => (
                 <GroupsDetails
                   key={groupInfo + index}
                   details={groupInfo.details}
@@ -110,16 +118,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onIngredientAdded: (ingName) =>
-//       dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
-//     onIngredientRemoved: (ingName) =>
-//       dispatch({
-//         type: actionTypes.REMOVE_INGREDIENT,
-//         ingredientName: ingName,
-//       }),
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onInitGroups: () => dispatch(actionTypes.initGroups()),
+  };
+};
 
-export default connect(mapStateToProps)(React.memo(GroupsList));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(GroupsList));

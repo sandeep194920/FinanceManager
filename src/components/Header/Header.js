@@ -243,7 +243,7 @@ function Header(props) {
     <Drawer
       classes={{ root: classes.drawer }}
       open={open}
-      onOpen={handleDrawerToggle}
+      // onOpen={handleDrawerToggle}
       onClose={handleDrawerToggle}
     >
       {sideDrawerList}

@@ -17,7 +17,7 @@ import * as actionTypes from "./store/actions";
 
 function FriendsList(props) {
   console.log("Friends");
-  const { onInitFriends } = props;
+  const { onInitFriends, friendsInfo } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -38,12 +38,12 @@ function FriendsList(props) {
   }, [switchHideDetails, switchShowDetails]);
 
   //converting props.friendsInfo to array
-  const friendsArray = objToArray(props.friendsInfo, "main", "details");
+  const friendsArray = objToArray(friendsInfo, "main", "details");
 
   useEffect(() => {
-    console.log("Reached useEffect");
     onInitFriends();
   }, [onInitFriends]);
+
   return (
     <Grid
       className={classes.container}

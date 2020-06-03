@@ -119,8 +119,9 @@ function DetailsModal(props) {
     dialogOpen,
     dialogCloseHandler,
     editMode,
-    editCloseHandler,
+    // editCloseHandler,
     editOpenHandler,
+    updateHandler,
     currentDetails,
   } = props;
 
@@ -143,6 +144,12 @@ function DetailsModal(props) {
     // new Date("2014-08-18" + "T21:11:54")
     new Date(`${year}-${month}-${day}T21:11:54`)
   );
+
+  const [transactionAmt, setTransactionAmt] = React.useState(
+    currentDetails.transactionAmount
+  );
+  const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
+  const [details, setDetails] = React.useState(currentDetails.details);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -216,7 +223,7 @@ function DetailsModal(props) {
         id="standard-number"
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue={currentDetails.transactionAmount}
+        defaultValue={transactionAmt}
         classes={{
           root: classes.listItemText,
         }}
@@ -224,6 +231,7 @@ function DetailsModal(props) {
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setTransactionAmt(event.target.value)}
       />
     ),
     editPaidBy: (
@@ -294,10 +302,11 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         className={classes.detailNumber}
-        defaultValue={`${currentDetails.owe}`}
+        defaultValue={`${oweAmt}`}
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setOweAmt(event.target.value)}
       />
     ),
     editDetails: (
@@ -312,6 +321,7 @@ function DetailsModal(props) {
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setDetails(event.target.value)}
       />
     ),
   };
@@ -371,7 +381,7 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         style={{ marginLeft: "39px" }}
-        primary={currentDetails.details}
+        primary={details}
       />
     ),
   };
@@ -618,7 +628,19 @@ function DetailsModal(props) {
 
               <div style={{ marginLeft: "auto" }}>
                 <Button
-                  onClick={editMode ? editCloseHandler : editOpenHandler}
+                  onClick={() =>
+                    editMode
+                      ? updateHandler({
+                          date: selectedDate,
+                          transactionAmount: transactionAmt,
+                          paidBy: paidBy,
+                          type: splitType,
+                          category: category,
+                          owe: oweAmt,
+                          details: details,
+                        })
+                      : editOpenHandler()
+                  }
                   color={
                     theme.palette.type === "light" ? "primary" : "secondary"
                   }

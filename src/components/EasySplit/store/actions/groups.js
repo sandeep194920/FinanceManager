@@ -14,7 +14,7 @@ export const setGroups = (groups) => {
 // fetch ingredients failed (sync) helper
 export const fetchGroupsFailed = () => {
   return {
-    type: actionTypes.FETCH_GROUPS_FAILED,
+    type: actionTypes.SET_GROUPS_FAILED,
   };
 };
 

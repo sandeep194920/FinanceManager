@@ -21,6 +21,8 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import * as actionTypes from "./store/actions";
+import { connect } from "react-redux";
 
 function FriendsDetails(props) {
   console.log("FriendsDetails");
@@ -32,6 +34,8 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
+    friendsInfo,
+    onUpdateFriends,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -82,6 +86,17 @@ function FriendsDetails(props) {
   const editCloseHandler = useCallback(() => {
     setEditMode(false);
   }, [setEditMode]);
+
+  const updateHandler = useCallback(
+    (updateDetails) => {
+      // here we need to update the data by using action creator and then close the handler
+      // console.log();
+      onUpdateFriends(updateDetails, friendsInfo);
+      editCloseHandler();
+    },
+    [editCloseHandler, friendsInfo, onUpdateFriends]
+  );
+
   return (
     <React.Fragment>
       <TableRow>
@@ -250,6 +265,7 @@ function FriendsDetails(props) {
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
+          updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
         />
@@ -258,4 +274,21 @@ function FriendsDetails(props) {
   );
 }
 
-export default React.memo(FriendsDetails);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.friends.loading,
+    friendsInfo: state.friends.friendsInfo,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateFriends: (updateFriends, currentFriends) =>
+      dispatch(actionTypes.updateFriends(updateFriends, currentFriends)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(FriendsDetails));

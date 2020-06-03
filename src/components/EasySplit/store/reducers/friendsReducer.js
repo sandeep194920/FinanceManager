@@ -13,6 +13,10 @@ const friendsReducer = (state = initState, action) => {
         friendsInfo: action.friends,
         loading: false,
       };
+    case actionTypes.UPDATE_FRIENDS:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

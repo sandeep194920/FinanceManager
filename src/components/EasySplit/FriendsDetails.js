@@ -28,7 +28,8 @@ function FriendsDetails(props) {
   console.log("FriendsDetails");
 
   const {
-    details,
+    friend,
+    // details,
     mainInfo,
     showDetails,
     hideDetails,
@@ -89,14 +90,17 @@ function FriendsDetails(props) {
 
   const updateHandler = useCallback(
     (updateDetails) => {
+      // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
       // console.log();
+      console.log("The user is id " + updateDetails.userId);
       onUpdateFriends(updateDetails, friendsInfo);
       editCloseHandler();
     },
     [editCloseHandler, friendsInfo, onUpdateFriends]
   );
-
+  console.log("The friend is ");
+  console.log(friend);
   return (
     <React.Fragment>
       <TableRow>
@@ -219,7 +223,9 @@ function FriendsDetails(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {details.map((record, index) => {
+                    {friend.details.map((record, index) => {
+                      console.log("The record is ");
+                      // console.log(record);
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
                           <TableCell>{record.date}</TableCell>
@@ -268,6 +274,8 @@ function FriendsDetails(props) {
           updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
+          setCurrentDetails={setCurrentDetails}
+          userId={friend.main.userId}
         />
       ) : null}
     </React.Fragment>

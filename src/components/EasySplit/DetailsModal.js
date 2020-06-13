@@ -116,6 +116,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function DetailsModal(props) {
   console.log("DetailsModal");
   const {
+    userId,
     dialogOpen,
     dialogCloseHandler,
     editMode,
@@ -123,8 +124,11 @@ function DetailsModal(props) {
     editOpenHandler,
     updateHandler,
     currentDetails,
+    setCurrentDetails,
   } = props;
 
+  console.log("The current details are");
+  console.log(currentDetails);
   // currentDetails date format update
   const formattedDate = currentDetails.date.split("-");
   const day = formattedDate[0];
@@ -142,8 +146,14 @@ function DetailsModal(props) {
   const [category, setCategory] = React.useState(currentDetails.category);
   const [selectedDate, setSelectedDate] = React.useState(
     // new Date("2014-08-18" + "T21:11:54")
-    new Date(`${year}-${month}-${day}T21:11:54`)
+    // new Date(`${year}-${month}-${day}T21:11:54`)
+    new Date()
   );
+  // var dateFormat = require("dateformat");
+  // var now = new Date();
+
+  // console.log("HAHAHA");
+  // console.log(dateFormat(now, "isoDateTime"));
 
   const [transactionAmt, setTransactionAmt] = React.useState(
     currentDetails.transactionAmount
@@ -152,7 +162,11 @@ function DetailsModal(props) {
   const [details, setDetails] = React.useState(currentDetails.details);
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    console.log("The date before is " + date);
+    var dateFormat = require("dateformat");
+    console.log("The date after format is ");
+    console.log(dateFormat(date, "dd-mm-yyyy"));
+    setSelectedDate(dateFormat(date, "dd-mm-yyyy"));
   };
 
   const whopaid = [
@@ -214,6 +228,7 @@ function DetailsModal(props) {
           classes={{
             root: classes.listItemText,
           }}
+          maxDate={new Date()}
           className={classes.detailDate}
         />
       </MuiPickersUtilsProvider>
@@ -418,6 +433,27 @@ function DetailsModal(props) {
   };
 
   // related to child container OkCancel Modal above
+
+  // onUpdate
+  const onUpdateHandler = () => {
+    const updateObj = {
+      date: selectedDate,
+      transactionAmount: transactionAmt,
+      paidBy: paidBy,
+      type: splitType,
+      category: category,
+      owe: oweAmt,
+      details: details,
+      detailId: currentDetails.detailId,
+      userId: userId,
+    };
+    console.log("The updateable date " + updateObj.date);
+    console.log("The correct date " + currentDetails.date);
+    updateHandler({
+      ...updateObj,
+    });
+    setCurrentDetails({ ...updateObj });
+  };
 
   return (
     <React.Fragment>
@@ -630,16 +666,30 @@ function DetailsModal(props) {
                 <Button
                   onClick={() =>
                     editMode
-                      ? updateHandler({
-                          date: selectedDate,
-                          transactionAmount: transactionAmt,
-                          paidBy: paidBy,
-                          type: splitType,
-                          category: category,
-                          owe: oweAmt,
-                          details: details,
-                        })
-                      : editOpenHandler()
+                      ? // ? updateHandler({
+                        //     date: selectedDate,
+                        //     transactionAmount: transactionAmt,
+                        //     paidBy: paidBy,
+                        //     type: splitType,
+                        //     category: category,
+                        //     owe: oweAmt,
+                        //     details: details,
+                        //     detailId: currentDetails.detailId,
+                        //     userId: userId,
+                        //   })
+                        onUpdateHandler()
+                      : // {
+                        //   date: selectedDate,
+                        //   transactionAmount: transactionAmt,
+                        //   paidBy: paidBy,
+                        //   type: splitType,
+                        //   category: category,
+                        //   owe: oweAmt,
+                        //   details: details,
+                        //   detailId: currentDetails.detailId,
+                        //   userId: userId,
+                        // }
+                        editOpenHandler()
                   }
                   color={
                     theme.palette.type === "light" ? "primary" : "secondary"

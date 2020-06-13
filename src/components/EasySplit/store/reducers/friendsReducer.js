@@ -8,6 +8,8 @@ const initState = {
 const friendsReducer = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.SET_FRIENDS:
+      console.log("REACHED setfriends");
+      console.log(action.friends);
       return {
         ...state,
         friendsInfo: action.friends,
@@ -16,6 +18,7 @@ const friendsReducer = (state = initState, action) => {
     case actionTypes.UPDATE_FRIENDS:
       return {
         ...state,
+        friendsInfo: action.friends,
       };
     default:
       return state;

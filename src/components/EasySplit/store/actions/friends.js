@@ -65,6 +65,7 @@ export const updateFriends = (updateDetails, currentFriends) => {
     if (detailObj["detailId"] !== updateDetails["detailId"]) {
       return detailObj;
     }
+    return 0;
   });
   updatedDetailsArray[updateDetails["detailId"]] = { ...updateDetails };
 

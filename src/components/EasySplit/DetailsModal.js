@@ -130,10 +130,10 @@ function DetailsModal(props) {
   console.log("The current details are");
   console.log(currentDetails);
   // currentDetails date format update
-  const formattedDate = currentDetails.date.split("-");
-  const day = formattedDate[0];
-  const month = formattedDate[1];
-  const year = formattedDate[2];
+  // const formattedDate = currentDetails.date.split("-");
+  // const day = formattedDate[0];
+  // const month = formattedDate[1];
+  // const year = formattedDate[2];
 
   const classes = useStyles();
   const theme = useTheme();
@@ -144,10 +144,12 @@ function DetailsModal(props) {
   const [paidBy, setPaidBy] = React.useState(currentDetails.paidBy);
   const [splitType, setSplitType] = React.useState(currentDetails.type);
   const [category, setCategory] = React.useState(currentDetails.category);
+  const dateFormat = require("dateformat");
   const [selectedDate, setSelectedDate] = React.useState(
     // new Date("2014-08-18" + "T21:11:54")
     // new Date(`${year}-${month}-${day}T21:11:54`)
-    new Date()
+    // new Date()
+    dateFormat(new Date(), "mm-dd-yyyy")
   );
   // var dateFormat = require("dateformat");
   // var now = new Date();
@@ -163,10 +165,10 @@ function DetailsModal(props) {
 
   const handleDateChange = (date) => {
     console.log("The date before is " + date);
-    var dateFormat = require("dateformat");
+    // const dateFormat = require("dateformat");
     console.log("The date after format is ");
     console.log(dateFormat(date, "dd-mm-yyyy"));
-    setSelectedDate(dateFormat(date, "dd-mm-yyyy"));
+    setSelectedDate(dateFormat(date, "mm-dd-yyyy"));
   };
 
   const whopaid = [
@@ -221,7 +223,7 @@ function DetailsModal(props) {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           id="date-picker-dialog"
-          format="MM/dd/yyyy"
+          format="dd MMM, yyyy"
           color={theme.palette.type === "dark" ? "secondary" : "primary"}
           value={selectedDate}
           onChange={handleDateChange}
@@ -452,6 +454,8 @@ function DetailsModal(props) {
     updateHandler({
       ...updateObj,
     });
+    console.log("SELE DATE IS ");
+    console.log(selectedDate);
     setCurrentDetails({ ...updateObj });
   };
 

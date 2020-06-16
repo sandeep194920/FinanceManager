@@ -27,13 +27,12 @@ export const initFriends = () => {
         console.log(response.data);
         return dispatch(setFriends(response.data));
       })
-
       .catch((error) => dispatch(setFriendsFailed()));
   };
 };
 
 // update friends failed (sync) helper
-export const updateFriendsDet = (friends) => {
+export const updateFriendsDetails = (friends) => {
   return {
     type: actionTypes.UPDATE_FRIENDS,
     friends: friends,
@@ -50,17 +49,9 @@ export const updateFriendsFailed = () => {
 // actual async action creator to update friends -- called in FriendsDetails.js
 export const updateFriends = (updateDetails, currentFriends) => {
   // get these update details and get the id out of it, use current details to modify it and then send it to set friends
-
   // Getting only the details of this particular user whose details need to be updated
   const extractedDetails = currentFriends[updateDetails["userId"]].details;
-  console.log("The extracted details are");
-  console.log(extractedDetails);
   // Getting a new array thats going to contain only the objects that need not be updated
-
-  // const updatedDetailsArray = extractedDetails.filter(
-  //   (detailObj) => detailObj["detailId"] !== updateDetails["detailId"]
-  // );
-
   const updatedDetailsArray = extractedDetails.map((detailObj) => {
     if (detailObj["detailId"] !== updateDetails["detailId"]) {
       return detailObj;
@@ -71,12 +62,6 @@ export const updateFriends = (updateDetails, currentFriends) => {
 
   // pushing the update into the previous array to get new updated details. This array can now be replaced with the user's details
   const updatedDetails = [...updatedDetailsArray];
-  console.log("extractedDetails");
-  console.log(extractedDetails);
-
-  console.log("updatedDetailsArray");
-  console.log(updatedDetailsArray);
-
   const updatedFriends = {
     ...currentFriends,
     [updateDetails["userId"]]: {
@@ -87,16 +72,7 @@ export const updateFriends = (updateDetails, currentFriends) => {
       details: updatedDetails,
     },
   };
-
-  // const formattedUpdatedFriends = objToArray(updatedFriends, "main", "details");
-
   return (dispatch) => {
-    console.log("Coming from updateFriends actions");
-    console.log(currentFriends);
-    console.log(updatedFriends);
-
-    // console.log(updateDetails);
-    // console.log(currentFriend);
-    dispatch(updateFriendsDet(updatedFriends));
+    dispatch(updateFriendsDetails(updatedFriends));
   };
 };

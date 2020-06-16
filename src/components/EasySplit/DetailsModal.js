@@ -127,14 +127,6 @@ function DetailsModal(props) {
     setCurrentDetails,
   } = props;
 
-  console.log("The current details are");
-  console.log(currentDetails);
-  // currentDetails date format update
-  // const formattedDate = currentDetails.date.split("-");
-  // const day = formattedDate[0];
-  // const month = formattedDate[1];
-  // const year = formattedDate[2];
-
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -146,16 +138,8 @@ function DetailsModal(props) {
   const [category, setCategory] = React.useState(currentDetails.category);
   const dateFormat = require("dateformat");
   const [selectedDate, setSelectedDate] = React.useState(
-    // new Date("2014-08-18" + "T21:11:54")
-    // new Date(`${year}-${month}-${day}T21:11:54`)
-    // new Date()
-    dateFormat(new Date(), "mm-dd-yyyy")
+    dateFormat(new Date(currentDetails.date), "dd mmm, yyyy")
   );
-  // var dateFormat = require("dateformat");
-  // var now = new Date();
-
-  // console.log("HAHAHA");
-  // console.log(dateFormat(now, "isoDateTime"));
 
   const [transactionAmt, setTransactionAmt] = React.useState(
     currentDetails.transactionAmount
@@ -164,11 +148,7 @@ function DetailsModal(props) {
   const [details, setDetails] = React.useState(currentDetails.details);
 
   const handleDateChange = (date) => {
-    console.log("The date before is " + date);
-    // const dateFormat = require("dateformat");
-    console.log("The date after format is ");
-    console.log(dateFormat(date, "dd-mm-yyyy"));
-    setSelectedDate(dateFormat(date, "mm-dd-yyyy"));
+    setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };
 
   const whopaid = [
@@ -184,34 +164,34 @@ function DetailsModal(props) {
 
   const splitTypes = [
     {
-      value: "equal",
+      value: "Equal",
       label: "Equal",
     },
     {
-      value: "nosplit",
+      value: "No Split",
       label: "No Split",
     },
     {
-      value: "custom",
+      value: "Custom",
       label: "Custom",
     },
   ];
 
   const categories = [
     {
-      value: "entertainment",
+      value: "Entertainment",
       label: "Entertainment",
     },
     {
-      value: "groceries",
+      value: "Groceries",
       label: "Groceries",
     },
     {
-      value: "movies",
+      value: "Movies",
       label: "Movies",
     },
     {
-      value: "other",
+      value: "Other",
       label: "Other",
     },
   ];
@@ -225,6 +205,7 @@ function DetailsModal(props) {
           id="date-picker-dialog"
           format="dd MMM, yyyy"
           color={theme.palette.type === "dark" ? "secondary" : "primary"}
+          // value={selectedDate}
           value={selectedDate}
           onChange={handleDateChange}
           classes={{
@@ -350,6 +331,7 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         primary={currentDetails.date}
+        // primary={selectedDate}
       />
     ),
     transactionAmount: (
@@ -449,13 +431,9 @@ function DetailsModal(props) {
       detailId: currentDetails.detailId,
       userId: userId,
     };
-    console.log("The updateable date " + updateObj.date);
-    console.log("The correct date " + currentDetails.date);
     updateHandler({
       ...updateObj,
     });
-    console.log("SELE DATE IS ");
-    console.log(selectedDate);
     setCurrentDetails({ ...updateObj });
   };
 
@@ -669,31 +647,7 @@ function DetailsModal(props) {
               <div style={{ marginLeft: "auto" }}>
                 <Button
                   onClick={() =>
-                    editMode
-                      ? // ? updateHandler({
-                        //     date: selectedDate,
-                        //     transactionAmount: transactionAmt,
-                        //     paidBy: paidBy,
-                        //     type: splitType,
-                        //     category: category,
-                        //     owe: oweAmt,
-                        //     details: details,
-                        //     detailId: currentDetails.detailId,
-                        //     userId: userId,
-                        //   })
-                        onUpdateHandler()
-                      : // {
-                        //   date: selectedDate,
-                        //   transactionAmount: transactionAmt,
-                        //   paidBy: paidBy,
-                        //   type: splitType,
-                        //   category: category,
-                        //   owe: oweAmt,
-                        //   details: details,
-                        //   detailId: currentDetails.detailId,
-                        //   userId: userId,
-                        // }
-                        editOpenHandler()
+                    editMode ? onUpdateHandler() : editOpenHandler()
                   }
                   color={
                     theme.palette.type === "light" ? "primary" : "secondary"

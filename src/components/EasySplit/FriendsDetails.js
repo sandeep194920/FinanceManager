@@ -26,7 +26,8 @@ function FriendsDetails(props) {
   console.log("FriendsDetails");
 
   const {
-    details,
+    friend,
+    //details,
     mainInfo,
     showDetails,
     hideDetails,
@@ -204,7 +205,7 @@ function FriendsDetails(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {details.map((record, index) => {
+                    {friend.details.map((record, index) => {
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
                           <TableCell>{record.date}</TableCell>
@@ -252,6 +253,8 @@ function FriendsDetails(props) {
           editCloseHandler={editCloseHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
+          setCurrentDetails={setCurrentDetails}
+          userId={friend.main.userId}
         />
       ) : null}
     </React.Fragment>

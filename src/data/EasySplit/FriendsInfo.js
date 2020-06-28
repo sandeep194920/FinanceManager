@@ -8,29 +8,29 @@ export const friendsInfo = [
     },
     details: [
       {
-        date: "18-08-2018",
+        date: "04 Dec, 2010",
         transactionAmount: "30",
         paidBy: "You",
-        type: "Custom",
-        category: "Entertainment",
+        type: "custom",
+        category: "entertainment",
         owe: "20",
         details: "Watched starwars movie",
       },
       {
-        date: "03-04-2019",
+        date: "12 Dec, 2020",
         transactionAmount: "40",
         paidBy: "You",
-        type: "No split",
-        category: "Buffet",
+        type: "nosplit",
+        category: "buffet",
         owe: "10",
         details: "Saravana bhavan",
       },
       {
-        date: "02-12-2020",
+        date: "04 Nov, 1992",
         transactionAmount: "60",
         paidBy: "Sandeep",
-        type: "Equal",
-        category: "Fitness",
+        type: "equal",
+        category: "fitness",
         owe: "200",
         details: "Whey protein",
       },
@@ -45,32 +45,68 @@ export const friendsInfo = [
     },
     details: [
       {
-        date: "18-08-2018",
+        date: "18 Aug, 2019",
         transactionAmount: "30",
         paidBy: "You",
-        type: "Custom",
-        category: "Entertainment",
+        type: "custom",
+        category: "entertainment",
         owe: "20",
         details: "Watched starwars movie",
       },
       {
-        date: "03-04-2019",
+        date: "04 Sep, 2020",
         transactionAmount: "40",
         paidBy: "You",
-        type: "No split",
-        category: "Buffet",
+        type: "nosplit",
+        category: "buffet",
         owe: "10",
         details: "Saravana bhavan",
       },
       {
-        date: "02-12-2020",
+        date: "01 Jun, 1998",
         transactionAmount: "60",
         paidBy: "Sandeep",
-        type: "Equal",
-        category: "Fitness",
+        type: "equal",
+        category: "fitness",
         owe: "200",
         details: "Whey protein",
       },
     ],
   },
 ];
+
+// add data to firestore
+
+// const fr = friendsInfo[0];
+//     db.collection("friends")
+//       .doc("Sa194920")
+//       .set({
+//         ...fr,
+//       })
+//       .then(function () {
+//         console.log("Document successfully written!");
+//       })
+//       .catch(function (error) {
+//         console.error("Error writing document: ", error);
+//       });
+
+// get the data from firestore
+
+//   const firebaseFriends = [];
+//   db.collection("friends")
+//     .get()
+//     .then((snapshot) => {
+//       snapshot.forEach((friend) => {
+//         firebaseFriends.push(friend.data());
+//       });
+//       dispatch(setFriends(firebaseFriends));
+//       console.log("firebaseFriends");
+//       console.log(firebaseFriends);
+//     })
+//     .catch((error) => dispatch(setFriendsFailed()));
+
+// update the data in friebase. Use this dot notation not to lose other fields
+
+// db.collection("friends").doc("Sa194920").update({
+//   "main.oweAmount": 180,
+// });

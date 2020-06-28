@@ -20,6 +20,7 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import CallSplitIcon from "@material-ui/icons/CallSplit";
 import CategoryIcon from "@material-ui/icons/Category";
 import DetailsIcon from "@material-ui/icons/Details";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import Grid from "@material-ui/core/Grid";
 import OkCancelModal from "../EasySplit/OkCancelModal";
 import TextField from "@material-ui/core/TextField";
@@ -115,19 +116,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function DetailsModal(props) {
   console.log("DetailsModal");
   const {
+    userId,
     dialogOpen,
     dialogCloseHandler,
     editMode,
-    editCloseHandler,
+    // editCloseHandler,
     editOpenHandler,
+    updateHandler,
     currentDetails,
+    setCurrentDetails,
   } = props;
-
-  // currentDetails date format update
-  const formattedDate = currentDetails.date.split("-");
-  const day = formattedDate[0];
-  const month = formattedDate[1];
-  const year = formattedDate[2];
 
   const classes = useStyles();
   const theme = useTheme();
@@ -138,13 +136,19 @@ function DetailsModal(props) {
   const [paidBy, setPaidBy] = React.useState(currentDetails.paidBy);
   const [splitType, setSplitType] = React.useState(currentDetails.type);
   const [category, setCategory] = React.useState(currentDetails.category);
+  const dateFormat = require("dateformat");
   const [selectedDate, setSelectedDate] = React.useState(
-    // new Date("2014-08-18" + "T21:11:54")
-    new Date(`${year}-${month}-${day}T21:11:54`)
+    dateFormat(new Date(currentDetails.date), "dd mmm, yyyy")
   );
 
+  const [transactionAmt, setTransactionAmt] = React.useState(
+    currentDetails.transactionAmount
+  );
+  const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
+  const [details, setDetails] = React.useState(currentDetails.details);
+
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };
 
   const whopaid = [
@@ -160,34 +164,34 @@ function DetailsModal(props) {
 
   const splitTypes = [
     {
-      value: "equal",
+      value: "Equal",
       label: "Equal",
     },
     {
-      value: "nosplit",
+      value: "No Split",
       label: "No Split",
     },
     {
-      value: "custom",
+      value: "Custom",
       label: "Custom",
     },
   ];
 
   const categories = [
     {
-      value: "entertainment",
+      value: "Entertainment",
       label: "Entertainment",
     },
     {
-      value: "groceries",
+      value: "Groceries",
       label: "Groceries",
     },
     {
-      value: "movies",
+      value: "Movies",
       label: "Movies",
     },
     {
-      value: "other",
+      value: "Other",
       label: "Other",
     },
   ];
@@ -199,13 +203,15 @@ function DetailsModal(props) {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           id="date-picker-dialog"
-          format="MM/dd/yyyy"
+          format="dd MMM, yyyy"
           color={theme.palette.type === "dark" ? "secondary" : "primary"}
+          // value={selectedDate}
           value={selectedDate}
           onChange={handleDateChange}
           classes={{
             root: classes.listItemText,
           }}
+          maxDate={new Date()}
           className={classes.detailDate}
         />
       </MuiPickersUtilsProvider>
@@ -215,7 +221,7 @@ function DetailsModal(props) {
         id="standard-number"
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue={currentDetails.transactionAmount}
+        defaultValue={transactionAmt}
         classes={{
           root: classes.listItemText,
         }}
@@ -223,6 +229,7 @@ function DetailsModal(props) {
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setTransactionAmt(event.target.value)}
       />
     ),
     editPaidBy: (
@@ -293,10 +300,11 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         className={classes.detailNumber}
-        defaultValue={`${currentDetails.owe}`}
+        defaultValue={`${oweAmt}`}
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setOweAmt(event.target.value)}
       />
     ),
     editDetails: (
@@ -311,6 +319,7 @@ function DetailsModal(props) {
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(event) => setDetails(event.target.value)}
       />
     ),
   };
@@ -322,6 +331,7 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         primary={currentDetails.date}
+        // primary={selectedDate}
       />
     ),
     transactionAmount: (
@@ -370,7 +380,7 @@ function DetailsModal(props) {
           root: classes.listItemText,
         }}
         style={{ marginLeft: "39px" }}
-        primary={currentDetails.details}
+        primary={details}
       />
     ),
   };
@@ -407,6 +417,25 @@ function DetailsModal(props) {
   };
 
   // related to child container OkCancel Modal above
+
+  // onUpdate
+  const onUpdateHandler = () => {
+    const updateObj = {
+      date: selectedDate,
+      transactionAmount: transactionAmt,
+      paidBy: paidBy,
+      type: splitType,
+      category: category,
+      owe: oweAmt,
+      details: details,
+      detailId: currentDetails.detailId,
+      userId: userId,
+    };
+    updateHandler({
+      ...updateObj,
+    });
+    setCurrentDetails({ ...updateObj });
+  };
 
   return (
     <React.Fragment>
@@ -557,7 +586,7 @@ function DetailsModal(props) {
                   <Grid container alignItems="center" justify="space-between">
                     <Grid item style={{ display: "inherit" }}>
                       <ListItemIcon classes={{ root: classes.listIcon }}>
-                        <CategoryIcon
+                        <AttachMoneyIcon
                           fontSize={matchesSM ? "small" : "default"}
                           color={
                             theme.palette.type === "dark"
@@ -617,7 +646,9 @@ function DetailsModal(props) {
 
               <div style={{ marginLeft: "auto" }}>
                 <Button
-                  onClick={editMode ? editCloseHandler : editOpenHandler}
+                  onClick={() =>
+                    editMode ? onUpdateHandler() : editOpenHandler()
+                  }
                   color={
                     theme.palette.type === "light" ? "primary" : "secondary"
                   }

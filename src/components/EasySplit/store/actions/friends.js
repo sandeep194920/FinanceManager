@@ -27,8 +27,8 @@ export const initFriends = () => {
           firebaseFriends.push(friend.data());
         });
         dispatch(setFriends(firebaseFriends));
-        console.log("firebaseFriends");
-        console.log(firebaseFriends);
+        // console.log("firebaseFriends");
+        // console.log(firebaseFriends);
       })
       .catch((error) => dispatch(setFriendsFailed()));
   };

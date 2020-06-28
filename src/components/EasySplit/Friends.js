@@ -58,8 +58,8 @@ function FriendsList(props) {
           {friendsInfo.map((friendInfo, index) => (
             <FriendsshowDetails
               key={friendInfo + index}
-              details={friendInfo.details}
-              // friend={friendInfo}
+              //details={friendInfo.details}
+              friend={friendInfo}
               mainInfo={friendInfo.main}
               showDetails={showDetails}
               setShowDetails={switchShowDetails}

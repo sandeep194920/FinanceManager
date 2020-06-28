@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -12,11 +12,15 @@ import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
+import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
 // redux
 import { connect } from "react-redux";
 
 function FriendsList(props) {
   console.log("Friends");
+  const { onInitFriends, friendsInfo, loading } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -35,6 +39,38 @@ function FriendsList(props) {
     switchShowDetails(false);
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
+
+  // console.log(friendsInfo);
+
+  useEffect(() => {
+    onInitFriends();
+  }, [onInitFriends]);
+
+  let friends = (
+    <LinearProgress
+      color={theme.palette.type === "dark" ? "secondary" : "primary"}
+    />
+  );
+  if (!loading) {
+    friends = (
+      <Table>
+        <TableBody>
+          {friendsInfo.map((friendInfo, index) => (
+            <FriendsshowDetails
+              key={friendInfo + index}
+              details={friendInfo.details}
+              // friend={friendInfo}
+              mainInfo={friendInfo.main}
+              showDetails={showDetails}
+              setShowDetails={switchShowDetails}
+              hideDetails={hideDetails}
+              setHideDetails={switchHideDetails}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    );
+  }
 
   return (
     <Grid
@@ -83,21 +119,7 @@ function FriendsList(props) {
               className={classes.formControlLabel}
             />
           </Grid>
-          <Table>
-            <TableBody>
-              {props.friendsInfo.map((friendInfo, index) => (
-                <FriendsshowDetails
-                  key={friendInfo + index}
-                  details={friendInfo.details}
-                  mainInfo={friendInfo.main}
-                  showDetails={showDetails}
-                  setShowDetails={switchShowDetails}
-                  hideDetails={hideDetails}
-                  setHideDetails={switchHideDetails}
-                />
-              ))}
-            </TableBody>
-          </Table>
+          {friends}
         </TableContainer>
       </Grid>
     </Grid>
@@ -106,24 +128,18 @@ function FriendsList(props) {
 
 const mapStateToProps = (state) => {
   return {
-    test: state.friends.test,
+    loading: state.friends.loading,
     friendsInfo: state.friends.friendsInfo,
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onIngredientAdded: (ingName) =>
-//       dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
-//     onIngredientRemoved: (ingName) =>
-//       dispatch({
-//         type: actionTypes.REMOVE_INGREDIENT,
-//         ingredientName: ingName,
-//       }),
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onInitFriends: () => dispatch(actionTypes.initFriends()),
+  };
+};
 
 export default connect(
-  mapStateToProps
-  // mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(React.memo(FriendsList));

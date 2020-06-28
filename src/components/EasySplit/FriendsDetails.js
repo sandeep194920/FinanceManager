@@ -35,7 +35,6 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    friendsInfo,
     onUpdateFriends,
   } = props;
   const theme = useTheme();
@@ -92,12 +91,11 @@ function FriendsDetails(props) {
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
-      // console.log();
       console.log("The user is id " + updateDetails.userId);
-      onUpdateFriends(updateDetails, friendsInfo);
+      onUpdateFriends(updateDetails);
       editCloseHandler();
     },
-    [editCloseHandler, friendsInfo, onUpdateFriends]
+    [editCloseHandler, onUpdateFriends]
   );
 
   return (
@@ -282,14 +280,14 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-    friendsInfo: state.friends.friendsInfo,
+    // friendsInfo: state.friends.friendsInfo, // not required since we get this from firebase directly in friend action creator
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateFriends: (updateFriends, currentFriends) =>
-      dispatch(actionTypes.updateFriends(updateFriends, currentFriends)),
+      dispatch(actionTypes.updateFriends(updateFriends)),
   };
 };
 

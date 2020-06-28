@@ -105,8 +105,29 @@ export const friendsInfo = [
 //     })
 //     .catch((error) => dispatch(setFriendsFailed()));
 
+// get a single data from firestore
+
+// let currentUser = null;
+
+//     const docRef = db.collection("friends").doc(userId);
+//     docRef
+//       .get()
+//       .then(function (doc) {
+//         if (doc.exists) {
+//           console.log("Document data:", doc.data());
+//           currentUser = doc.data();
+//         } else {
+//           // doc.data() will be undefined in this case
+//           console.log("No such document!");
+//         }
+//       })
+//       .catch(function (error) {
+//         console.log("Error getting document:", error);
+//       });
+
 // update the data in friebase. Use this dot notation not to lose other fields
 
 // db.collection("friends").doc("Sa194920").update({
 //   "main.oweAmount": 180,
+// [`testObj.${zero}.a`]: "12345",   // dynamically update the value
 // });

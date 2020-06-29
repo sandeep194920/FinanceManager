@@ -366,14 +366,30 @@ function DetailsModal(props) {
         primary={currentDetails.category}
       />
     ),
-    youOwe: (
-      <ListItemText
-        classes={{
-          root: classes.listItemText,
-        }}
-        primary={`$${currentDetails.owe}`}
-      />
-    ),
+    youOwe:
+      currentDetails.owe >= 0 ? (
+        <ListItemText
+          style={{ color: theme.palette.common.green }}
+          classes={{
+            root: classes.listItemText,
+          }}
+          primary={`$${currentDetails.owe}`}
+        />
+      ) : (
+        <ListItemText
+          style={{ color: theme.palette.common.red }}
+          classes={{
+            root: classes.listItemText,
+          }}
+          primary={`$${currentDetails.owe}`}
+        />
+      ),
+    // <ListItemText
+    //   classes={{
+    //     root: classes.listItemText,
+    //   }}
+    //   primary={`$${currentDetails.owe}`}
+    // />
     details: (
       <ListItemText
         classes={{

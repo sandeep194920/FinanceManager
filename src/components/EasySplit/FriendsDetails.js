@@ -203,14 +203,16 @@ function FriendsDetails(props) {
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      {detailsTableHead.map((tableCell) => (
-                        <TableCell
-                          key={tableCell}
-                          classes={{ root: classes.tcell }}
-                        >
-                          {tableCell}
-                        </TableCell>
-                      ))}
+                      {detailsTableHead.map((tableCell) => {
+                        return (
+                          <TableCell
+                            key={tableCell}
+                            classes={{ root: classes.tcell }}
+                          >
+                            {tableCell}
+                          </TableCell>
+                        );
+                      })}
                       <TableCell
                         className={classes.detailCellHead}
                         classes={{ root: classes.tcell }}
@@ -229,7 +231,20 @@ function FriendsDetails(props) {
                             <TableCell>{record.paidBy}</TableCell>
                           )}
                           <TableCell>{record.type}</TableCell>
-                          <TableCell>{record.owe}</TableCell>
+                          {record.owe >= 0 ? (
+                            <TableCell
+                              style={{ color: theme.palette.common.green }}
+                            >
+                              {record.owe}
+                            </TableCell>
+                          ) : (
+                            <TableCell
+                              style={{ color: theme.palette.common.red }}
+                            >
+                              {record.owe}
+                            </TableCell>
+                          )}
+                          {/* <TableCell>{record.owe}</TableCell> */}
                           <TableCell>
                             <IconButton
                               onClick={() => {

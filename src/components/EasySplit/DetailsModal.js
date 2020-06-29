@@ -125,6 +125,7 @@ function DetailsModal(props) {
     updateHandler,
     currentDetails,
     setCurrentDetails,
+    friendName,
   } = props;
 
   const classes = useStyles();
@@ -151,14 +152,14 @@ function DetailsModal(props) {
     setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };
 
-  const whopaid = [
+  const whopaidFriend = [
     {
-      value: "you",
+      value: "You",
       label: "You",
     },
     {
-      value: "sandeep",
-      label: "Sandeep",
+      value: friendName,
+      label: friendName,
     },
   ];
 
@@ -244,7 +245,7 @@ function DetailsModal(props) {
           native: true,
         }}
       >
-        {whopaid.map((option) => (
+        {whopaidFriend.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

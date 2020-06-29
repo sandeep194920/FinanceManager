@@ -286,6 +286,7 @@ function FriendsDetails(props) {
           currentDetails={currentDetails}
           setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
+          friendName={friend.main.displayName}
         />
       ) : null}
     </React.Fragment>

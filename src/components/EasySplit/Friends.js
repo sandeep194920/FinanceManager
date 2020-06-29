@@ -14,7 +14,6 @@ import Switch from "@material-ui/core/Switch";
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
 // redux
 import { connect } from "react-redux";
 
@@ -39,8 +38,6 @@ function FriendsList(props) {
     switchShowDetails(false);
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
-
-  // console.log(friendsInfo);
 
   useEffect(() => {
     onInitFriends();

@@ -21,17 +21,21 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "./FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import * as actionTypes from "./store/actions";
+import { connect } from "react-redux";
 
 function GroupsDetails(props) {
   console.log("GroupsDetails");
 
   const {
-    details,
+    group,
+    //details,
     mainInfo,
     showDetails,
     hideDetails,
     setHideDetails,
     setShowDetails,
+    onUpdateGroups,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -82,6 +86,18 @@ function GroupsDetails(props) {
   const editCloseHandler = useCallback(() => {
     setEditMode(false);
   }, [setEditMode]);
+
+  const updateHandler = useCallback(
+    (updateDetails) => {
+      // updateHandler has been called in Friends.js
+      // here we need to update the data by using action creator and then close the handler
+      console.log("The user is id " + updateDetails.userId);
+      onUpdateGroups(updateDetails);
+      editCloseHandler();
+    },
+    [editCloseHandler, onUpdateGroups]
+  );
+
   return (
     <React.Fragment>
       <TableRow>
@@ -218,7 +234,7 @@ function GroupsDetails(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {details.map((record, index) => (
+                    {group.details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
                         <TableCell>{record.date}</TableCell>
                         <TableCell>{record.transactionAmount}</TableCell>
@@ -226,7 +242,20 @@ function GroupsDetails(props) {
                           <TableCell>{record.paidBy}</TableCell>
                         )}
                         <TableCell>{record.type}</TableCell>
-                        <TableCell>{record.owe}</TableCell>
+                        {record.owe >= 0 ? (
+                          <TableCell
+                            style={{ color: theme.palette.common.green }}
+                          >
+                            {record.owe}
+                          </TableCell>
+                        ) : (
+                          <TableCell
+                            style={{ color: theme.palette.common.red }}
+                          >
+                            {record.owe}
+                          </TableCell>
+                        )}
+                        {/* <TableCell>{record.owe}</TableCell> */}
                         <TableCell>
                           <IconButton
                             onClick={() => {
@@ -262,12 +291,33 @@ function GroupsDetails(props) {
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
+          updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
+          setCurrentDetails={setCurrentDetails}
+          userId={group.main.userId}
+          groupName={group.main.displayName}
         />
       ) : null}
     </React.Fragment>
   );
 }
 
-export default React.memo(GroupsDetails);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.groups.loading,
+    // friendsInfo: state.friends.friendsInfo, // not required since we get this from firebase directly in friend action creator
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateGroups: (updateGroups) =>
+      dispatch(actionTypes.updateGroups(updateGroups)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(GroupsDetails));

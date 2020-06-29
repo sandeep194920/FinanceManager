@@ -126,6 +126,7 @@ function DetailsModal(props) {
     currentDetails,
     setCurrentDetails,
     friendName,
+    groupName,
   } = props;
 
   const classes = useStyles();
@@ -163,6 +164,17 @@ function DetailsModal(props) {
     },
   ];
 
+  const whopaidGroup = [
+    {
+      value: "You",
+      label: "You",
+    },
+    {
+      value: groupName,
+      label: groupName,
+    },
+  ];
+
   const splitTypes = [
     {
       value: "Equal",
@@ -197,6 +209,27 @@ function DetailsModal(props) {
     },
   ];
 
+  // depends if it comes from FriendsDetails or GroupsDetails
+  // if friendName is not null then it comes from FriendsDetails
+  // if groupName is not null then it comes from GroupsDetails
+  let whoPaid = [];
+  if (friendName) {
+    console.log("The friendName is " + friendName);
+    console.log("The groupName is " + groupName);
+    whoPaid = whopaidFriend.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  } else if (groupName) {
+    console.log("The friendName is " + friendName);
+    console.log("The groupName is " + groupName);
+    whoPaid = whopaidGroup.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  }
   // jsx related to edit Details
 
   const editTextFields = {
@@ -245,11 +278,7 @@ function DetailsModal(props) {
           native: true,
         }}
       >
-        {whopaidFriend.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {whoPaid}
       </TextField>
     ),
     editSplitType: (

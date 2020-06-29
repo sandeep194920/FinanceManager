@@ -296,13 +296,13 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-    // friendsInfo: state.friends.friendsInfo, // not required since we get this from firebase directly in friend action creator
+    // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateFriends: (updateFriends, currentFriends) =>
+    onUpdateFriends: (updateFriends) =>
       dispatch(actionTypes.updateFriends(updateFriends)),
   };
 };

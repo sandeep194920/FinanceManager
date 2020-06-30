@@ -1,9 +1,9 @@
 export const groupsInfo = [
   {
     main: {
-      displayName: "Ontario street group",
-      userId: "Sa194920",
-      fullName: "Sandeep Amarnath",
+      displayName: "444 Sherbourne street",
+      userId: "grp2123d",
+      fullName: "Karan Johar",
       oweAmount: -590,
       groupMembersLength: 4,
     },
@@ -16,6 +16,7 @@ export const groupsInfo = [
         category: "Entertainment",
         owe: "20",
         details: "Watched starwars movie",
+        detailId: 0,
       },
       {
         date: "03-04-2019",
@@ -25,6 +26,7 @@ export const groupsInfo = [
         category: "Buffet",
         owe: "10",
         details: "Saravana bhavan",
+        detailId: 1,
       },
       {
         date: "02-12-2020",
@@ -34,6 +36,7 @@ export const groupsInfo = [
         category: "Fitness",
         owe: "200",
         details: "Whey protein",
+        detailId: 2,
       },
     ],
   },

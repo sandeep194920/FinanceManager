@@ -23,6 +23,8 @@ import useStyles from "./FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 function GroupsDetails(props) {
   console.log("GroupsDetails");
@@ -197,21 +199,31 @@ function GroupsDetails(props) {
             unmountOnExit
           >
             <Box>
-              <Grid container justify="space-between">
+              <Grid container justify="space-between" alignItems="center">
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  {mainInfo.fullName}
+                  Group ID - &nbsp; {mainInfo.userId}
                 </Typography>
-                <Typography
+                {/* <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
                   Created By - {mainInfo.userId}
-                </Typography>
+                </Typography> */}
+
+                <Fab
+                  //size="small" // overridden in Light and Dark theme files - Fab button
+                  // color="secondary"
+                  classes={{ root: classes.addDetail }}
+                  // className={classes.addDetail}
+                  aria-label="add"
+                >
+                  <AddIcon classes={{ root: classes.addDetail }} />
+                </Fab>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
@@ -236,7 +248,9 @@ function GroupsDetails(props) {
                   <TableBody>
                     {group.details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
-                        <TableCell>{record.date}</TableCell>
+                        <TableCell style={{ fontWeight: "600" }}>
+                          {record.date}
+                        </TableCell>
                         <TableCell>{record.transactionAmount}</TableCell>
                         {matchesSM ? null : (
                           <TableCell>{record.paidBy}</TableCell>
@@ -244,13 +258,19 @@ function GroupsDetails(props) {
                         <TableCell>{record.type}</TableCell>
                         {record.owe >= 0 ? (
                           <TableCell
-                            style={{ color: theme.palette.common.green }}
+                            style={{
+                              color: theme.palette.common.green,
+                              fontWeight: "700",
+                            }}
                           >
                             {record.owe}
                           </TableCell>
                         ) : (
                           <TableCell
-                            style={{ color: theme.palette.common.red }}
+                            style={{
+                              color: theme.palette.common.red,
+                              fontWeight: "700",
+                            }}
                           >
                             {record.owe}
                           </TableCell>

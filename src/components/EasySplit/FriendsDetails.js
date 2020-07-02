@@ -23,6 +23,8 @@ import useStyles from "./FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 function FriendsDetails(props) {
   console.log("FriendsDetails");
@@ -183,21 +185,30 @@ function FriendsDetails(props) {
             unmountOnExit
           >
             <Box>
-              <Grid container justify="space-between">
+              <Grid container justify="space-between" alignItems="center">
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  {mainInfo.fullName}
+                  {mainInfo.fullName} &nbsp; ({mainInfo.userId})
                 </Typography>
-                <Typography
+                {/* <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  User ID - {mainInfo.userId}
-                </Typography>
+                  ADD Details
+                </Typography> */}
+                <Fab
+                  //size="small" // overridden in Light and Dark theme files - Fab button
+                  // color="secondary"
+                  classes={{ root: classes.addDetail }}
+                  // className={classes.addDetail}
+                  aria-label="add"
+                >
+                  <AddIcon classes={{ root: classes.addDetail }} />
+                </Fab>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
@@ -225,7 +236,9 @@ function FriendsDetails(props) {
                     {friend.details.map((record, index) => {
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
-                          <TableCell>{record.date}</TableCell>
+                          <TableCell style={{ fontWeight: "600" }}>
+                            {record.date}
+                          </TableCell>
                           <TableCell>{record.transactionAmount}</TableCell>
                           {matchesSM ? null : (
                             <TableCell>{record.paidBy}</TableCell>
@@ -233,13 +246,19 @@ function FriendsDetails(props) {
                           <TableCell>{record.type}</TableCell>
                           {record.owe >= 0 ? (
                             <TableCell
-                              style={{ color: theme.palette.common.green }}
+                              style={{
+                                color: theme.palette.common.green,
+                                fontWeight: "700",
+                              }}
                             >
                               {record.owe}
                             </TableCell>
                           ) : (
                             <TableCell
-                              style={{ color: theme.palette.common.red }}
+                              style={{
+                                color: theme.palette.common.red,
+                                fontWeight: "700",
+                              }}
                             >
                               {record.owe}
                             </TableCell>

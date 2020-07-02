@@ -31,7 +31,8 @@ import {
   MuiPickersUtilsProvider,
   // KeyboardDatePicker,
 } from "@material-ui/pickers";
-
+// redux
+import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   dialog: {
     width: "40%",
@@ -213,7 +214,9 @@ function DetailsModal(props) {
   // if friendName is not null then it comes from FriendsDetails
   // if groupName is not null then it comes from GroupsDetails
   let whoPaid = [];
+  let detailsName = null;
   if (friendName) {
+    detailsName = friendName;
     console.log("The friendName is " + friendName);
     console.log("The groupName is " + groupName);
     whoPaid = whopaidFriend.map((option) => (
@@ -222,6 +225,7 @@ function DetailsModal(props) {
       </option>
     ));
   } else if (groupName) {
+    detailsName = groupName;
     console.log("The friendName is " + friendName);
     console.log("The groupName is " + groupName);
     whoPaid = whopaidGroup.map((option) => (
@@ -503,7 +507,7 @@ function DetailsModal(props) {
             color={theme.palette.type === "light" ? "primary" : "secondary"}
             variant={matchesSM ? "subtitle2" : "subtitle1"}
           >
-            Sandeep Amarnath (Sa194920)
+            {`${detailsName} (${userId})`}
           </Typography>
         </DialogTitle>
 
@@ -725,4 +729,10 @@ function DetailsModal(props) {
   );
 }
 
-export default React.memo(DetailsModal);
+const mapStateToProps = (state) => {
+  return {
+    friendsInfo: state.friends.friendsInfo,
+  };
+};
+
+export default connect(mapStateToProps)(React.memo(DetailsModal));

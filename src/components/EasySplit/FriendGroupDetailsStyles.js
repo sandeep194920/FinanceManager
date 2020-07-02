@@ -51,6 +51,47 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "2em",
     },
   },
+
+  addDetail: {
+    "&.MuiButtonBase-root": {
+      "&:hover": {
+        backgroundColor:
+          theme.palette.type === "dark"
+            ? theme.palette.secondary.dark
+            : theme.palette.primary.dark,
+      },
+      backgroundColor:
+        theme.palette.type === "dark"
+          ? theme.palette.secondary.A400
+          : theme.palette.primary[400],
+
+      width: "2.3em",
+      height: "1.75em",
+      marginRight: "2.8em",
+      [theme.breakpoints.down("sm")]: {
+        width: "2em",
+        height: "1em",
+        marginRight: "2.7em",
+      },
+      [theme.breakpoints.down("xs")]: {
+        width: "30px",
+        marginRight: "1.3em",
+        // backgroundColor: "transparent",
+        boxShadow: "none",
+      },
+    },
+
+    color: theme.palette.type === "dark" ? theme.palette.grey500 : "#fff",
+    fontSize: "1.5em",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "15px",
+      // color:
+      //   theme.palette.type === "dark"
+      //     ? theme.palette.secondary.main
+      //     : theme.palette.primary["400"],
+    },
+  },
+
   username: {
     marginRight: "5em",
     marginTop: "1em",

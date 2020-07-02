@@ -29,5 +29,19 @@ const lightTheme = createMuiTheme({
     secondary: amber,
     type: "light", // different in DarkTheme. By default it is light but just mentioned it here.
   },
+  overrides: {
+    // MuiFab: {
+    //   root: {
+    //     backgroundColor: purple[300],
+    //     color: "white",
+    //     marginRight: "5em",
+    //     width: "35px",
+    //     height: "25px",
+    //     "&:hover": {
+    //       backgroundColor: purple[500],
+    //     },
+    //   },
+    // },
+  },
 });
 export default lightTheme;

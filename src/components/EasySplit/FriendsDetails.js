@@ -38,7 +38,7 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    onUpdateFriends,
+    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -99,16 +99,10 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
-  const addHandler = useCallback(
-    (updateDetails) => {
-      // updateHandler has been called in Friends.js
-      // here we need to update the data by using action creator and then close the handler
-      console.log("The user is id " + updateDetails.userId);
-      onUpdateFriends(updateDetails);
-      editCloseHandler();
-    },
-    [editCloseHandler, onUpdateFriends]
-  );
+  const addHandler = useCallback((addDetails) => {
+    console.log("REached addHandler");
+    console.log(addDetails);
+  }, []);
 
   const updateHandler = useCallback(
     (updateDetails) => {
@@ -326,7 +320,7 @@ function FriendsDetails(props) {
           updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
-          setCurrentDetails={setCurrentDetails}
+          // setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
           friendName={friend.main.displayName}
         />

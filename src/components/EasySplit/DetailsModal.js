@@ -49,7 +49,7 @@ function DetailsModal(props) {
     editOpenHandler,
     updateHandler,
     currentDetails,
-    setCurrentDetails,
+    // setCurrentDetails,
     friendName,
     groupName,
   } = props;
@@ -410,7 +410,7 @@ function DetailsModal(props) {
     updateHandler({
       ...updateObj,
     });
-    setCurrentDetails({ ...updateObj });
+    // setCurrentDetails({ ...updateObj });
   };
 
   return (

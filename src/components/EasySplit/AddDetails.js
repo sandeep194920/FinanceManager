@@ -26,6 +26,8 @@ import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker } from "@material-ui/pickers";
+import * as actionTypes from "./store/actions";
+import { connect } from "react-redux";
 import {
   MuiPickersUtilsProvider,
   // KeyboardDatePicker,
@@ -44,6 +46,7 @@ const AddDetails = (props) => {
     // setAddDetails,
     friendName,
     groupName,
+    onAddDetails, // doesnt come from Friends but comes from mapStateToProps
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -152,6 +155,7 @@ const AddDetails = (props) => {
     });
     console.log("The add Object is ");
     console.log(addObject);
+    onAddDetails(addObject);
     dialogCloseHandler();
   };
   // depends if it comes from FriendsDetails or GroupsDetails
@@ -545,4 +549,14 @@ const AddDetails = (props) => {
   );
 };
 
-export default AddDetails;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddDetails: (newDetails) => dispatch(actionTypes.addDetails(newDetails)),
+  };
+};
+
+export default connect(
+  // mapStateToProps,
+  null,
+  mapDispatchToProps
+)(React.memo(AddDetails));

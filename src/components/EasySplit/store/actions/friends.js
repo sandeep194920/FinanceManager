@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { db } from "../../../../firebase";
+import * as firebase from "firebase";
 
 // helper for friends fetch (sync) helper
 export const setFriends = (friends) => {
@@ -76,6 +77,52 @@ export const updateFriends = (updateDetails) => {
       .catch(function (error) {
         console.log("Error getting document:", error);
       });
+  };
+};
+
+// add new details to friend
+export const addDetails = (newDetails) => {
+  console.log("Th of currENT USER are");
+
+  return (dispatch) => {
+    const docRef = db.collection("friends").doc(newDetails.userId);
+    docRef.get().then(function (doc) {
+      if (doc.exists) {
+        const currentUser = doc.data();
+        console.log("The details of currENT USER are");
+        console.log(currentUser.details);
+
+        const detailIdArray = [];
+        currentUser.details.forEach((detail) => {
+          detailIdArray.push(detail.detailId);
+        });
+        detailIdArray.sort((a, b) => a - b); // sorting array in ascending order //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
+        console.log("The array is " + detailIdArray);
+        // Now we got the sorted (ascending order) detaildIds, we can get the last detailId and add 1 for the new detailId
+
+        const lastDetailId = detailIdArray.pop();
+        console.log("The last id is " + lastDetailId);
+
+        const newDetailId = lastDetailId + 1;
+        const updatedNewDetails = {
+          ...newDetails,
+          detailId: newDetailId,
+        };
+
+        console.log(updatedNewDetails);
+        // updating the details in firestore with new details
+        db.collection("friends")
+          .doc(newDetails.userId)
+          .update({
+            details: firebase.firestore.FieldValue.arrayUnion(
+              updatedNewDetails
+            ),
+          });
+
+        // getting the updated data from firestore
+        dispatchFirstoreFriends(dispatch);
+      }
+    });
   };
 };
 

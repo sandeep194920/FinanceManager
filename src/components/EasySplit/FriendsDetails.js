@@ -21,6 +21,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "../styles/FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import AddDetails from "./AddDetails";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
@@ -46,24 +47,33 @@ function FriendsDetails(props) {
   const [open, setOpen] = useState(false);
   //edit
   const [editMode, setEditMode] = useState(false);
-  //dialog
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // update dialog
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  // add dialog
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   const [currentDetails, setCurrentDetails] = useState({});
 
+  // const [addDetails, setAddDetails] = useState({});
+
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  const addDialogOpenHandler = useCallback(() => {
+    setAddDialogOpen(true);
+  }, [setAddDialogOpen]);
 
-  const dialogOpenHandler = useCallback(() => {
-    setDialogOpen(true);
-  }, [setDialogOpen]);
+  const updateDialogOpenHandler = useCallback(() => {
+    setUpdateDialogOpen(true);
+  }, [setUpdateDialogOpen]);
 
   const dialogCloseHandler = useCallback(() => {
-    setDialogOpen(false);
+    setAddDialogOpen(false);
+    setUpdateDialogOpen(false);
     setEditMode(false);
-  }, [setDialogOpen, setEditMode]);
+  }, [setUpdateDialogOpen, setEditMode, setAddDialogOpen]);
 
   useEffect(() => {
     if (hideDetails) {
@@ -88,6 +98,17 @@ function FriendsDetails(props) {
   const editCloseHandler = useCallback(() => {
     setEditMode(false);
   }, [setEditMode]);
+
+  const addHandler = useCallback(
+    (updateDetails) => {
+      // updateHandler has been called in Friends.js
+      // here we need to update the data by using action creator and then close the handler
+      console.log("The user is id " + updateDetails.userId);
+      onUpdateFriends(updateDetails);
+      editCloseHandler();
+    },
+    [editCloseHandler, onUpdateFriends]
+  );
 
   const updateHandler = useCallback(
     (updateDetails) => {
@@ -176,7 +197,6 @@ function FriendsDetails(props) {
           </Card>
         </TableCell>
       </TableRow>
-
       <TableRow>
         <TableCell className={classes.displayCard} colSpan={6}>
           <Collapse
@@ -204,6 +224,9 @@ function FriendsDetails(props) {
                   //size="small" // overridden in Light and Dark theme files - Fab button
                   // color="secondary"
                   classes={{ root: classes.addDetail }}
+                  onClick={() => {
+                    addDialogOpenHandler();
+                  }}
                   // className={classes.addDetail}
                   aria-label="add"
                 >
@@ -267,7 +290,7 @@ function FriendsDetails(props) {
                           <TableCell>
                             <IconButton
                               onClick={() => {
-                                dialogOpenHandler();
+                                updateDialogOpenHandler();
                                 setCurrentDetails({ ...record });
                               }}
                               disableRipple
@@ -294,9 +317,9 @@ function FriendsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      {dialogOpen ? ( // performance optimized here due to this check
+      {updateDialogOpen ? ( // performance optimized here due to this check
         <DetailsModal
-          dialogOpen={dialogOpen}
+          updateDialogOpen={updateDialogOpen}
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
@@ -306,6 +329,18 @@ function FriendsDetails(props) {
           setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
           friendName={friend.main.displayName}
+        />
+      ) : null}
+      {/* When clicked on add details icon */}
+      {addDialogOpen ? (
+        <AddDetails
+          addDialogOpen={addDialogOpen} // this tells if the dialog should be open or not - true or false
+          dialogCloseHandler={dialogCloseHandler} // function to close the dialog
+          addHandler={addHandler} // function to add the details
+          userId={friend.main.userId}
+          friendName={friend.main.displayName}
+          // addDetails={addDetails}
+          // setAddDetails={setAddDetails}
         />
       ) : null}
     </React.Fragment>

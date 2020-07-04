@@ -42,7 +42,7 @@ function DetailsModal(props) {
   console.log("DetailsModal");
   const {
     userId,
-    dialogOpen,
+    updateDialogOpen,
     dialogCloseHandler,
     editMode,
     // editCloseHandler,
@@ -159,7 +159,9 @@ function DetailsModal(props) {
     ));
   }
   // jsx related to edit Details
-
+  React.useEffect(() => {
+    console.log("DEtailsModal UseEffect");
+  });
   const editTextFields = {
     editTransactionDate: (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -415,7 +417,7 @@ function DetailsModal(props) {
     <React.Fragment>
       <Dialog
         classes={{ paper: classes.dialog }}
-        open={dialogOpen}
+        open={updateDialogOpen}
         TransitionComponent={Transition}
         keepMounted
         onClose={dialogCloseHandler}

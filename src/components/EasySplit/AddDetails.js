@@ -41,12 +41,13 @@ const AddDetails = (props) => {
     userId,
     addDialogOpen,
     dialogCloseHandler,
-    addHandler,
+    // addHandler,
     // addDetails,
     // setAddDetails,
     friendName,
     groupName,
-    onAddDetails, // doesnt come from Friends but comes from mapStateToProps
+    onAddDetailsForFriend, // doesnt come from FriendsDetails but comes from mapStateToProps
+    onAddDetailsForGroup, // doesnt come from GroupsDetails but comes from mapStateToProps
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -150,12 +151,18 @@ const AddDetails = (props) => {
       // detailId: currentDetails.detailId, // we will add it in the action creator because we don't know which index it should go to yet. We get the detailIds from firestore for this user and then increment the detailId and add it
       userId: userId,
     };
-    addHandler({
-      ...addObject,
-    });
+    // addHandler({
+    //   ...addObject,
+    // });
     console.log("The add Object is ");
     console.log(addObject);
-    onAddDetails(addObject);
+    if (friendName) {
+      console.log("FRIEND IS COMING");
+      onAddDetailsForFriend(addObject);
+    } else if (groupName) {
+      console.log("GROUP IS COMING");
+      onAddDetailsForGroup(addObject);
+    }
     dialogCloseHandler();
   };
   // depends if it comes from FriendsDetails or GroupsDetails
@@ -551,7 +558,10 @@ const AddDetails = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddDetails: (newDetails) => dispatch(actionTypes.addDetails(newDetails)),
+    onAddDetailsForFriend: (newDetails) =>
+      dispatch(actionTypes.addDetailsFriend(newDetails)),
+    onAddDetailsForGroup: (newDetails) =>
+      dispatch(actionTypes.addDetailsGroup(newDetails)),
   };
 };
 

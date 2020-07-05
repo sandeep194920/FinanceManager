@@ -99,10 +99,10 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
-  const addHandler = useCallback((addDetails) => {
-    console.log("REached addHandler");
-    console.log(addDetails);
-  }, []);
+  // const addHandler = useCallback((addDetails) => {
+  //   console.log("REached addHandler");
+  //   console.log(addDetails);
+  // }, []);
 
   const updateHandler = useCallback(
     (updateDetails) => {
@@ -330,7 +330,7 @@ function FriendsDetails(props) {
         <AddDetails
           addDialogOpen={addDialogOpen} // this tells if the dialog should be open or not - true or false
           dialogCloseHandler={dialogCloseHandler} // function to close the dialog
-          addHandler={addHandler} // function to add the details
+          //addHandler={addHandler} // function to add the details
           userId={friend.main.userId}
           friendName={friend.main.displayName}
           // addDetails={addDetails}

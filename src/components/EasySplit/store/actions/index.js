@@ -1,2 +1,2 @@
-export { initFriends, updateFriends, addDetails } from "./friends";
-export { initGroups, updateGroups } from "./groups";
+export { initFriends, updateFriends, addDetailsFriend } from "./friends";
+export { initGroups, updateGroups, addDetailsGroup } from "./groups";

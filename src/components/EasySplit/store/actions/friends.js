@@ -81,7 +81,7 @@ export const updateFriends = (updateDetails) => {
 };
 
 // add new details to friend
-export const addDetails = (newDetails) => {
+export const addDetailsFriend = (newDetails) => {
   console.log("Th of currENT USER are");
 
   return (dispatch) => {

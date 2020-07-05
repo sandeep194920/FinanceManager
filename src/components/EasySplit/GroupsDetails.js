@@ -21,6 +21,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "../styles/FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import AddDetails from "./AddDetails";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
@@ -46,8 +47,11 @@ function GroupsDetails(props) {
   const [open, setOpen] = useState(false);
   //edit
   const [editMode, setEditMode] = useState(false);
-  //dialog
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // update dialog
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  // add dialog
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   const [currentDetails, setCurrentDetails] = useState({});
@@ -55,15 +59,19 @@ function GroupsDetails(props) {
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  const addDialogOpenHandler = useCallback(() => {
+    setAddDialogOpen(true);
+  }, [setAddDialogOpen]);
 
-  const dialogOpenHandler = useCallback(() => {
-    setDialogOpen(true);
-  }, [setDialogOpen]);
+  const updateDialogOpenHandler = useCallback(() => {
+    setUpdateDialogOpen(true);
+  }, [setUpdateDialogOpen]);
 
   const dialogCloseHandler = useCallback(() => {
-    setDialogOpen(false);
+    setAddDialogOpen(false);
+    setUpdateDialogOpen(false);
     setEditMode(false);
-  }, [setDialogOpen, setEditMode]);
+  }, [setUpdateDialogOpen, setEditMode]);
 
   useEffect(() => {
     if (hideDetails) {
@@ -219,6 +227,9 @@ function GroupsDetails(props) {
                   //size="small" // overridden in Light and Dark theme files - Fab button
                   // color="secondary"
                   classes={{ root: classes.addDetail }}
+                  onClick={() => {
+                    addDialogOpenHandler();
+                  }}
                   // className={classes.addDetail}
                   aria-label="add"
                 >
@@ -279,7 +290,7 @@ function GroupsDetails(props) {
                         <TableCell>
                           <IconButton
                             onClick={() => {
-                              dialogOpenHandler();
+                              updateDialogOpenHandler();
                               setCurrentDetails({ ...record });
                             }}
                             disableRipple
@@ -305,9 +316,9 @@ function GroupsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      {dialogOpen ? ( // performance optimized here due to this check
+      {updateDialogOpen ? ( // performance optimized here due to this check
         <DetailsModal
-          dialogOpen={dialogOpen}
+          updateDialogOpen={updateDialogOpen}
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
@@ -317,6 +328,18 @@ function GroupsDetails(props) {
           setCurrentDetails={setCurrentDetails}
           userId={group.main.userId}
           groupName={group.main.displayName}
+        />
+      ) : null}
+      {/* When clicked on add details icon */}
+      {addDialogOpen ? (
+        <AddDetails
+          addDialogOpen={addDialogOpen} // this tells if the dialog should be open or not - true or false
+          dialogCloseHandler={dialogCloseHandler} // function to close the dialog
+          //addHandler={addHandler} // function to add the details
+          userId={group.main.userId}
+          groupName={group.main.displayName}
+          // addDetails={addDetails}
+          // setAddDetails={setAddDetails}
         />
       ) : null}
     </React.Fragment>

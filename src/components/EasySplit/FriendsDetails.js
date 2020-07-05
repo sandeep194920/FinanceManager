@@ -320,7 +320,7 @@ function FriendsDetails(props) {
           updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
-          // setCurrentDetails={setCurrentDetails}
+          setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
           friendName={friend.main.displayName}
         />

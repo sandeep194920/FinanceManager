@@ -50,7 +50,8 @@ function App() {
   return (
     <ThemeProvider theme={myTheme}>
       {/* remove this style later */}
-      <Paper style={{ height: "100vh" }}>
+      {/* <Paper style={{ height: "100vh" }}> */}
+      <Paper>
         <BrowserRouter>
           <Header
             switchTheme={switchThemeHandler}

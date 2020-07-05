@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: "1em 0",
+    minHeight: "100vh",
   },
   heading: {
     borderBottom:

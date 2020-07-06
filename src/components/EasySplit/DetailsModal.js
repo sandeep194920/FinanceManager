@@ -135,6 +135,10 @@ function DetailsModal(props) {
       label: "Movies",
     },
     {
+      value: "Medical",
+      label: "Medical",
+    },
+    {
       value: "Other",
       label: "Other",
     },

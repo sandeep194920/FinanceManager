@@ -27,6 +27,7 @@ import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
+
 function FriendsDetails(props) {
   console.log("FriendsDetails");
 
@@ -38,7 +39,6 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-
     friendsInfo,
     onUpdateFriends,
   } = props;
@@ -101,6 +101,7 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
+
   // const addHandler = useCallback((addDetails) => {
   //   console.log("REached addHandler");
   //   console.log(addDetails);
@@ -117,7 +118,7 @@ function FriendsDetails(props) {
     },
     [editCloseHandler, friendsInfo, onUpdateFriends]
   );
-
+  
   return (
     <React.Fragment>
       <TableRow>
@@ -254,8 +255,6 @@ function FriendsDetails(props) {
                   </TableHead>
                   <TableBody>
                     {friend.details.map((record, index) => {
-                      console.log("The record is ");
-                      // console.log(record);
 
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
@@ -350,7 +349,6 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-
     friendsInfo: state.friends.friendsInfo,
   };
 };
@@ -359,6 +357,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateFriends: (updateFriends) =>
       dispatch(actionTypes.updateFriends(updateFriends)),
+
   };
 };
 

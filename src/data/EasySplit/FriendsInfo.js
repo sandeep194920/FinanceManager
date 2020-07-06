@@ -84,6 +84,7 @@ export const friendsInfo = {
       oweAmount: 50,
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     details: {
       0: {
         date: "18-08-2018",
@@ -92,6 +93,11 @@ export const friendsInfo = {
       {
         date: "04 Dec, 2010",
 >>>>>>> develop
+=======
+    details: [
+      {
+        date: "04 Dec, 2010",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "30",
         paidBy: "You",
         type: "custom",
@@ -100,12 +106,17 @@ export const friendsInfo = {
         details: "Watched starwars movie",
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       1: {
         date: "03-04-2019",
 =======
       {
         date: "12 Dec, 2020",
 >>>>>>> develop
+=======
+      {
+        date: "12 Dec, 2020",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "40",
         paidBy: "You",
         type: "nosplit",
@@ -114,12 +125,17 @@ export const friendsInfo = {
         details: "Saravana bhavan",
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       2: {
         date: "02-12-2020",
 =======
       {
         date: "04 Nov, 1992",
 >>>>>>> develop
+=======
+      {
+        date: "04 Nov, 1992",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "60",
         paidBy: "Sandeep",
         type: "equal",
@@ -138,6 +154,7 @@ export const friendsInfo = {
       oweAmount: -70,
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     details: {
       0: {
         date: "18-08-2018",
@@ -146,6 +163,11 @@ export const friendsInfo = {
       {
         date: "18 Aug, 2019",
 >>>>>>> develop
+=======
+    details: [
+      {
+        date: "18 Aug, 2019",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "30",
         paidBy: "You",
         type: "custom",
@@ -154,12 +176,17 @@ export const friendsInfo = {
         details: "Watched starwars movie",
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       1: {
         date: "03-04-2019",
 =======
       {
         date: "04 Sep, 2020",
 >>>>>>> develop
+=======
+      {
+        date: "04 Sep, 2020",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "40",
         paidBy: "You",
         type: "nosplit",
@@ -168,12 +195,17 @@ export const friendsInfo = {
         details: "Saravana bhavan",
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       2: {
         date: "02-12-2020",
 =======
       {
         date: "01 Jun, 1998",
 >>>>>>> develop
+=======
+      {
+        date: "01 Jun, 1998",
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         transactionAmount: "60",
         paidBy: "Sandeep",
         type: "equal",
@@ -184,8 +216,11 @@ export const friendsInfo = {
     },
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 };
 =======
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 ];
 
 // add data to firestore
@@ -244,4 +279,7 @@ export const friendsInfo = {
 //   "main.oweAmount": 180,
 // [`testObj.${zero}.a`]: "12345",   // dynamically update the value
 // });
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0

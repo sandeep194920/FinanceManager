@@ -11,14 +11,20 @@ import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 import { objToArray } from "../../data/helpers/objectToArray";
 =======
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -46,11 +52,14 @@ function FriendsList(props) {
   }, [switchHideDetails, switchShowDetails]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   //converting props.friendsInfo to array
   const friendsArray = objToArray(friendsInfo, "main", "details");
 
 =======
 >>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   useEffect(() => {
     onInitFriends();
   }, [onInitFriends]);
@@ -65,16 +74,22 @@ function FriendsList(props) {
       <Table>
         <TableBody>
 <<<<<<< HEAD
+<<<<<<< HEAD
           {friendsArray.map((friendInfo, index) => (
             <FriendsshowDetails
               key={friendInfo + index}
               // details={friendInfo.details}
 =======
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
           {friendsInfo.map((friendInfo, index) => (
             <FriendsshowDetails
               key={friendInfo + index}
               //details={friendInfo.details}
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
               friend={friendInfo}
               mainInfo={friendInfo.main}
               showDetails={showDetails}

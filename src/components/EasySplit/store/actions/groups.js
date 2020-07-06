@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-import axios from "../../../../axios-easysplit";
-import * as actionTypes from "../actions/actionTypes";
-
-// fetching groups from backend using thunk
-=======
 import * as actionTypes from "./actionTypes";
 import { db } from "../../../../firebase";
 import * as firebase from "firebase";
->>>>>>> develop
 
 // helper for groups fetch (sync) helper
 export const setGroups = (groups) => {
@@ -17,29 +10,27 @@ export const setGroups = (groups) => {
   };
 };
 
-<<<<<<< HEAD
 // fetch ingredients failed (sync) helper
 export const fetchGroupsFailed = () => {
-=======
-// set groups failed (sync) helper
-export const setGroupsFailed = () => {
->>>>>>> develop
-  return {
-    type: actionTypes.SET_GROUPS_FAILED,
-  };
-};
+  // set groups failed (sync) helper
+  export const setGroupsFailed = () => {
+    // set groups failed (sync) helper
+    export const setGroupsFailed = () => {
+      return {
+        type: actionTypes.SET_GROUPS_FAILED,
+      };
+    };
 
-// actual aync action creator to get groups
-export const initGroups = () => {
-  return (dispatch) => {
-<<<<<<< HEAD
-    axios
-      .get("groups.json")
-      .then((response) => dispatch(setGroups(response.data)))
-      .catch((error) => dispatch(fetchGroupsFailed()));
-  };
-};
-=======
+    // actual aync action creator to get groups
+    export const initGroups = () => {
+      return (dispatch) => {
+        axios
+          .get("groups.json")
+          .then((response) => dispatch(setGroups(response.data)))
+          .catch((error) => dispatch(fetchGroupsFailed()));
+      };
+    };
+
     dispatchFirstoreGroups(dispatch);
   };
 };
@@ -161,4 +152,3 @@ function dispatchFirstoreGroups(dispatch) {
     })
     .catch((error) => dispatch(setGroupsFailed()));
 }
->>>>>>> develop

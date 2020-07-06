@@ -15,8 +15,6 @@ import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
 import { connect } from "react-redux";
-import * as actionTypes from "./store/actions";
-import LinearProgress from "@material-ui/core/LinearProgress";
 
 function GroupsList(props) {
   console.log("Groups");
@@ -40,7 +38,6 @@ function GroupsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
-
   useEffect(() => {
     onInitGroups();
   }, [onInitGroups]);
@@ -60,7 +57,6 @@ function GroupsList(props) {
               key={groupInfo + index}
               //details={groupInfo.details}
               group={groupInfo}
-
               mainInfo={groupInfo.main}
               showDetails={showDetails}
               setShowDetails={switchShowDetails}

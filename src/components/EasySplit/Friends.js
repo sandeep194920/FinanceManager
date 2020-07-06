@@ -17,8 +17,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
 
 import { connect } from "react-redux";
-import * as actionTypes from "./store/actions";
-import LinearProgress from "@material-ui/core/LinearProgress";
 
 function FriendsList(props) {
   console.log("Friends");

@@ -19,10 +19,14 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
-import useStyles from "./FriendGroupDetailsStyles";
+import useStyles from "../styles/FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import AddDetails from "./AddDetails";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+
 
 function FriendsDetails(props) {
   console.log("FriendsDetails");
@@ -35,8 +39,8 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    friendsInfo,
-    onUpdateFriends,
+    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
+
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -45,24 +49,33 @@ function FriendsDetails(props) {
   const [open, setOpen] = useState(false);
   //edit
   const [editMode, setEditMode] = useState(false);
-  //dialog
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // update dialog
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  // add dialog
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   const [currentDetails, setCurrentDetails] = useState({});
 
+  // const [addDetails, setAddDetails] = useState({});
+
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  const addDialogOpenHandler = useCallback(() => {
+    setAddDialogOpen(true);
+  }, [setAddDialogOpen]);
 
-  const dialogOpenHandler = useCallback(() => {
-    setDialogOpen(true);
-  }, [setDialogOpen]);
+  const updateDialogOpenHandler = useCallback(() => {
+    setUpdateDialogOpen(true);
+  }, [setUpdateDialogOpen]);
 
   const dialogCloseHandler = useCallback(() => {
-    setDialogOpen(false);
+    setAddDialogOpen(false);
+    setUpdateDialogOpen(false);
     setEditMode(false);
-  }, [setDialogOpen, setEditMode]);
+  }, [setUpdateDialogOpen, setEditMode, setAddDialogOpen]);
 
   useEffect(() => {
     if (hideDetails) {
@@ -88,19 +101,23 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
+
+  // const addHandler = useCallback((addDetails) => {
+  //   console.log("REached addHandler");
+  //   console.log(addDetails);
+  // }, []);
+
   const updateHandler = useCallback(
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
-      // console.log();
       console.log("The user is id " + updateDetails.userId);
-      onUpdateFriends(updateDetails, friendsInfo);
+      onUpdateFriends(updateDetails);
       editCloseHandler();
     },
-    [editCloseHandler, friendsInfo, onUpdateFriends]
+    [editCloseHandler, onUpdateFriends]
   );
-  console.log("The friend is ");
-  console.log(friend);
+  
   return (
     <React.Fragment>
       <TableRow>
@@ -177,7 +194,6 @@ function FriendsDetails(props) {
           </Card>
         </TableCell>
       </TableRow>
-
       <TableRow>
         <TableCell className={classes.displayCard} colSpan={6}>
           <Collapse
@@ -186,34 +202,48 @@ function FriendsDetails(props) {
             unmountOnExit
           >
             <Box>
-              <Grid container justify="space-between">
+              <Grid container justify="space-between" alignItems="center">
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  {mainInfo.fullName}
+                  {mainInfo.fullName} &nbsp; ({mainInfo.userId})
                 </Typography>
-                <Typography
+                {/* <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
-                  User ID - {mainInfo.userId}
-                </Typography>
+                  ADD Details
+                </Typography> */}
+                <Fab
+                  //size="small" // overridden in Light and Dark theme files - Fab button
+                  // color="secondary"
+                  classes={{ root: classes.addDetail }}
+                  onClick={() => {
+                    addDialogOpenHandler();
+                  }}
+                  // className={classes.addDetail}
+                  aria-label="add"
+                >
+                  <AddIcon classes={{ root: classes.addDetail }} />
+                </Fab>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      {detailsTableHead.map((tableCell) => (
-                        <TableCell
-                          key={tableCell}
-                          classes={{ root: classes.tcell }}
-                        >
-                          {tableCell}
-                        </TableCell>
-                      ))}
+                      {detailsTableHead.map((tableCell) => {
+                        return (
+                          <TableCell
+                            key={tableCell}
+                            classes={{ root: classes.tcell }}
+                          >
+                            {tableCell}
+                          </TableCell>
+                        );
+                      })}
                       <TableCell
                         className={classes.detailCellHead}
                         classes={{ root: classes.tcell }}
@@ -224,21 +254,41 @@ function FriendsDetails(props) {
                   </TableHead>
                   <TableBody>
                     {friend.details.map((record, index) => {
-                      console.log("The record is ");
-                      // console.log(record);
+
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
-                          <TableCell>{record.date}</TableCell>
+                          <TableCell style={{ fontWeight: "600" }}>
+                            {record.date}
+                          </TableCell>
                           <TableCell>{record.transactionAmount}</TableCell>
                           {matchesSM ? null : (
                             <TableCell>{record.paidBy}</TableCell>
                           )}
                           <TableCell>{record.type}</TableCell>
-                          <TableCell>{record.owe}</TableCell>
+                          {record.owe >= 0 ? (
+                            <TableCell
+                              style={{
+                                color: theme.palette.common.green,
+                                fontWeight: "700",
+                              }}
+                            >
+                              {record.owe}
+                            </TableCell>
+                          ) : (
+                            <TableCell
+                              style={{
+                                color: theme.palette.common.red,
+                                fontWeight: "700",
+                              }}
+                            >
+                              {record.owe}
+                            </TableCell>
+                          )}
+                          {/* <TableCell>{record.owe}</TableCell> */}
                           <TableCell>
                             <IconButton
                               onClick={() => {
-                                dialogOpenHandler();
+                                updateDialogOpenHandler();
                                 setCurrentDetails({ ...record });
                               }}
                               disableRipple
@@ -265,9 +315,9 @@ function FriendsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      {dialogOpen ? ( // performance optimized here due to this check
+      {updateDialogOpen ? ( // performance optimized here due to this check
         <DetailsModal
-          dialogOpen={dialogOpen}
+          updateDialogOpen={updateDialogOpen}
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
@@ -276,6 +326,19 @@ function FriendsDetails(props) {
           currentDetails={currentDetails}
           setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
+          friendName={friend.main.displayName}
+        />
+      ) : null}
+      {/* When clicked on add details icon */}
+      {addDialogOpen ? (
+        <AddDetails
+          addDialogOpen={addDialogOpen} // this tells if the dialog should be open or not - true or false
+          dialogCloseHandler={dialogCloseHandler} // function to close the dialog
+          //addHandler={addHandler} // function to add the details
+          userId={friend.main.userId}
+          friendName={friend.main.displayName}
+          // addDetails={addDetails}
+          // setAddDetails={setAddDetails}
         />
       ) : null}
     </React.Fragment>
@@ -285,14 +348,17 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-    friendsInfo: state.friends.friendsInfo,
+
+    // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
+
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUpdateFriends: (updateFriends, currentFriends) =>
-      dispatch(actionTypes.updateFriends(updateFriends, currentFriends)),
+    onUpdateFriends: (updateFriends) =>
+      dispatch(actionTypes.updateFriends(updateFriends)),
+
   };
 };
 

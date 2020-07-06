@@ -5,7 +5,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -27,87 +26,13 @@ import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker } from "@material-ui/pickers";
+import useStyles from "../styles/DetailsModalAddDetailsStyles";
 import {
   MuiPickersUtilsProvider,
   // KeyboardDatePicker,
 } from "@material-ui/pickers";
-
-const useStyles = makeStyles((theme) => ({
-  dialog: {
-    width: "40%",
-    [theme.breakpoints.down("md")]: {
-      width: "50%",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "90%",
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: "90%",
-    },
-  },
-  dialogTitle: {
-    padding: "30px 30px 20px 45px",
-  },
-  dialogContainer: {
-    "&.MuiDialogContent-root": {
-      paddingTop: 0,
-    },
-    [theme.breakpoints.down("xs")]: {
-      padding: "5px 5px",
-    },
-  },
-  dialogActions: {
-    marginBottom: "1em",
-    marginRight: "1em",
-  },
-  detailItem: {
-    marginBottom: "10px",
-  },
-  detailHead: {
-    marginRight: "7em",
-  },
-  listIcon: {
-    minWidth: "38px",
-  },
-  listItemText: {
-    flex: "inherit",
-    [theme.breakpoints.down("xs")]: {
-      "& .MuiTypography-body1": {
-        fontSize: "0.8em",
-      },
-      "& .MuiInputBase-root": {
-        fontSize: "0.8em",
-      },
-    },
-  },
-  detailDate: {
-    [theme.breakpoints.down("xs")]: {
-      width: "6.5em",
-    },
-  },
-  dropDownText: {
-    minWidth: "10.2em",
-    [theme.breakpoints.down("xs")]: {
-      minWidth: "6.5em",
-      "& .MuiTypography-body1": {
-        fontSize: "0.8em",
-      },
-      "& .MuiInputBase-root": {
-        fontSize: "0.8em",
-      },
-    },
-  },
-  detailNumber: {
-    [theme.breakpoints.down("xs")]: {
-      width: "6.5em",
-    },
-  },
-  detailText: {
-    [theme.breakpoints.down("xs")]: {
-      width: "6.5em",
-    },
-  },
-}));
+// redux
+import { connect } from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -117,7 +42,7 @@ function DetailsModal(props) {
   console.log("DetailsModal");
   const {
     userId,
-    dialogOpen,
+    updateDialogOpen,
     dialogCloseHandler,
     editMode,
     // editCloseHandler,
@@ -125,6 +50,8 @@ function DetailsModal(props) {
     updateHandler,
     currentDetails,
     setCurrentDetails,
+    friendName,
+    groupName,
   } = props;
 
   const classes = useStyles();
@@ -147,18 +74,35 @@ function DetailsModal(props) {
   const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
   const [details, setDetails] = React.useState(currentDetails.details);
 
+  const [transactionAmt, setTransactionAmt] = React.useState(
+    currentDetails.transactionAmount
+  );
+  const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
+  const [details, setDetails] = React.useState(currentDetails.details);
+
   const handleDateChange = (date) => {
     setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };
 
-  const whopaid = [
+  const whopaidFriend = [
     {
-      value: "you",
+      value: "You",
       label: "You",
     },
     {
-      value: "sandeep",
-      label: "Sandeep",
+      value: friendName,
+      label: friendName,
+    },
+  ];
+
+  const whopaidGroup = [
+    {
+      value: "You",
+      label: "You",
+    },
+    {
+      value: groupName,
+      label: groupName,
     },
   ];
 
@@ -196,8 +140,34 @@ function DetailsModal(props) {
     },
   ];
 
+  // depends if it comes from FriendsDetails or GroupsDetails
+  // if friendName is not null then it comes from FriendsDetails
+  // if groupName is not null then it comes from GroupsDetails
+  let whoPaid = [];
+  let detailsName = null;
+  if (friendName) {
+    detailsName = friendName;
+    console.log("The friendName is " + friendName);
+    console.log("The groupName is " + groupName);
+    whoPaid = whopaidFriend.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  } else if (groupName) {
+    detailsName = groupName;
+    console.log("The friendName is " + friendName);
+    console.log("The groupName is " + groupName);
+    whoPaid = whopaidGroup.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ));
+  }
   // jsx related to edit Details
-
+  React.useEffect(() => {
+    console.log("DEtailsModal UseEffect");
+  });
   const editTextFields = {
     editTransactionDate: (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -244,11 +214,7 @@ function DetailsModal(props) {
           native: true,
         }}
       >
-        {whopaid.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {whoPaid}
       </TextField>
     ),
     editSplitType: (
@@ -366,14 +332,30 @@ function DetailsModal(props) {
         primary={currentDetails.category}
       />
     ),
-    youOwe: (
-      <ListItemText
-        classes={{
-          root: classes.listItemText,
-        }}
-        primary={`$${currentDetails.owe}`}
-      />
-    ),
+    youOwe:
+      currentDetails.owe >= 0 ? (
+        <ListItemText
+          style={{ color: theme.palette.common.green }}
+          classes={{
+            root: classes.listItemText,
+          }}
+          primary={`$${currentDetails.owe}`}
+        />
+      ) : (
+        <ListItemText
+          style={{ color: theme.palette.common.red }}
+          classes={{
+            root: classes.listItemText,
+          }}
+          primary={`$${currentDetails.owe}`}
+        />
+      ),
+    // <ListItemText
+    //   classes={{
+    //     root: classes.listItemText,
+    //   }}
+    //   primary={`$${currentDetails.owe}`}
+    // />
     details: (
       <ListItemText
         classes={{
@@ -441,7 +423,7 @@ function DetailsModal(props) {
     <React.Fragment>
       <Dialog
         classes={{ paper: classes.dialog }}
-        open={dialogOpen}
+        open={updateDialogOpen}
         TransitionComponent={Transition}
         keepMounted
         onClose={dialogCloseHandler}
@@ -457,7 +439,7 @@ function DetailsModal(props) {
             color={theme.palette.type === "light" ? "primary" : "secondary"}
             variant={matchesSM ? "subtitle2" : "subtitle1"}
           >
-            Sandeep Amarnath (Sa194920)
+            {`${detailsName} (${userId})`}
           </Typography>
         </DialogTitle>
 
@@ -679,4 +661,10 @@ function DetailsModal(props) {
   );
 }
 
-export default React.memo(DetailsModal);
+const mapStateToProps = (state) => {
+  return {
+    friendsInfo: state.friends.friendsInfo,
+  };
+};
+
+export default connect(mapStateToProps)(React.memo(DetailsModal));

@@ -1,7 +1,8 @@
-import axios from "../../../../axios-easysplit";
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from "./actionTypes";
+import { db } from "../../../../firebase";
+import * as firebase from "firebase";
 
-// fetching friends from backend using thunk
+
 // helper for friends fetch (sync) helper
 export const setFriends = (friends) => {
   return {
@@ -20,59 +21,122 @@ export const setFriendsFailed = () => {
 // actual aync action creator to get friends
 export const initFriends = () => {
   return (dispatch) => {
-    axios
-      .get("friends.json")
-      .then((response) => {
-        console.log("SET FRIENDS");
-        console.log(response.data);
-        return dispatch(setFriends(response.data));
-      })
-      .catch((error) => dispatch(setFriendsFailed()));
+    dispatchFirstoreFriends(dispatch);
   };
 };
 
-// update friends failed (sync) helper
-export const updateFriendsDetails = (friends) => {
-  return {
-    type: actionTypes.UPDATE_FRIENDS,
-    friends: friends,
-  };
-};
-
-// set friends failed (sync) helper
-export const updateFriendsFailed = () => {
-  return {
-    type: actionTypes.UPDATE_FRIENDS_FAILED,
-  };
-};
-
-// actual async action creator to update friends -- called in FriendsDetails.js
-export const updateFriends = (updateDetails, currentFriends) => {
-  // get these update details and get the id out of it, use current details to modify it and then send it to set friends
-  // Getting only the details of this particular user whose details need to be updated
-  const extractedDetails = currentFriends[updateDetails["userId"]].details;
-  // Getting a new array thats going to contain only the objects that need not be updated
-  const updatedDetailsArray = extractedDetails.map((detailObj) => {
-    if (detailObj["detailId"] !== updateDetails["detailId"]) {
-      return detailObj;
-    }
-    return 0;
-  });
-  updatedDetailsArray[updateDetails["detailId"]] = { ...updateDetails };
-
-  // pushing the update into the previous array to get new updated details. This array can now be replaced with the user's details
-  const updatedDetails = [...updatedDetailsArray];
-  const updatedFriends = {
-    ...currentFriends,
-    [updateDetails["userId"]]: {
-      ...currentFriends[updateDetails["userId"]],
-      main: {
-        ...currentFriends[updateDetails["userId"]].main,
-      },
-      details: updatedDetails,
-    },
-  };
+// actual aync action creator to update friends - called in FriendsDetails.js
+export const updateFriends = (updateDetails) => {
   return (dispatch) => {
-    dispatch(updateFriendsDetails(updatedFriends));
+    // update the data here
+    console.log("The updateDetails are ");
+    console.log(updateDetails);
+
+    // first get the index of the array where the data needs to be changed - use userId and detailId here
+    const userId = updateDetails["userId"];
+    const detailId = updateDetails["detailId"];
+
+    // getting an element from firestore using userId
+    const docRef = db.collection("friends").doc(userId);
+    docRef
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          // getting the currentUser using userId from firestore
+          const currentUser = doc.data();
+          console.log("The details of cur user are");
+          console.log(currentUser.details);
+
+          // this index helps to get the particular element in detail array using the detailId
+          let indexOfDetail = null;
+          currentUser.details.forEach((detailObj, index) => {
+            if (detailObj.detailId === detailId) {
+              indexOfDetail = index;
+              console.log(`Index is ${index} and the detailId is ${detailId}`);
+            }
+          });
+
+          // deep copy the currentUser.details and then update it
+
+          // we are replacing current user details with our new updatedUserDetails at the index of the detailId equal to detailID of updateDetails argument
+          const updatedUserDetails = [...currentUser.details];
+          updatedUserDetails[indexOfDetail] = updateDetails;
+          console.log("The updated details array is ");
+          console.log(updatedUserDetails);
+
+          // updating the details in firestore with new details
+          db.collection("friends").doc(userId).update({
+            details: updatedUserDetails,
+          });
+          // getting the updated data from firestore
+          dispatchFirstoreFriends(dispatch);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
   };
 };
+
+// add new details to friend
+export const addDetailsFriend = (newDetails) => {
+  console.log("Th of currENT USER are");
+
+  return (dispatch) => {
+    const docRef = db.collection("friends").doc(newDetails.userId);
+    docRef.get().then(function (doc) {
+      if (doc.exists) {
+        const currentUser = doc.data();
+        console.log("The details of currENT USER are");
+        console.log(currentUser.details);
+
+        const detailIdArray = [];
+        currentUser.details.forEach((detail) => {
+          detailIdArray.push(detail.detailId);
+        });
+        detailIdArray.sort((a, b) => a - b); // sorting array in ascending order //https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly
+        console.log("The array is " + detailIdArray);
+        // Now we got the sorted (ascending order) detaildIds, we can get the last detailId and add 1 for the new detailId
+
+        const lastDetailId = detailIdArray.pop();
+        console.log("The last id is " + lastDetailId);
+
+        const newDetailId = lastDetailId + 1;
+        const updatedNewDetails = {
+          ...newDetails,
+          detailId: newDetailId,
+        };
+
+        console.log(updatedNewDetails);
+        // updating the details in firestore with new details
+        db.collection("friends")
+          .doc(newDetails.userId)
+          .update({
+            details: firebase.firestore.FieldValue.arrayUnion(
+              updatedNewDetails
+            ),
+          });
+
+        // getting the updated data from firestore
+        dispatchFirstoreFriends(dispatch);
+      }
+    });
+  };
+};
+
+// helper function used in setFriends and updateFriends
+function dispatchFirstoreFriends(dispatch) {
+  const firebaseFriends = [];
+  db.collection("friends")
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((friend) => {
+        firebaseFriends.push(friend.data());
+      });
+      dispatch(setFriends(firebaseFriends));
+    })
+    .catch((error) => dispatch(setFriendsFailed()));
+}

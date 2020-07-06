@@ -10,8 +10,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import useStyles from "../EasySplit/FriendsGroupsStyles";
-import { objToArray } from "../../data/helpers/objectToArray";
+import useStyles from "../styles/FriendsGroupsStyles";
+import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
+// redux
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -38,9 +40,6 @@ function FriendsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
-  //converting props.friendsInfo to array
-  const friendsArray = objToArray(friendsInfo, "main", "details");
-
   useEffect(() => {
     onInitFriends();
   }, [onInitFriends]);
@@ -54,10 +53,10 @@ function FriendsList(props) {
     friends = (
       <Table>
         <TableBody>
-          {friendsArray.map((friendInfo, index) => (
+          {friendsInfo.map((friendInfo, index) => (
             <FriendsshowDetails
               key={friendInfo + index}
-              // details={friendInfo.details}
+              //details={friendInfo.details}
               friend={friendInfo}
               mainInfo={friendInfo.main}
               showDetails={showDetails}

@@ -10,21 +10,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import useStyles from "../EasySplit/FriendsGroupsStyles";
-import { objToArray } from "../../data/helpers/objectToArray";
-=======
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -51,16 +40,9 @@ function GroupsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   //converting props.friendsInfo to array
   const groupsArray = objToArray(groupsInfo, "main", "details");
 
-=======
->>>>>>> develop
-=======
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   useEffect(() => {
     onInitGroups();
   }, [onInitGroups]);
@@ -75,25 +57,11 @@ function GroupsList(props) {
     groups = (
       <Table>
         <TableBody>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          {groupsArray.map((groupInfo, index) => (
-            <GroupsDetails
-              key={groupInfo + index}
-              details={groupInfo.details}
-=======
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
           {groupsInfo.map((groupInfo, index) => (
             <GroupsDetails
               key={groupInfo + index}
               //details={groupInfo.details}
               group={groupInfo}
-<<<<<<< HEAD
->>>>>>> develop
-=======
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
               mainInfo={groupInfo.main}
               showDetails={showDetails}
               setShowDetails={switchShowDetails}

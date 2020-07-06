@@ -10,27 +10,16 @@ export const setGroups = (groups) => {
   };
 };
 
-// fetch ingredients failed (sync) helper
-export const fetchGroupsFailed = () => {
-  // set groups failed (sync) helper
-  export const setGroupsFailed = () => {
-    // set groups failed (sync) helper
-    export const setGroupsFailed = () => {
-      return {
-        type: actionTypes.SET_GROUPS_FAILED,
-      };
-    };
+// set groups failed (sync) helper
+export const setGroupsFailed = () => {
+  return {
+    type: actionTypes.SET_GROUPS_FAILED,
+  };
+};
 
-    // actual aync action creator to get groups
-    export const initGroups = () => {
-      return (dispatch) => {
-        axios
-          .get("groups.json")
-          .then((response) => dispatch(setGroups(response.data)))
-          .catch((error) => dispatch(fetchGroupsFailed()));
-      };
-    };
-
+// actual aync action creator to get groups
+export const initGroups = () => {
+  return (dispatch) => {
     dispatchFirstoreGroups(dispatch);
   };
 };

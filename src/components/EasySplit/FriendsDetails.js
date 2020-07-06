@@ -21,23 +21,11 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
 import useStyles from "../styles/FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import * as actionTypes from "./store/actions";
-import { connect } from "react-redux";
-=======
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 import AddDetails from "./AddDetails";
 import * as actionTypes from "./store/actions";
 import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-<<<<<<< HEAD
->>>>>>> develop
-=======
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
 
 function FriendsDetails(props) {
   console.log("FriendsDetails");
@@ -50,17 +38,9 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     friendsInfo,
     onUpdateFriends,
-=======
-    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
->>>>>>> develop
-=======
-    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -121,27 +101,15 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   // const addHandler = useCallback((addDetails) => {
   //   console.log("REached addHandler");
   //   console.log(addDetails);
   // }, []);
-
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   const updateHandler = useCallback(
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       // console.log();
       console.log("The user is id " + updateDetails.userId);
       onUpdateFriends(updateDetails, friendsInfo);
@@ -149,23 +117,7 @@ function FriendsDetails(props) {
     },
     [editCloseHandler, friendsInfo, onUpdateFriends]
   );
-  console.log("The friend is ");
-  console.log(friend);
-=======
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
-      console.log("The user is id " + updateDetails.userId);
-      onUpdateFriends(updateDetails);
-      editCloseHandler();
-    },
-    [editCloseHandler, onUpdateFriends]
-  );
-<<<<<<< HEAD
 
->>>>>>> develop
-=======
-  
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   return (
     <React.Fragment>
       <TableRow>
@@ -302,15 +254,9 @@ function FriendsDetails(props) {
                   </TableHead>
                   <TableBody>
                     {friend.details.map((record, index) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
                       console.log("The record is ");
                       // console.log(record);
-=======
->>>>>>> develop
-=======
 
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
                           <TableCell style={{ fontWeight: "600" }}>
@@ -382,11 +328,6 @@ function FriendsDetails(props) {
           currentDetails={currentDetails}
           setCurrentDetails={setCurrentDetails}
           userId={friend.main.userId}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
           friendName={friend.main.displayName}
         />
       ) : null}
@@ -400,10 +341,6 @@ function FriendsDetails(props) {
           friendName={friend.main.displayName}
           // addDetails={addDetails}
           // setAddDetails={setAddDetails}
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
         />
       ) : null}
     </React.Fragment>
@@ -413,35 +350,15 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     friendsInfo: state.friends.friendsInfo,
-=======
-    // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
->>>>>>> develop
-=======
-
-    // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    onUpdateFriends: (updateFriends, currentFriends) =>
-      dispatch(actionTypes.updateFriends(updateFriends, currentFriends)),
-=======
     onUpdateFriends: (updateFriends) =>
       dispatch(actionTypes.updateFriends(updateFriends)),
->>>>>>> develop
-=======
-    onUpdateFriends: (updateFriends) =>
-      dispatch(actionTypes.updateFriends(updateFriends)),
-
->>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   };
 };
 

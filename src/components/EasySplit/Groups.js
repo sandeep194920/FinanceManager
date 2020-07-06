@@ -12,10 +12,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
-import LinearProgress from "@material-ui/core/LinearProgress";
+
 // redux
 import { connect } from "react-redux";
-import * as actionTypes from "./store/actions";
+
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 function GroupsList(props) {
@@ -39,9 +39,6 @@ function GroupsList(props) {
     switchShowDetails(false);
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
-
-  //converting props.friendsInfo to array
-  const groupsArray = objToArray(groupsInfo, "main", "details");
 
   useEffect(() => {
     onInitGroups();

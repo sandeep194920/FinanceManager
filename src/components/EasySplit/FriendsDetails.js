@@ -27,6 +27,7 @@ import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
+
 function FriendsDetails(props) {
   console.log("FriendsDetails");
 
@@ -39,6 +40,7 @@ function FriendsDetails(props) {
     setHideDetails,
     setShowDetails,
     onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
+
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -99,6 +101,7 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
+
   // const addHandler = useCallback((addDetails) => {
   //   console.log("REached addHandler");
   //   console.log(addDetails);
@@ -114,7 +117,7 @@ function FriendsDetails(props) {
     },
     [editCloseHandler, onUpdateFriends]
   );
-
+  
   return (
     <React.Fragment>
       <TableRow>
@@ -251,6 +254,7 @@ function FriendsDetails(props) {
                   </TableHead>
                   <TableBody>
                     {friend.details.map((record, index) => {
+
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
                           <TableCell style={{ fontWeight: "600" }}>
@@ -344,7 +348,9 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
+
     // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
+
   };
 };
 
@@ -352,6 +358,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateFriends: (updateFriends) =>
       dispatch(actionTypes.updateFriends(updateFriends)),
+
   };
 };
 

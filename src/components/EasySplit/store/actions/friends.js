@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import { db } from "../../../../firebase";
 import * as firebase from "firebase";
 
+
 // helper for friends fetch (sync) helper
 export const setFriends = (friends) => {
   return {

@@ -74,6 +74,12 @@ function DetailsModal(props) {
   const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
   const [details, setDetails] = React.useState(currentDetails.details);
 
+  const [transactionAmt, setTransactionAmt] = React.useState(
+    currentDetails.transactionAmount
+  );
+  const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
+  const [details, setDetails] = React.useState(currentDetails.details);
+
   const handleDateChange = (date) => {
     setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };

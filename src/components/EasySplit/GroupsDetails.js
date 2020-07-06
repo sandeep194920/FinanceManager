@@ -19,19 +19,26 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import CallMadeIcon from "@material-ui/icons/CallMade";
-import useStyles from "./FriendGroupDetailsStyles";
+import useStyles from "../styles/FriendGroupDetailsStyles";
 import DetailsModal from "./DetailsModal";
+import AddDetails from "./AddDetails";
+import * as actionTypes from "./store/actions";
+import { connect } from "react-redux";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 function GroupsDetails(props) {
   console.log("GroupsDetails");
 
   const {
-    details,
+    group,
+    //details,
     mainInfo,
     showDetails,
     hideDetails,
     setHideDetails,
     setShowDetails,
+    onUpdateGroups,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -40,8 +47,11 @@ function GroupsDetails(props) {
   const [open, setOpen] = useState(false);
   //edit
   const [editMode, setEditMode] = useState(false);
-  //dialog
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // update dialog
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  // add dialog
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
   const [currentDetails, setCurrentDetails] = useState({});
@@ -49,15 +59,19 @@ function GroupsDetails(props) {
   if (matchesSM) {
     detailsTableHead.splice(2, 1);
   }
+  const addDialogOpenHandler = useCallback(() => {
+    setAddDialogOpen(true);
+  }, [setAddDialogOpen]);
 
-  const dialogOpenHandler = useCallback(() => {
-    setDialogOpen(true);
-  }, [setDialogOpen]);
+  const updateDialogOpenHandler = useCallback(() => {
+    setUpdateDialogOpen(true);
+  }, [setUpdateDialogOpen]);
 
   const dialogCloseHandler = useCallback(() => {
-    setDialogOpen(false);
+    setAddDialogOpen(false);
+    setUpdateDialogOpen(false);
     setEditMode(false);
-  }, [setDialogOpen, setEditMode]);
+  }, [setUpdateDialogOpen, setEditMode]);
 
   useEffect(() => {
     if (hideDetails) {
@@ -82,6 +96,18 @@ function GroupsDetails(props) {
   const editCloseHandler = useCallback(() => {
     setEditMode(false);
   }, [setEditMode]);
+
+  const updateHandler = useCallback(
+    (updateDetails) => {
+      // updateHandler has been called in Friends.js
+      // here we need to update the data by using action creator and then close the handler
+      console.log("The user is id " + updateDetails.userId);
+      onUpdateGroups(updateDetails);
+      editCloseHandler();
+    },
+    [editCloseHandler, onUpdateGroups]
+  );
+
   return (
     <React.Fragment>
       <TableRow>
@@ -181,21 +207,34 @@ function GroupsDetails(props) {
             unmountOnExit
           >
             <Box>
-              <Grid container justify="space-between">
+              <Grid container justify="space-between" alignItems="center">
                 <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.displayName}
                 >
-                  {mainInfo.fullName}
+                  Group ID - &nbsp; {mainInfo.userId}
                 </Typography>
-                <Typography
+                {/* <Typography
                   gutterBottom
                   variant="subtitle2"
                   className={classes.username}
                 >
                   Created By - {mainInfo.userId}
-                </Typography>
+                </Typography> */}
+
+                <Fab
+                  //size="small" // overridden in Light and Dark theme files - Fab button
+                  // color="secondary"
+                  classes={{ root: classes.addDetail }}
+                  onClick={() => {
+                    addDialogOpenHandler();
+                  }}
+                  // className={classes.addDetail}
+                  aria-label="add"
+                >
+                  <AddIcon classes={{ root: classes.addDetail }} />
+                </Fab>
               </Grid>
               <TableContainer className={classes.displayCard} component={Paper}>
                 <Table aria-label="purchases">
@@ -218,19 +257,40 @@ function GroupsDetails(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {details.map((record, index) => (
+                    {group.details.map((record, index) => (
                       <TableRow key={record + index} className={classes.tRow}>
-                        <TableCell>{record.date}</TableCell>
+                        <TableCell style={{ fontWeight: "600" }}>
+                          {record.date}
+                        </TableCell>
                         <TableCell>{record.transactionAmount}</TableCell>
                         {matchesSM ? null : (
                           <TableCell>{record.paidBy}</TableCell>
                         )}
                         <TableCell>{record.type}</TableCell>
-                        <TableCell>{record.owe}</TableCell>
+                        {record.owe >= 0 ? (
+                          <TableCell
+                            style={{
+                              color: theme.palette.common.green,
+                              fontWeight: "700",
+                            }}
+                          >
+                            {record.owe}
+                          </TableCell>
+                        ) : (
+                          <TableCell
+                            style={{
+                              color: theme.palette.common.red,
+                              fontWeight: "700",
+                            }}
+                          >
+                            {record.owe}
+                          </TableCell>
+                        )}
+                        {/* <TableCell>{record.owe}</TableCell> */}
                         <TableCell>
                           <IconButton
                             onClick={() => {
-                              dialogOpenHandler();
+                              updateDialogOpenHandler();
                               setCurrentDetails({ ...record });
                             }}
                             disableRipple
@@ -256,18 +316,51 @@ function GroupsDetails(props) {
         </TableCell>
       </TableRow>
       {/* When clicked on the details icon */}
-      {dialogOpen ? ( // performance optimized here due to this check
+      {updateDialogOpen ? ( // performance optimized here due to this check
         <DetailsModal
-          dialogOpen={dialogOpen}
+          updateDialogOpen={updateDialogOpen}
           editMode={editMode}
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
+          updateHandler={updateHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
+          setCurrentDetails={setCurrentDetails}
+          userId={group.main.userId}
+          groupName={group.main.displayName}
+        />
+      ) : null}
+      {/* When clicked on add details icon */}
+      {addDialogOpen ? (
+        <AddDetails
+          addDialogOpen={addDialogOpen} // this tells if the dialog should be open or not - true or false
+          dialogCloseHandler={dialogCloseHandler} // function to close the dialog
+          //addHandler={addHandler} // function to add the details
+          userId={group.main.userId}
+          groupName={group.main.displayName}
+          // addDetails={addDetails}
+          // setAddDetails={setAddDetails}
         />
       ) : null}
     </React.Fragment>
   );
 }
 
-export default React.memo(GroupsDetails);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.groups.loading,
+    // friendsInfo: state.friends.friendsInfo, // not required since we get this from firebase directly in friend action creator
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdateGroups: (updateGroups) =>
+      dispatch(actionTypes.updateGroups(updateGroups)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(GroupsDetails));

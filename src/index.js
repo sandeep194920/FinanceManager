@@ -4,8 +4,13 @@ import App from "./App";
 // connecting react router
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+<<<<<<< HEAD
 import friendsReducer from "./components/EasySplit/store/reducers/friendsReducer";
 import groupsReducer from "./components/EasySplit/store/reducers/groupsReducer";
+=======
+import friendsReducer from "./components/EasySplit/store/reducers/friends";
+import groupsReducer from "./components/EasySplit/store/reducers/groups";
+>>>>>>> develop
 import thunk from "redux-thunk"; // the import name can be anything which is thunk here
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

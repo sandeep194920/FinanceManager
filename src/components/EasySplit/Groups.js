@@ -10,8 +10,15 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+<<<<<<< HEAD
 import useStyles from "../EasySplit/FriendsGroupsStyles";
 import { objToArray } from "../../data/helpers/objectToArray";
+=======
+import useStyles from "../styles/FriendsGroupsStyles";
+import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
+// redux
+>>>>>>> develop
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -38,9 +45,12 @@ function GroupsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
+<<<<<<< HEAD
   //converting props.friendsInfo to array
   const groupsArray = objToArray(groupsInfo, "main", "details");
 
+=======
+>>>>>>> develop
   useEffect(() => {
     onInitGroups();
   }, [onInitGroups]);
@@ -55,10 +65,18 @@ function GroupsList(props) {
     groups = (
       <Table>
         <TableBody>
+<<<<<<< HEAD
           {groupsArray.map((groupInfo, index) => (
             <GroupsDetails
               key={groupInfo + index}
               details={groupInfo.details}
+=======
+          {groupsInfo.map((groupInfo, index) => (
+            <GroupsDetails
+              key={groupInfo + index}
+              //details={groupInfo.details}
+              group={groupInfo}
+>>>>>>> develop
               mainInfo={groupInfo.main}
               showDetails={showDetails}
               setShowDetails={switchShowDetails}

@@ -10,13 +10,32 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+import useStyles from "../EasySplit/FriendsGroupsStyles";
+import { objToArray } from "../../data/helpers/objectToArray";
+=======
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
+>>>>>>> fbf295ed5e074f26137eca54e8a89be87277441b
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
+>>>>>>> fbf295ed5e074f26137eca54e8a89be87277441b
 import { connect } from "react-redux";
+import * as actionTypes from "./store/actions";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function FriendsList(props) {
   console.log("Friends");
@@ -40,6 +59,15 @@ function FriendsList(props) {
     switchHideDetails(true);
   }, [switchHideDetails, switchShowDetails]);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+  //converting props.friendsInfo to array
+  const friendsArray = objToArray(friendsInfo, "main", "details");
+
+=======
+>>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   useEffect(() => {
     onInitFriends();
   }, [onInitFriends]);
@@ -53,11 +81,27 @@ function FriendsList(props) {
     friends = (
       <Table>
         <TableBody>
+<<<<<<< HEAD
+<<<<<<< HEAD
+          {friendsArray.map((friendInfo, index) => (
+            <FriendsshowDetails
+              key={friendInfo + index}
+              // details={friendInfo.details}
+=======
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
           {friendsInfo.map((friendInfo, index) => (
             <FriendsshowDetails
               key={friendInfo + index}
               //details={friendInfo.details}
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
+>>>>>>> fbf295ed5e074f26137eca54e8a89be87277441b
               friend={friendInfo}
               mainInfo={friendInfo.main}
               showDetails={showDetails}

@@ -42,7 +42,15 @@ function DetailsModal(props) {
   console.log("DetailsModal");
   const {
     userId,
+<<<<<<< HEAD
+<<<<<<< HEAD
+    dialogOpen,
+=======
     updateDialogOpen,
+>>>>>>> develop
+=======
+    updateDialogOpen,
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
     dialogCloseHandler,
     editMode,
     // editCloseHandler,
@@ -50,8 +58,16 @@ function DetailsModal(props) {
     updateHandler,
     currentDetails,
     setCurrentDetails,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     friendName,
     groupName,
+>>>>>>> develop
+=======
+    friendName,
+    groupName,
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   } = props;
 
   const classes = useStyles();
@@ -66,7 +82,22 @@ function DetailsModal(props) {
   const dateFormat = require("dateformat");
   const [selectedDate, setSelectedDate] = React.useState(
     dateFormat(new Date(currentDetails.date), "dd mmm, yyyy")
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
   );
+
+  const [transactionAmt, setTransactionAmt] = React.useState(
+    currentDetails.transactionAmount
+<<<<<<< HEAD
+=======
+>>>>>>> develop
+=======
+>>>>>>> 6a1c4070ff7cd0b76b54ca690c994cdfcfb5f2c0
+  );
+  const [oweAmt, setOweAmt] = React.useState(currentDetails.owe);
+  const [details, setDetails] = React.useState(currentDetails.details);
 
   const [transactionAmt, setTransactionAmt] = React.useState(
     currentDetails.transactionAmount

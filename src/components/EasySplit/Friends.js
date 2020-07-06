@@ -8,13 +8,14 @@ import Typography from "@material-ui/core/Typography";
 import FriendsshowDetails from "./FriendsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-// import { friendsInfo } from "../../data/EasySplit/FriendsInfo"; // This comes from friendsReducer
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 // redux
+
 import { connect } from "react-redux";
 
 function FriendsList(props) {
@@ -56,6 +57,7 @@ function FriendsList(props) {
             <FriendsshowDetails
               key={friendInfo + index}
               //details={friendInfo.details}
+
               friend={friendInfo}
               mainInfo={friendInfo.main}
               showDetails={showDetails}

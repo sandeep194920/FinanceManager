@@ -80,6 +80,26 @@ export const updateFriends = (updateDetails) => {
   };
 };
 
+// actual aync action creator to delete friends - called in FriendsDetails.js
+export const deleteFriendsDetail = (deleteDetail) => {
+  console.log("REAChed delete");
+  return (dispatch) => {
+    // remove the array detail object from firestore using arrayRemove method
+    const userId = deleteDetail["userId"];
+    // const detailId = deleteDetails["detailId"];
+
+    // getting an element from firestore using userId
+    const docRef = db.collection("friends").doc(userId);
+
+    docRef.update({
+      details: firebase.firestore.FieldValue.arrayRemove(deleteDetail),
+    });
+
+    // getting the updated data from firestore
+    dispatchFirstoreFriends(dispatch);
+  };
+};
+
 // add new details to friend
 export const addDetailsFriend = (newDetails) => {
   console.log("Th of currENT USER are");

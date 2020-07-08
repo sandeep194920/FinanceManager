@@ -21,7 +21,7 @@ import CategoryIcon from "@material-ui/icons/Category";
 import DetailsIcon from "@material-ui/icons/Details";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import Grid from "@material-ui/core/Grid";
-import OkCancelModal from "../EasySplit/OkCancelModal";
+import DeleteCancelModal from "../EasySplit/DeleteCancelModal";
 import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -48,6 +48,7 @@ function DetailsModal(props) {
     // editCloseHandler,
     editOpenHandler,
     updateHandler,
+    deleteHandler,
     currentDetails,
     setCurrentDetails,
     friendName,
@@ -163,9 +164,7 @@ function DetailsModal(props) {
     ));
   }
   // jsx related to edit Details
-  React.useEffect(() => {
-    console.log("DEtailsModal UseEffect");
-  });
+
   const editTextFields = {
     editTransactionDate: (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -411,10 +410,29 @@ function DetailsModal(props) {
       detailId: currentDetails.detailId,
       userId: userId,
     };
+    // this method is in FriendsDetails.js
     updateHandler({
       ...updateObj,
     });
     setCurrentDetails({ ...updateObj });
+  };
+
+  //onDelete
+  const onDeleteHandler = () => {
+    const deleteObj = {
+      date: selectedDate,
+      transactionAmount: transactionAmt,
+      paidBy: paidBy,
+      type: splitType,
+      category: category,
+      owe: oweAmt,
+      details: details,
+      detailId: currentDetails.detailId,
+      userId: userId,
+    };
+    deleteHandler({
+      ...deleteObj,
+    });
   };
 
   return (
@@ -651,10 +669,13 @@ function DetailsModal(props) {
           </DialogActions>
         </form>
       </Dialog>
-      <OkCancelModal
-        dialogOpen={deleteDialogOpen}
-        dialogCloseHandler={deleteDialogCloseHandler}
-      />
+      {deleteDialogOpen ? (
+        <DeleteCancelModal
+          dialogOpen={deleteDialogOpen} // it sets open prop to true in the DeleteCancelModal
+          deleteHandler={onDeleteHandler}
+          deleteDialogCloseHandler={deleteDialogCloseHandler}
+        />
+      ) : null}
     </React.Fragment>
   );
 }

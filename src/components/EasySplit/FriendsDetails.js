@@ -38,7 +38,7 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
+    onUpdateFriends, // doesnt come from FriendsDetails but comes from mapStateToProps
     onDeleteFriendsDetail, // doesnt come from Friends but comes from mapStateToProps
   } = props;
   const theme = useTheme();
@@ -103,16 +103,10 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
-  // const addHandler = useCallback((addDetails) => {
-  //   console.log("REached addHandler");
-  //   console.log(addDetails);
-  // }, []);
   const updateHandler = useCallback(
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
-
-      // console.log();
       console.log("The user is id " + updateDetails.userId);
       onUpdateFriends(updateDetails);
       editCloseHandler();
@@ -361,7 +355,7 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-    friendsInfo: state.friends.friendsInfo,
+    // friendsInfo: state.friends.friendsInfo, // not required since we get this from firebase directly in friend action creator
   };
 };
 

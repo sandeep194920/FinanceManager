@@ -4,4 +4,9 @@ export {
   addDetailsFriend,
   deleteFriendsDetail,
 } from "./friends";
-export { initGroups, updateGroups, addDetailsGroup } from "./groups";
+export {
+  initGroups,
+  updateGroups,
+  addDetailsGroup,
+  deleteGroupsDetail,
+} from "./groups";

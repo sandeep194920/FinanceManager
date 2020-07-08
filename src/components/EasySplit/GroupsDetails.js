@@ -38,7 +38,8 @@ function GroupsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    onUpdateGroups,
+    onUpdateGroups, // doesnt come from GroupsDetails but comes from mapStateToProps
+    onDeleteGroupsDetail, // doesnt come from Friends but comes from mapStateToProps
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -106,6 +107,17 @@ function GroupsDetails(props) {
       editCloseHandler();
     },
     [editCloseHandler, onUpdateGroups]
+  );
+
+  // to execute this, the btn is clicked in DeleteCancelModal
+  const deleteHandler = useCallback(
+    (deleteDetail) => {
+      console.log("The deletable id is ");
+      console.log(deleteDetail);
+      onDeleteGroupsDetail(deleteDetail);
+      dialogCloseHandler();
+    },
+    [dialogCloseHandler, onDeleteGroupsDetail]
   );
 
   return (
@@ -323,6 +335,7 @@ function GroupsDetails(props) {
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
           updateHandler={updateHandler}
+          deleteHandler={deleteHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
           setCurrentDetails={setCurrentDetails}
@@ -357,6 +370,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateGroups: (updateGroups) =>
       dispatch(actionTypes.updateGroups(updateGroups)),
+    onDeleteGroupsDetail: (deleteDetail) =>
+      dispatch(actionTypes.deleteGroupsDetail(deleteDetail)),
   };
 };
 

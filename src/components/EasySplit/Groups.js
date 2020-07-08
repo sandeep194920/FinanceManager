@@ -8,14 +8,15 @@ import Typography from "@material-ui/core/Typography";
 import GroupsDetails from "./GroupsDetails";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-// import { groupsInfo } from "../../data/EasySplit/GroupsInfo";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import useStyles from "../styles/FriendsGroupsStyles";
 import * as actionTypes from "./store/actions";
-import LinearProgress from "@material-ui/core/LinearProgress";
+
 // redux
 import { connect } from "react-redux";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function GroupsList(props) {
   console.log("Groups");

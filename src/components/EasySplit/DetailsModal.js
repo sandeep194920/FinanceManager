@@ -42,7 +42,9 @@ function DetailsModal(props) {
   console.log("DetailsModal");
   const {
     userId,
+
     updateDialogOpen,
+
     dialogCloseHandler,
     editMode,
     // editCloseHandler,

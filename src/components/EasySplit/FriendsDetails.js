@@ -27,6 +27,7 @@ import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
+
 function FriendsDetails(props) {
   console.log("FriendsDetails");
 
@@ -40,6 +41,7 @@ function FriendsDetails(props) {
     setShowDetails,
     onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
     onDeleteFriendsDetail, // doesnt come from Friends but comes from mapStateToProps
+
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -103,20 +105,22 @@ function FriendsDetails(props) {
     setEditMode(false);
   }, [setEditMode]);
 
+
   // const addHandler = useCallback((addDetails) => {
   //   console.log("REached addHandler");
   //   console.log(addDetails);
   // }, []);
-
   const updateHandler = useCallback(
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
+
+      // console.log();
       console.log("The user is id " + updateDetails.userId);
-      onUpdateFriends(updateDetails);
+      onUpdateFriends(updateDetails, friendsInfo);
       editCloseHandler();
     },
-    [editCloseHandler, onUpdateFriends]
+    [editCloseHandler, friendsInfo, onUpdateFriends]
   );
 
   // to execute this, the btn is clicked in DeleteCancelModal
@@ -129,6 +133,7 @@ function FriendsDetails(props) {
     },
     [dialogCloseHandler, onDeleteFriendsDetail]
   );
+
 
   return (
     <React.Fragment>
@@ -266,6 +271,7 @@ function FriendsDetails(props) {
                   </TableHead>
                   <TableBody>
                     {friend.details.map((record, index) => {
+
                       return (
                         <TableRow key={record + index} className={classes.tRow}>
                           <TableCell style={{ fontWeight: "600" }}>
@@ -360,7 +366,7 @@ function FriendsDetails(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.friends.loading,
-    // groupsInfo: state.friends.groupsInfo, // not required since we get this from firebase directly in friend action creator
+    friendsInfo: state.friends.friendsInfo,
   };
 };
 
@@ -370,6 +376,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionTypes.updateFriends(updateFriends)),
     onDeleteFriendsDetail: (deleteDetail) =>
       dispatch(actionTypes.deleteFriendsDetail(deleteDetail)),
+
   };
 };
 

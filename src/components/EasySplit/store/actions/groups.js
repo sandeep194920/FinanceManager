@@ -24,7 +24,7 @@ export const initGroups = () => {
   };
 };
 
-// actual aync action creator to update friends - called in FriendsDetails.js
+// actual aync action creator to update groups - called in GroupsDetails.js
 export const updateGroups = (updateDetails) => {
   return (dispatch) => {
     // update the data here
@@ -67,8 +67,16 @@ export const updateGroups = (updateDetails) => {
           db.collection("groups").doc(userId).update({
             details: updatedUserDetails,
           });
+
+          // introduce timeout so that the fetch will happen properly
+
+          setTimeout(() => {
+            // getting the updated data from firestore
+            dispatchFirstoreGroups(dispatch);
+          }, 500);
+
           // getting the updated data from firestore
-          dispatchFirstoreGroups(dispatch);
+          // dispatchFirstoreGroups(dispatch);
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -77,6 +85,33 @@ export const updateGroups = (updateDetails) => {
       .catch(function (error) {
         console.log("Error getting document:", error);
       });
+  };
+};
+
+// actual aync action creator to delete groups - called in GroupsDetails.js
+export const deleteGroupsDetail = (deleteDetail) => {
+  console.log("REAChed delete");
+  return (dispatch) => {
+    // remove the array detail object from firestore using arrayRemove method
+    const userId = deleteDetail["userId"];
+    // const detailId = deleteDetails["detailId"];
+
+    // getting an element from firestore using userId
+    const docRef = db.collection("groups").doc(userId);
+
+    docRef.update({
+      details: firebase.firestore.FieldValue.arrayRemove(deleteDetail),
+    });
+
+    // introduce timeout so that the fetch will happen properly
+
+    setTimeout(() => {
+      // getting the updated data from firestore
+      dispatchFirstoreGroups(dispatch);
+    }, 500);
+
+    // getting the updated data from firestore
+    // dispatchFirstoreGroups(dispatch);
   };
 };
 
@@ -118,15 +153,21 @@ export const addDetailsGroup = (newDetails) => {
               updatedNewDetails
             ),
           });
+        // introduce timeout so that the fetch will happen properly
+
+        setTimeout(() => {
+          // getting the updated data from firestore
+          dispatchFirstoreGroups(dispatch);
+        }, 500);
 
         // getting the updated data from firestore
-        dispatchFirstoreGroups(dispatch);
+        // dispatchFirstoreGroups(dispatch);
       }
     });
   };
 };
 
-// helper function used in setFriends and updateFriends
+// helper function used in setGroups and updateGroups
 function dispatchFirstoreGroups(dispatch) {
   console.log("REACHED GROUP ACTION");
   const firebaseGroups = [];

@@ -2,7 +2,6 @@ import * as actionTypes from "./actionTypes";
 import { db } from "../../../../firebase";
 import * as firebase from "firebase";
 
-
 // helper for friends fetch (sync) helper
 export const setFriends = (friends) => {
   return {
@@ -68,8 +67,16 @@ export const updateFriends = (updateDetails) => {
           db.collection("friends").doc(userId).update({
             details: updatedUserDetails,
           });
+
+          // introduce timeout so that the fetch will happen properly
+
+          setTimeout(() => {
+            // getting the updated data from firestore
+            dispatchFirstoreFriends(dispatch);
+          }, 500);
+
           // getting the updated data from firestore
-          dispatchFirstoreFriends(dispatch);
+          //dispatchFirstoreFriends(dispatch);
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -96,8 +103,15 @@ export const deleteFriendsDetail = (deleteDetail) => {
       details: firebase.firestore.FieldValue.arrayRemove(deleteDetail),
     });
 
+    // introduce timeout so that the fetch will happen properly
+
+    setTimeout(() => {
+      // getting the updated data from firestore
+      dispatchFirstoreFriends(dispatch);
+    }, 500);
+
     // getting the updated data from firestore
-    dispatchFirstoreFriends(dispatch);
+    // dispatchFirstoreFriends(dispatch);
   };
 };
 
@@ -113,6 +127,9 @@ export const addDetailsFriend = (newDetails) => {
         console.log("The details of currENT USER are");
         console.log(currentUser.details);
 
+        // here we get the detailIDs present in the firebase into this array and then figureout what should be the next number that should go in.
+        // Array is sorted in asc order and then 1 is added to the last element to form the latest detailId
+
         const detailIdArray = [];
         currentUser.details.forEach((detail) => {
           detailIdArray.push(detail.detailId);
@@ -121,7 +138,12 @@ export const addDetailsFriend = (newDetails) => {
         console.log("The array is " + detailIdArray);
         // Now we got the sorted (ascending order) detaildIds, we can get the last detailId and add 1 for the new detailId
 
-        const lastDetailId = detailIdArray.pop();
+        let lastDetailId = detailIdArray.pop();
+
+        // What if there are no details, then the lastDetailId will be undefined. In that case the lastDetailId should be made 0 so it starts from first
+        if (isNaN(lastDetailId)) {
+          lastDetailId = -1; // this is coz the below line makes the first detailId 0
+        }
         console.log("The last id is " + lastDetailId);
 
         const newDetailId = lastDetailId + 1;
@@ -140,8 +162,15 @@ export const addDetailsFriend = (newDetails) => {
             ),
           });
 
+        // introduce timeout so that the fetch will happen properly
+
+        setTimeout(() => {
+          // getting the updated data from firestore
+          dispatchFirstoreFriends(dispatch);
+        }, 500);
+
         // getting the updated data from firestore
-        dispatchFirstoreFriends(dispatch);
+        //dispatchFirstoreFriends(dispatch);
       }
     });
   };

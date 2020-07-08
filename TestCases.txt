@@ -1,0 +1,8 @@
+Test These while you develop
+
+1. Create detail for friends
+2. Update detail for friends
+3. Delete detail for friends
+4. Create detail for groups
+5. Update detail for groups
+6. Delete detail for groups

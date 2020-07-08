@@ -51,7 +51,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function OkCancelModal(props) {
-  const { dialogOpen, dialogCloseHandler } = props;
+  const { dialogOpen, deleteDialogCloseHandler, deleteHandler } = props;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -63,7 +63,7 @@ export default function OkCancelModal(props) {
         open={dialogOpen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={dialogCloseHandler}
+        onClose={deleteDialogCloseHandler}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
@@ -78,14 +78,17 @@ export default function OkCancelModal(props) {
         </DialogTitle>
         <DialogActions className={classes.dialogActions}>
           <Button
-            onClick={dialogCloseHandler}
+            onClick={() => {
+              deleteHandler();
+              deleteDialogCloseHandler();
+            }}
             color={theme.palette.type === "light" ? "primary" : "secondary"}
             size={matchesSM ? "small" : "medium"}
           >
             Delete
           </Button>
           <Button
-            onClick={dialogCloseHandler}
+            onClick={deleteDialogCloseHandler}
             color={theme.palette.type === "light" ? "primary" : "secondary"}
             size={matchesSM ? "small" : "medium"}
           >

@@ -39,8 +39,9 @@ function FriendsDetails(props) {
     hideDetails,
     setHideDetails,
     setShowDetails,
-    friendsInfo,
-    onUpdateFriends,
+    onUpdateFriends, // doesnt come from Friends but comes from mapStateToProps
+    onDeleteFriendsDetail, // doesnt come from Friends but comes from mapStateToProps
+
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -53,6 +54,8 @@ function FriendsDetails(props) {
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   // add dialog
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+
+  // delete dialog ()
 
   const detailsTableHead = ["Date", "Amount", "Paid", "Split", "You Owe($)"];
 
@@ -71,6 +74,7 @@ function FriendsDetails(props) {
     setUpdateDialogOpen(true);
   }, [setUpdateDialogOpen]);
 
+  // this closes the popups
   const dialogCloseHandler = useCallback(() => {
     setAddDialogOpen(false);
     setUpdateDialogOpen(false);
@@ -118,7 +122,19 @@ function FriendsDetails(props) {
     },
     [editCloseHandler, friendsInfo, onUpdateFriends]
   );
-  
+
+  // to execute this, the btn is clicked in DeleteCancelModal
+  const deleteHandler = useCallback(
+    (deleteDetail) => {
+      console.log("The deletable id is ");
+      console.log(deleteDetail);
+      onDeleteFriendsDetail(deleteDetail);
+      dialogCloseHandler();
+    },
+    [dialogCloseHandler, onDeleteFriendsDetail]
+  );
+
+
   return (
     <React.Fragment>
       <TableRow>
@@ -323,6 +339,7 @@ function FriendsDetails(props) {
           dialogCloseHandler={dialogCloseHandler}
           editCloseHandler={editCloseHandler}
           updateHandler={updateHandler}
+          deleteHandler={deleteHandler}
           editOpenHandler={editOpenHandler}
           currentDetails={currentDetails}
           setCurrentDetails={setCurrentDetails}
@@ -357,6 +374,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUpdateFriends: (updateFriends) =>
       dispatch(actionTypes.updateFriends(updateFriends)),
+    onDeleteFriendsDetail: (deleteDetail) =>
+      dispatch(actionTypes.deleteFriendsDetail(deleteDetail)),
 
   };
 };

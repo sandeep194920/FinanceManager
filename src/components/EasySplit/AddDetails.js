@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -121,19 +121,6 @@ const AddDetails = (props) => {
     },
   ];
 
-  useEffect(() => {
-    setSplitType(splitTypes[0].value);
-    setCategory(categories[0].value);
-    setPaidBy(whopaidFriend[0].value);
-  }, [
-    setSplitType,
-    setCategory,
-    setPaidBy,
-    categories,
-    splitTypes,
-    whopaidFriend,
-  ]);
-
   const handleDateChange = (date) => {
     setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
   };
@@ -212,7 +199,7 @@ const AddDetails = (props) => {
         required
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue=""
+        defaultValue={transactionAmt}
         classes={{
           root: classes.listItemText,
         }}

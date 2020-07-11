@@ -49,21 +49,6 @@ const AddDetails = (props) => {
     onAddDetailsForFriend, // doesnt come from FriendsDetails but comes from mapStateToProps
     onAddDetailsForGroup, // doesnt come from GroupsDetails but comes from mapStateToProps
   } = props;
-  const classes = useStyles();
-  const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  // Edit details related below
-  const [paidBy, setPaidBy] = React.useState("");
-  const [splitType, setSplitType] = React.useState("");
-  const [category, setCategory] = React.useState("");
-  const dateFormat = require("dateformat");
-  const [selectedDate, setSelectedDate] = React.useState(
-    dateFormat(new Date(), "dd mmm, yyyy")
-  );
-
-  const [transactionAmt, setTransactionAmt] = React.useState("");
-  const [oweAmt, setOweAmt] = React.useState("");
-  const [details, setDetails] = React.useState("");
 
   const whopaidFriend = [
     {
@@ -120,6 +105,35 @@ const AddDetails = (props) => {
       label: "Other",
     },
   ];
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  // Edit details related below
+  const [paidBy, setPaidBy] = React.useState(whopaidFriend[0].value);
+  const [splitType, setSplitType] = React.useState(splitTypes[0].value);
+  const [category, setCategory] = React.useState(categories[0].value);
+  const dateFormat = require("dateformat");
+  const [selectedDate, setSelectedDate] = React.useState(
+    dateFormat(new Date(), "dd mmm, yyyy")
+  );
+
+  const [transactionAmt, setTransactionAmt] = React.useState("");
+  const [oweAmt, setOweAmt] = React.useState("");
+  const [details, setDetails] = React.useState("");
+
+  // useEffect(() => {
+  //   setSplitType();
+  //   setCategory();
+  //   setPaidBy();
+  // }, [
+  //   setSplitType,
+  //   setCategory,
+  //   setPaidBy,
+  //   categories,
+  //   splitTypes,
+  //   whopaidFriend,
+  // ]);
 
   const handleDateChange = (date) => {
     setSelectedDate(dateFormat(date, "dd mmm, yyyy"));
@@ -199,7 +213,7 @@ const AddDetails = (props) => {
         required
         type="number"
         color={theme.palette.type === "dark" ? "secondary" : "primary"}
-        defaultValue={transactionAmt}
+        defaultValue=""
         classes={{
           root: classes.listItemText,
         }}

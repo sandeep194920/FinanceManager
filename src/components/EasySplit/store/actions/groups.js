@@ -73,7 +73,7 @@ export const updateGroups = (updateDetails) => {
           setTimeout(() => {
             // getting the updated data from firestore
             dispatchFirstoreGroups(dispatch);
-          }, 500);
+          }, 800);
 
           // getting the updated data from firestore
           // dispatchFirstoreGroups(dispatch);
@@ -108,7 +108,7 @@ export const deleteGroupsDetail = (deleteDetail) => {
     setTimeout(() => {
       // getting the updated data from firestore
       dispatchFirstoreGroups(dispatch);
-    }, 500);
+    }, 800);
 
     // getting the updated data from firestore
     // dispatchFirstoreGroups(dispatch);
@@ -158,7 +158,7 @@ export const addDetailsGroup = (newDetails) => {
         setTimeout(() => {
           // getting the updated data from firestore
           dispatchFirstoreGroups(dispatch);
-        }, 500);
+        }, 800);
 
         // getting the updated data from firestore
         // dispatchFirstoreGroups(dispatch);

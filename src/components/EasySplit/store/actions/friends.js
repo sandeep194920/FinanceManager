@@ -73,7 +73,7 @@ export const updateFriends = (updateDetails) => {
           setTimeout(() => {
             // getting the updated data from firestore
             dispatchFirstoreFriends(dispatch);
-          }, 500);
+          }, 800);
 
           // getting the updated data from firestore
           //dispatchFirstoreFriends(dispatch);
@@ -108,7 +108,7 @@ export const deleteFriendsDetail = (deleteDetail) => {
     setTimeout(() => {
       // getting the updated data from firestore
       dispatchFirstoreFriends(dispatch);
-    }, 500);
+    }, 800);
 
     // getting the updated data from firestore
     // dispatchFirstoreFriends(dispatch);
@@ -167,7 +167,7 @@ export const addDetailsFriend = (newDetails) => {
         setTimeout(() => {
           // getting the updated data from firestore
           dispatchFirstoreFriends(dispatch);
-        }, 500);
+        }, 800);
 
         // getting the updated data from firestore
         //dispatchFirstoreFriends(dispatch);

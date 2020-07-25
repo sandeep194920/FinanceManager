@@ -197,14 +197,14 @@ function Header(props) {
       icon: <GroupAddIcon classes={{ root: classes.icons }} />,
     },
     {
-      name: "About Us",
-      link: "/about",
+      name: "Register",
+      link: "/register",
       activeIndex: 3,
       icon: <InfoIcon classes={{ root: classes.icons }} />,
     },
     {
-      name: "Contact Us",
-      link: "/contact",
+      name: "Login",
+      link: "/login",
       activeIndex: 4,
       icon: <ContactsIcon classes={{ root: classes.icons }} />,
     },

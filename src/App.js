@@ -10,7 +10,9 @@ import Friends from "./components/EasySplit/Friends";
 import Paper from "@material-ui/core/Paper";
 import darkLogo from "./assets/darkLogo.png";
 import lightLogo from "./assets/lightLogo.png";
-import AboutUs from "./components/AboutUs";
+// import AboutUs from "./components/AboutUs";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 function App() {
   const [myTheme, setTheme] = useState(lightTheme);
@@ -66,8 +68,8 @@ function App() {
             />
             <Route path="/friends" render={() => <Friends />} />
             <Route path="/groups" render={() => <Groups />} />
-            <Route path="/about" render={() => <AboutUs />} />
-            <Route path="/contact" component={() => <div>Contact Us</div>} />
+            <Route path="/register" render={() => <Register />} />
+            <Route path="/login" component={() => <Login />} />
           </Switch>
           {/* <Footer /> */}
         </BrowserRouter>

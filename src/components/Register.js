@@ -38,21 +38,14 @@ function Register(props) {
         // classes={root:classes.}
         variant="outlined"
       >
-        <CardContent>
-          <Grid contianer>
+        <CardContent className={classes.CardContent}>
+          <Grid>
             <Grid className={classes.registerLoginContainerRow}>
-              <IconButton
-                disableRipple
-                style={{
-                  marginRight: "0.5em",
-                  marginTop: "0.4em",
-                  cursor: "default",
-                }}
-              >
+              <IconButton disableRipple className={classes.icon}>
                 <PersonIcon />
               </IconButton>
               <TextField
-                style={{ width: "80%" }}
+                className={classes.textField}
                 id="standard-textarea"
                 label="Full Name"
                 placeholder="Full Name"
@@ -72,7 +65,7 @@ function Register(props) {
                 <MailOutlineIcon />
               </IconButton>
               <TextField
-                style={{ width: "80%" }}
+                className={classes.textField}
                 id="standard-textarea"
                 label="Email ID"
                 placeholder="Email ID"
@@ -104,7 +97,29 @@ function Register(props) {
           </Grid>
         </CardContent>
         <CardActions>
-          <Button size="small">Register</Button>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Button
+              variant="contained"
+              color={theme.palette.type === "dark" ? "secondary" : "primary"}
+              className={classes.btn}
+            >
+              Register
+            </Button>
+            <Button size="small">
+              <Typography
+                style={{ textDecorationLine: "underline" }}
+                variant="caption"
+                gutterBottom
+              >
+                Already a member ? Login
+              </Typography>
+            </Button>
+          </Grid>
         </CardActions>
       </Card>
     </Grid>

@@ -96,6 +96,12 @@ const darkTheme = createMuiTheme({
     //     backgroundColor: "blue",
     //   },
     // },
+
+    // MuiTabsIndicator: {
+    //   backgroundColor: "red",
+    //   left: "3.1em !important",
+    //   width: "4em !important",
+    // },
   },
 });
 export default darkTheme;

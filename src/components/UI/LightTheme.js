@@ -42,6 +42,11 @@ const lightTheme = createMuiTheme({
     //     },
     //   },
     // },
+    // MuiTabsIndicator: {
+    //   backgroundColor: "red",
+    //   left: "3.1em !important",
+    //   width: "4em !important",
+    // },
   },
 });
 export default lightTheme;

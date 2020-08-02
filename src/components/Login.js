@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./styles/RegisterLoginStyles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -12,11 +12,25 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockIcon from "@material-ui/icons/Lock";
+import * as actionTypes from "./store/actions";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
 
 function Login(props) {
+  const history = useHistory();
+  const { onLoginUser } = props; //onLoginUser comes from mapDispatchToProps
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onLoginHandler = (event) => {
+    event.preventDefault();
+    console.log(`The login email and password are ${email} and ${password}`);
+    onLoginUser(email, password, history);
+  };
 
   return (
     <Grid
@@ -32,84 +46,96 @@ function Login(props) {
       >
         Login
       </Typography>
-      <Card
-        className={classes.registerLoginContainer}
-        // classes={root:classes.}
-        variant="outlined"
-      >
-        <CardContent className={classes.CardContent}>
-          <Grid>
-            <Grid className={classes.registerLoginContainerRow}>
-              <IconButton
-                disableRipple
-                style={{
-                  marginRight: "0.5em",
-                  marginTop: "0.4em",
-                  cursor: "default",
-                }}
-              >
-                <MailOutlineIcon />
-              </IconButton>
-              <TextField
-                className={classes.textField}
-                id="standard-textarea"
-                label="Email ID"
-                placeholder="Email ID"
-                multiline
-                color={theme.palette.type === "dark" ? "secondary" : "primary"}
-              />
-            </Grid>
+      <form onSubmit={(event) => onLoginHandler(event)}>
+        <Card className={classes.registerLoginContainer} variant="outlined">
+          <CardContent className={classes.CardContent}>
+            <Grid>
+              <Grid className={classes.registerLoginContainerRow}>
+                <IconButton
+                  disableRipple
+                  style={{
+                    marginRight: "0.5em",
+                    marginTop: "0.4em",
+                    cursor: "default",
+                  }}
+                >
+                  <MailOutlineIcon />
+                </IconButton>
+                <TextField
+                  className={classes.textField}
+                  onChange={(event) => setEmail(event.target.value)}
+                  id="standard-textarea"
+                  label="Email ID"
+                  placeholder="Email ID"
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                  type="email"
+                />
+              </Grid>
 
-            <Grid className={classes.registerLoginContainerRow}>
-              <IconButton
-                disableRipple
-                style={{
-                  marginRight: "0.5em",
-                  marginTop: "0.4em",
-                  cursor: "default",
-                }}
-              >
-                <LockIcon />
-              </IconButton>
-              <TextField
-                className={classes.textField}
-                id="standard-textarea"
-                label="Password"
-                placeholder="Password"
-                multiline
-                color={theme.palette.type === "dark" ? "secondary" : "primary"}
-              />
+              <Grid className={classes.registerLoginContainerRow}>
+                <IconButton
+                  disableRipple
+                  style={{
+                    marginRight: "0.5em",
+                    marginTop: "0.4em",
+                    cursor: "default",
+                  }}
+                >
+                  <LockIcon />
+                </IconButton>
+                <TextField
+                  className={classes.textField}
+                  id="standard-textarea"
+                  onChange={(event) => setPassword(event.target.value)}
+                  label="Password"
+                  placeholder="Password"
+                  color={
+                    theme.palette.type === "dark" ? "secondary" : "primary"
+                  }
+                  type="password"
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-        <CardActions>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Button
-              variant="contained"
-              color={theme.palette.type === "dark" ? "secondary" : "primary"}
-              className={classes.btn}
+          </CardContent>
+          <CardActions>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
             >
-              Login
-            </Button>
-            <Button size="small">
-              <Typography
-                style={{ textDecorationLine: "underline" }}
-                variant="caption"
-                gutterBottom
+              <Button
+                variant="contained"
+                color={theme.palette.type === "dark" ? "secondary" : "primary"}
+                className={classes.btn}
+                type="submit"
               >
-                Not a member yet? Register
-              </Typography>
-            </Button>
-          </Grid>
-        </CardActions>
-      </Card>
+                Login
+              </Button>
+              <Button size="small" href="/register">
+                <Typography
+                  style={{ textDecorationLine: "underline" }}
+                  variant="caption"
+                  gutterBottom
+                >
+                  Not a member yet? Register
+                </Typography>
+              </Button>
+            </Grid>
+          </CardActions>
+        </Card>
+      </form>
     </Grid>
   );
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoginUser: (email, password, history) =>
+      dispatch(actionTypes.loginUser(email, password, history)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(React.memo(Login));

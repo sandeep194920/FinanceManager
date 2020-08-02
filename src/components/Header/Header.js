@@ -26,6 +26,8 @@ import Brightness4Icon from "@material-ui/icons/Brightness4";
 import HighlightIcon from "@material-ui/icons/Highlight";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// redux
+import * as firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -71,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+
   tab: {
     fontSize: "1rem",
     textTransform: "none",
@@ -143,14 +146,13 @@ function ElevationScroll(props) {
 }
 
 function Header(props) {
-  React.useEffect(() => {
-    console.log("Header");
-  });
   const { switchTheme, switchLogo, logoImg } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState(null);
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -164,20 +166,32 @@ function Header(props) {
   };
 
   useEffect(() => {
-    if (path === "/") {
-      setValue(0);
-    } else if (path === "/friends") {
-      setValue(1);
-    } else if (path === "/groups") {
-      setValue(2);
-    } else if (path === "/about") {
-      setValue(3);
-    } else if (path === "/contact") {
-      setValue(4);
+    if (userId === null) {
+      if (path === "/") {
+        setValue(0);
+      } else if (path === "/friends") {
+        setValue(1);
+      } else if (path === "/groups") {
+        setValue(2);
+      } else if (path === "/register") {
+        setValue(3);
+      } else if (path === "/login") {
+        setValue(4);
+      }
+    } else {
+      if (path === "/") {
+        setValue(0);
+      } else if (path === "/friends") {
+        setValue(1);
+      } else if (path === "/groups") {
+        setValue(2);
+      } else if (path === "/logout") {
+        setValue(3);
+      }
     }
-  }, [path]);
+  }, [path, userId]);
 
-  const routes = [
+  let routes = [
     {
       name: "Home",
       link: "/",
@@ -197,18 +211,66 @@ function Header(props) {
       icon: <GroupAddIcon classes={{ root: classes.icons }} />,
     },
     {
-      name: "About Us",
-      link: "/about",
+      name: "Register",
+      link: "/register",
       activeIndex: 3,
       icon: <InfoIcon classes={{ root: classes.icons }} />,
     },
+
     {
-      name: "Contact Us",
-      link: "/contact",
+      name: "Login",
+      link: "/login",
       activeIndex: 4,
       icon: <ContactsIcon classes={{ root: classes.icons }} />,
     },
   ];
+
+  if (userId !== null) {
+    console.log("REACHED IF STATE");
+    routes = [
+      {
+        name: "Home",
+        link: "/",
+        activeIndex: 0,
+        icon: <HomeIcon classes={{ root: classes.icons }} />,
+      },
+      {
+        name: "Friends",
+        link: "/friends",
+        activeIndex: 1,
+        icon: <GroupIcon classes={{ root: classes.icons }} />,
+      },
+      {
+        name: "Groups",
+        link: "/groups",
+        activeIndex: 2,
+        icon: <GroupAddIcon classes={{ root: classes.icons }} />,
+      },
+      {
+        name: "Logout",
+        link: "/logout",
+        activeIndex: 3,
+        icon: <ContactsIcon classes={{ root: classes.icons }} />,
+      },
+    ];
+  } else {
+    console.log("REACHED ELSE STATE");
+
+    routes = [...routes];
+  }
+  // method that fires when the authentication changes like login to logout and so on
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      console.log("Header logged in if -> " + user.uid);
+
+      setUserId(user.uid);
+    } else {
+      // No user is signed in.
+      console.log("Header else -> ");
+      setUserId(null);
+    }
+  });
 
   const sideDrawerList = (
     <List
@@ -221,22 +283,25 @@ function Header(props) {
           <img className={classes.logoImg} src={logoImg} alt="logo" />
         </Button>
       </ListItem>
-      {routes.map((route, index) => (
-        <React.Fragment key={route + index}>
-          <ListItem
-            classes={{ root: classes.listItem, selected: classes.selected }}
-            selected={window.location.pathname === route.link}
-            button
-            onClick={handleDrawerToggle}
-            component={Link}
-            to={route.link}
-          >
-            <ListItemIcon>{route.icon}</ListItemIcon>
-            <ListItemText primary={route.name} />
-          </ListItem>
-          <Divider />
-        </React.Fragment>
-      ))}
+      {routes.map((route, index) => {
+        console.log("GHHHH");
+        return (
+          <React.Fragment key={route + index}>
+            <ListItem
+              classes={{ root: classes.listItem, selected: classes.selected }}
+              selected={window.location.pathname === route.link}
+              button
+              onClick={handleDrawerToggle}
+              component={Link}
+              to={route.link}
+            >
+              <ListItemIcon>{route.icon}</ListItemIcon>
+              <ListItemText primary={route.name} />
+            </ListItem>
+            <Divider />
+          </React.Fragment>
+        );
+      })}
     </List>
   );
   const drawer = (
@@ -285,6 +350,7 @@ function Header(props) {
                 </Button>
               </Grid>
               <Tabs
+                classes={{ indicator: classes.indicator }}
                 indicatorColor={
                   theme.palette.type === "dark" ? "secondary" : "primary"
                 }
@@ -293,16 +359,18 @@ function Header(props) {
                 aria-label="simple tabs"
                 className={classes.tabs}
               >
-                {routes.map((route, index) => (
-                  <Tab
-                    component={Link}
-                    to={route.link}
-                    className={classes.tab}
-                    label={route.name}
-                    disableRipple
-                    key={index + route}
-                  />
-                ))}
+                {routes.map((route, index) => {
+                  return (
+                    <Tab
+                      component={Link}
+                      to={route.link}
+                      className={classes.tab}
+                      label={route.name}
+                      disableRipple
+                      key={index + route}
+                    />
+                  );
+                })}
               </Tabs>
               <IconButton
                 disableRipple
@@ -333,4 +401,5 @@ function Header(props) {
   );
 }
 
+// export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Header));
 export default React.memo(Header);

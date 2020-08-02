@@ -6,6 +6,7 @@ const initState = {
 };
 
 const friendsReducer = (state = initState, action) => {
+  console.log(action.friends);
   switch (action.type) {
     case actionTypes.SET_FRIENDS:
       return {

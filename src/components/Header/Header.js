@@ -32,6 +32,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import { auth } from "../../firebase";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -175,7 +177,7 @@ function ElevationScroll(props) {
 
 function Header(props) {
   const { switchTheme, switchLogo, logoImg } = props;
-
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -426,7 +428,10 @@ function Header(props) {
                   );
                 })}
               </Tabs>
-              <div className={classes.profile}>
+              <div
+                className={classes.profile}
+                style={{ display: userId === null ? "none" : "block" }}
+              >
                 <div
                   style={{
                     position: "absolute",
@@ -458,7 +463,14 @@ function Header(props) {
                     >
                       <MenuItem>Profile</MenuItem>
                       <MenuItem>My account</MenuItem>
-                      <MenuItem>Logout</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          auth.signOut();
+                          history.push("/");
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
                     </MenuList>
                   </Paper>
                 </div>

@@ -5,7 +5,6 @@ import lightTheme from "./components/UI/LightTheme";
 import darkTheme from "./components/UI/DarkTheme";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 // import Footer from "./components/Footer/Footer";
-import Button from "@material-ui/core/Button";
 import Groups from "./components/EasySplit/Groups";
 import Friends from "./components/EasySplit/Friends";
 import Paper from "@material-ui/core/Paper";
@@ -14,7 +13,6 @@ import lightLogo from "./assets/lightLogo.png";
 // import AboutUs from "./components/AboutUs";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import { auth } from "./firebase";
 import * as firebase from "firebase";
 
 function App() {
@@ -52,10 +50,6 @@ function App() {
       setTheme(lightTheme);
     }
   }, [setLogoImg, setTheme]);
-
-  const logoutHandler = () => {
-    auth.signOut();
-  };
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -97,17 +91,6 @@ function App() {
         />
         <Route path="/friends" render={() => <Friends />} />
         <Route path="/groups" render={() => <Groups />} />
-        <Route
-          path="/logout"
-          exact
-          component={() => (
-            <div style={{ height: "1000px" }}>
-              <Button color="primary" onClick={logoutHandler}>
-                Logout
-              </Button>
-            </div>
-          )}
-        />
         <Redirect to="/" />
       </React.Fragment>
     );

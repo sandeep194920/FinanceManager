@@ -28,6 +28,12 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // redux
 import * as firebase from "firebase";
+import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import { auth } from "../../firebase";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -69,14 +75,38 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     marginLeft: "auto",
+    marginRight: "5em",
+
     [theme.breakpoints.down("md")]: {
       display: "none",
+      marginRight: "3em",
     },
   },
 
   tab: {
     fontSize: "1rem",
     textTransform: "none",
+  },
+  profile: {
+    position: "relative",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  avatar: {
+    cursor: "pointer",
+    margin: "auto",
+    fontSize: "1em",
+    letterSpacing: "1px",
+    color: "black",
+    background: "#f0f0f0",
+  },
+  profileMenu: {
+    // background: "black",
+    backgroundColor:
+      theme.palette.type === "dark" ? "black" : theme.palette.primary.main,
+    margin: "auto",
+    color: "white",
   },
   menuIcon: {
     [theme.breakpoints.down("md")]: {
@@ -147,7 +177,7 @@ function ElevationScroll(props) {
 
 function Header(props) {
   const { switchTheme, switchLogo, logoImg } = props;
-
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -155,6 +185,8 @@ function Header(props) {
   const [userId, setUserId] = useState(null);
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  // const [anchorEl, setAnchorEl] = useState(null);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -252,6 +284,12 @@ function Header(props) {
         activeIndex: 3,
         icon: <ContactsIcon classes={{ root: classes.icons }} />,
       },
+      {
+        name: "Profile",
+        link: "/logout",
+        activeIndex: 3,
+        icon: <ContactsIcon classes={{ root: classes.icons }} />,
+      },
     ];
   } else {
     console.log("REACHED ELSE STATE");
@@ -284,7 +322,9 @@ function Header(props) {
         </Button>
       </ListItem>
       {routes.map((route, index) => {
-        console.log("GHHHH");
+        if (route.name === "Profile") {
+          return null;
+        }
         return (
           <React.Fragment key={route + index}>
             <ListItem
@@ -314,6 +354,16 @@ function Header(props) {
       {sideDrawerList}
     </Drawer>
   );
+
+  const handleClick = (event) => {
+    // setAnchorEl(event.currentTarget);
+    setOpenMenu(true);
+  };
+
+  const handleRequestClose = () => {
+    setOpenMenu(false);
+    // setAnchorEl(null);
+  };
 
   return (
     <React.Fragment>
@@ -360,6 +410,12 @@ function Header(props) {
                 className={classes.tabs}
               >
                 {routes.map((route, index) => {
+                  if (route.name === "Logout") {
+                    return null;
+                  }
+                  if (route.name === "Profile") {
+                    return null;
+                  }
                   return (
                     <Tab
                       component={Link}
@@ -372,6 +428,53 @@ function Header(props) {
                   );
                 })}
               </Tabs>
+              <div
+                className={classes.profile}
+                style={{ display: userId === null ? "none" : "block" }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    right: "7px",
+                    top: "-19px",
+                  }}
+                >
+                  <Avatar
+                    className={classes.avatar}
+                    onClick={handleClick}
+                    onMouseOver={handleClick}
+                  >
+                    SA
+                  </Avatar>
+
+                  <Paper
+                    style={{ visibility: openMenu ? "visible" : "hidden" }}
+                    className={classes.profileMenu}
+                  >
+                    <MenuList
+                      autoFocusItem={open}
+                      id="menu-list-grow"
+                      // onKeyDown={handleListKeyDown}
+                      // anchorEl={anchorEl}
+                      // open={openMenu}
+                      // onRequestClose={handleRequestClose}
+                      onMouseOver={handleClick}
+                      onMouseOut={handleRequestClose}
+                    >
+                      <MenuItem>Profile</MenuItem>
+                      <MenuItem>My account</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          auth.signOut();
+                          history.push("/");
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </MenuList>
+                  </Paper>
+                </div>
+              </div>
               <IconButton
                 disableRipple
                 onClick={() => {

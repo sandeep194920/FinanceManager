@@ -3,7 +3,7 @@ import Header from "./components/Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import lightTheme from "./components/UI/LightTheme";
 import darkTheme from "./components/UI/DarkTheme";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Footer from "./components/Footer/Footer";
 import Groups from "./components/EasySplit/Groups";
 import Friends from "./components/EasySplit/Friends";
@@ -54,12 +54,12 @@ function App() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      console.log("Header logged in if -> " + user.uid);
+      // console.log("Header logged in if -> " + user.uid);
 
       setUserId(user.uid);
     } else {
       // No user is signed in.
-      console.log("Header else -> ");
+      // console.log("Header else -> ");
       setUserId(null);
     }
   });
@@ -74,11 +74,12 @@ function App() {
           exact
           component={() => <div style={{ height: "1000px" }}>Sandeep</div>}
         />
-        <Route path="/friends" render={() => <Friends />} />
-        <Route path="/groups" render={() => <Groups />} />
-        <Route path="/register" render={() => <Register />} />
-        <Route path="/login" component={() => <Login />} />
-        <Redirect to="/" />
+        <Route exact path="/register" render={() => <Register />} />
+        <Route exact path="/login" component={() => <Login />} />
+        <Route
+          path="/"
+          component={() => <div style={{ height: "1000px" }}>Sandeep</div>}
+        />
       </React.Fragment>
     );
   } else {
@@ -89,9 +90,12 @@ function App() {
           exact
           component={() => <div style={{ height: "1000px" }}>Sandeep</div>}
         />
-        <Route path="/friends" render={() => <Friends />} />
-        <Route path="/groups" render={() => <Groups />} />
-        <Redirect to="/" />
+        <Route exact path="/friends" render={() => <Friends />} />
+        <Route exact path="/groups" render={() => <Groups />} />
+        <Route
+          path="/"
+          component={() => <div style={{ height: "1000px" }}>Sandeep</div>}
+        />
       </React.Fragment>
     );
   }

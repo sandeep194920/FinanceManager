@@ -19,7 +19,6 @@ import { connect } from "react-redux";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 function GroupsList(props) {
-  console.log("Groups");
   const { onInitGroups, groupsInfo, loading } = props;
   const classes = useStyles();
   const theme = useTheme();

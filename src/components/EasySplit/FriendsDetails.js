@@ -28,8 +28,6 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
 function FriendsDetails(props) {
-  console.log("FriendsDetails");
-
   const {
     friend,
     // details,
@@ -107,7 +105,6 @@ function FriendsDetails(props) {
     (updateDetails) => {
       // updateHandler has been called in Friends.js
       // here we need to update the data by using action creator and then close the handler
-      console.log("The user is id " + updateDetails.userId);
       onUpdateFriends(updateDetails);
       editCloseHandler();
     },
@@ -117,8 +114,6 @@ function FriendsDetails(props) {
   // to execute this, the btn is clicked in DeleteCancelModal
   const deleteHandler = useCallback(
     (deleteDetail) => {
-      console.log("The deletable id is ");
-      console.log(deleteDetail);
       onDeleteFriendsDetail(deleteDetail);
       dialogCloseHandler();
     },

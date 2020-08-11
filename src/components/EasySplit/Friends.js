@@ -18,7 +18,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { connect } from "react-redux";
 
 function FriendsList(props) {
-  console.log("Friends");
   const { onInitFriends, friendsInfo, loading } = props;
   const classes = useStyles();
   const theme = useTheme();

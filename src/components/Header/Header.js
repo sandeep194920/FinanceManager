@@ -189,39 +189,15 @@ function Header(props) {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleChange = (event, newValue) => {
+    console.log("handle change set is " + newValue);
     setValue(newValue);
   };
 
   const path = window.location.pathname;
+  console.log("THE PATH IS " + path);
   const handleDrawerToggle = () => {
     setOpen((prevState) => !prevState);
   };
-
-  useEffect(() => {
-    if (userId === null) {
-      if (path === "/") {
-        setValue(0);
-      } else if (path === "/friends") {
-        setValue(1);
-      } else if (path === "/groups") {
-        setValue(2);
-      } else if (path === "/register") {
-        setValue(3);
-      } else if (path === "/login") {
-        setValue(4);
-      }
-    } else {
-      if (path === "/") {
-        setValue(0);
-      } else if (path === "/friends") {
-        setValue(1);
-      } else if (path === "/groups") {
-        setValue(2);
-      } else if (path === "/logout") {
-        setValue(3);
-      }
-    }
-  }, [path, userId]);
 
   let routes = [
     {
@@ -230,35 +206,35 @@ function Header(props) {
       activeIndex: 0,
       icon: <HomeIcon classes={{ root: classes.icons }} />,
     },
-    {
-      name: "Friends",
-      link: "/friends",
-      activeIndex: 1,
-      icon: <GroupIcon classes={{ root: classes.icons }} />,
-    },
-    {
-      name: "Groups",
-      link: "/groups",
-      activeIndex: 2,
-      icon: <GroupAddIcon classes={{ root: classes.icons }} />,
-    },
+    // {
+    //   name: "Friends",
+    //   link: "/friends",
+    //   activeIndex: 1,
+    //   icon: <GroupIcon classes={{ root: classes.icons }} />,
+    // },
+    // {
+    //   name: "Groups",
+    //   link: "/groups",
+    //   activeIndex: 2,
+    //   icon: <GroupAddIcon classes={{ root: classes.icons }} />,
+    // },
     {
       name: "Register",
       link: "/register",
-      activeIndex: 3,
+      activeIndex: 1,
       icon: <InfoIcon classes={{ root: classes.icons }} />,
     },
 
     {
       name: "Login",
       link: "/login",
-      activeIndex: 4,
+      activeIndex: 2,
       icon: <ContactsIcon classes={{ root: classes.icons }} />,
     },
   ];
 
   if (userId !== null) {
-    console.log("REACHED IF STATE");
+    // console.log("REACHED IF STATE");
     routes = [
       {
         name: "Home",
@@ -292,7 +268,7 @@ function Header(props) {
       },
     ];
   } else {
-    console.log("REACHED ELSE STATE");
+    // console.log("REACHED ELSE STATE");
 
     routes = [...routes];
   }
@@ -300,15 +276,53 @@ function Header(props) {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      console.log("Header logged in if -> " + user.uid);
+      // console.log("Header logged in if -> " + user.uid);
 
       setUserId(user.uid);
     } else {
       // No user is signed in.
-      console.log("Header else -> ");
+      // console.log("Header else -> ");
       setUserId(null);
     }
   });
+
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       history.replace("/");
+  //     }
+  //   });
+  // }, [history]);
+
+  useEffect(() => {
+    if (userId === null) {
+      console.log("USEEFFECT userId null");
+      console.log(" value is " + value);
+      if (path === "/") {
+        setValue(0);
+      } else if (path === "/register") {
+        console.log("USEEFFECT set value 1");
+        setValue(1);
+      } else if (path === "/login") {
+        console.log("USEEFFECT set value 2");
+        setValue(2);
+      }
+    } else {
+      if (path === "/") {
+        setValue(0);
+      } else if (path === "/friends") {
+        console.log("USEEFFECT set value 1");
+        console.log(" value is " + value);
+
+        setValue(1);
+      } else if (path === "/groups") {
+        console.log("USEEFFECT set value 2");
+        console.log(" value is " + value);
+
+        setValue(2);
+      }
+    }
+  }, [path, userId, value]);
 
   const sideDrawerList = (
     <List
@@ -323,6 +337,9 @@ function Header(props) {
       </ListItem>
       {routes.map((route, index) => {
         if (route.name === "Profile") {
+          return null;
+        }
+        if (route.name === "Logout") {
           return null;
         }
         return (
@@ -342,6 +359,25 @@ function Header(props) {
           </React.Fragment>
         );
       })}
+      {userId !== null ? (
+        <ListItem
+          classes={{ root: classes.listItem, selected: classes.selected }}
+          // selected={window.location.pathname === route.link}
+          button
+          onClick={() => {
+            auth.signOut().then((response) => {
+              history.replace("/");
+            });
+          }}
+          // component={Link}
+          // to={route.link}
+        >
+          <ListItemIcon>
+            <ContactsIcon classes={{ root: classes.icons }} />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      ) : null}
     </List>
   );
   const drawer = (
@@ -428,51 +464,51 @@ function Header(props) {
                   );
                 })}
               </Tabs>
-              <div
-                className={classes.profile}
-                style={{ display: userId === null ? "none" : "block" }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    right: "7px",
-                    top: "-19px",
-                  }}
-                >
-                  <Avatar
-                    className={classes.avatar}
-                    onClick={handleClick}
-                    onMouseOver={handleClick}
+              <div style={{ display: userId === null ? "none" : "block" }}>
+                <div className={classes.profile}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "7px",
+                      top: "-19px",
+                    }}
                   >
-                    SA
-                  </Avatar>
-
-                  <Paper
-                    style={{ visibility: openMenu ? "visible" : "hidden" }}
-                    className={classes.profileMenu}
-                  >
-                    <MenuList
-                      autoFocusItem={open}
-                      id="menu-list-grow"
-                      // onKeyDown={handleListKeyDown}
-                      // anchorEl={anchorEl}
-                      // open={openMenu}
-                      // onRequestClose={handleRequestClose}
+                    <Avatar
+                      className={classes.avatar}
+                      onClick={handleClick}
                       onMouseOver={handleClick}
-                      onMouseOut={handleRequestClose}
                     >
-                      <MenuItem>Profile</MenuItem>
-                      <MenuItem>My account</MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          auth.signOut();
-                          history.push("/");
-                        }}
+                      SA
+                    </Avatar>
+
+                    <Paper
+                      style={{ visibility: openMenu ? "visible" : "hidden" }}
+                      className={classes.profileMenu}
+                    >
+                      <MenuList
+                        autoFocusItem={open}
+                        id="menu-list-grow"
+                        // onKeyDown={handleListKeyDown}
+                        // anchorEl={anchorEl}
+                        // open={openMenu}
+                        // onRequestClose={handleRequestClose}
+                        onMouseOver={handleClick}
+                        onMouseOut={handleRequestClose}
                       >
-                        Logout
-                      </MenuItem>
-                    </MenuList>
-                  </Paper>
+                        <MenuItem>Profile</MenuItem>
+                        <MenuItem>My account</MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            auth.signOut().then((response) => {
+                              history.replace("/");
+                            });
+                          }}
+                        >
+                          Logout
+                        </MenuItem>
+                      </MenuList>
+                    </Paper>
+                  </div>
                 </div>
               </div>
               <IconButton

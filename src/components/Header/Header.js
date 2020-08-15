@@ -183,6 +183,7 @@ function Header(props) {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState(null);
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   // const [anchorEl, setAnchorEl] = useState(null);
@@ -279,20 +280,14 @@ function Header(props) {
       // console.log("Header logged in if -> " + user.uid);
 
       setUserId(user.uid);
+      setUserName(user.displayName);
     } else {
       // No user is signed in.
       // console.log("Header else -> ");
       setUserId(null);
+      setUserName(null);
     }
   });
-
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       history.replace("/");
-  //     }
-  //   });
-  // }, [history]);
 
   useEffect(() => {
     if (userId === null) {
@@ -478,7 +473,10 @@ function Header(props) {
                       onClick={handleClick}
                       onMouseOver={handleClick}
                     >
-                      SA
+                      {/* {userName} */}
+                      {userName === null
+                        ? null
+                        : userName.substring(0, 2).toUpperCase()}
                     </Avatar>
 
                     <Paper

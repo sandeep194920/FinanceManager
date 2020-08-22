@@ -92,10 +92,10 @@ function App() {
         />
         <Route exact path="/friends" render={() => <Friends />} />
         <Route exact path="/groups" render={() => <Groups />} />
-        <Route
+        {/* <Route
           path="/"
           component={() => <div style={{ height: "1000px" }}>Sandeep</div>}
-        />
+        /> */}
       </React.Fragment>
     );
   }
